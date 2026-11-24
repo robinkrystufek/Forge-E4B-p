@@ -111,55 +111,30 @@ Smoke-test a known-good stock package first, then candidate with identical flags
 
 Android was tested in Forge GM's isolated debug probe app, not Edge Gallery. On Pixel, verify pushed file SHA, select Model-default precision and GPU, and test MTP on/off in separate runs with identical app/runtime/prompt/context when comparing. The 4096 context with initial FP32 compatibility setting was LMK-killed five times. A 1024 requested context, Model-default precision, GPU run completed with MTP off; this only validates that debug configuration and does not establish 4096-context safety.
 
-Observed single-run diagnostics on Pixel 10 Pro: MTP off, 458 input/446 output, TTFT 2.86 s, 7.59 token/s, 61.54 s total. MTP on, 458 input/396 output, TTFT 2.91 s, 13.61 token/s, 31.97 s total. These were not a controlled paired benchmark: output lengths differed and MTP-on trace is a diagnostic record, so treat as directional observations, not a guaranteed speedup. The corresponding 5-run cold-start host proxy median was 6.786 s (range 6.759–7.115); it measures startup/graph-init plus a short response, not steady-state token throughput or MTP A/B.
+The supplied Forge-GM v116 export contains repeated P10 GPU narrator measurements. The corresponding app-aligned PC comparison, including per-run TTFT and decode tok/s, is recorded in section 6a. The separate 1024-context MTP-off run above remains a functional probe and should not be combined with the 4096-context performance results.
 
-## 6a. Final P10 host CPU/GPU TTFT and decode benchmark
+## 6a. Forge-GM app-aligned P10 narrator benchmark on Finnl1
 
-The final R14-D P10 package was measured on Finnl1 with LiteRT-LM CLI/builder 0.19.2. Package SHA-256: `18108925d98c552107e2e3d0724c025bb839fa8d70cd6ad5e1aa86ea460b0cfd`. The GPU backend selected the NVIDIA RTX 4090 through WebGPU/Dawn on Direct3D 12. CPU and GPU runs were separated; MTP off/on were separate runs. Each CLI benchmark used 128 prefill tokens, 64 decode tokens, a 1024-token context limit, three measured iterations plus the CLI warmup, and `--cache=no`.
+The previous host table in this section used a short CLI microbenchmark (128 synthetic prefill tokens / 64 forced decode tokens). That microbenchmark is valid only for that short fixed-token workload; its MTP acceptance was 0%, and it does not model Forge-GM's long narrator benchmark. The comparison below replaces it for app-performance conclusions.
 
-| Host backend | Speculative decoding | Prefill tok/s | Decode tok/s | TTFT | Drafter acceptance |
-|---|---:|---:|---:|---:|---:|
-| CPU | off | 329.58 | 15.94 | 0.4513 s | n/a |
-| CPU | on | 331.51 | 9.07 | 0.4965 s | 0% |
-| RTX 4090 / D3D12 | off | 4505.12 | 119.18 | 0.0368 s | n/a |
-| RTX 4090 / D3D12 | on | 4418.69 | 69.62 | 0.0433 s | 0% |
+The Pixel record and host run use the exact same P10 package SHA-256, `18108925d98c552107e2e3d0724c025bb839fa8d70cd6ad5e1aa86ea460b0cfd`. Forge-GM defines the fixed workload as `benchmark.narrator` version 1, the `BENCHMARK_NARRATOR` text in `D:\Forge-GM\experiment\Forge-GM-current\src\prompts\templates.ts`. Its UTF-8 SHA-256 is `de63332fe826bdaa0ca030662f01f150799186b04218aecd8cd966e3a1abbd38`. The app uses a 500-token output ceiling, 4096-token context, thinking disabled, and its narrator sampler defaults (top-k 64, top-p 0.95, temperature 1.0). Forge-GM accepts long-form performance samples only at 200 or more output tokens.
 
-These are the reported LiteRT-LM benchmark rates for this short synthetic 128/64-token workload, not a general throughput promise. MTP-on initialized and executed its drafter path, but accepted no draft tokens in these four short-run comparisons; it was slower here and does not demonstrate a PC speedup. The separate three-prompt POC functional smoke had nonzero MTP success rates, and the Pixel diagnostic recorded 13.61 token/s with MTP enabled versus 7.59 token/s disabled, but that Pixel pair was not controlled. Keep those distinct from this host benchmark.
+The host uses LiteRT-LM Python conversation API 0.19.2, reusing the installed export environment and P10 engine cache. The Pixel export is from Forge-GM 1.0-v116 with LiteRT-LM 0.19.1 / LiteRT 2.3.2 on Pixel 10 Pro / Android 17. PC prompt-token count was 453 versus Pixel's 458 for the same prompt string; this runtime/template count difference is recorded as observed. Three conversations were measured per mode. Every host output cleared the 200-token validity floor.
 
-Full invocation logs and gate evidence are retained in `D:\Forge-GM\experiment\output\r14d-qat-lora-20261123_0818\evaluation\litertlm_mtp_host_metrics\`: `cpu_mtp_off.log`, `cpu_mtp_on.log`, `gpu_mtp_off.log`, `gpu_mtp_on.log`, `gpu_exclusive_gate.jsonl`, and the task-local Chrome GPU-process classification helper. Each run log records the command header, runtime details, benchmark settings/results, and process exit status. Before each GPU run, the task followed the exclusive GPU gate, checked free VRAM and utilization, and did not stop any process.
+| PC backend | MTP | Decode tok/s, runs | Median decode tok/s | TTFT, runs | Median TTFT | Output tokens |
+|---|---|---:|---:|---:|---:|---:|
+| CPU | Off | 14.44, 14.31, 14.45 | 14.44 | 2.125, 1.962, 1.975 s | 1.975 s | 463, 463, 463 |
+| CPU | On | 19.68, 19.88, 19.75 | 19.75 | 2.083, 1.953, 1.960 s | 1.960 s | 382, 382, 382 |
+| RTX 4090 / WebGPU-Dawn / D3D12 | Off | 108.61, 111.86, 111.62 | 111.62 | 1.081, 0.120, 0.120 s | 0.120 s | 431, 431, 431 |
+| RTX 4090 / WebGPU-Dawn / D3D12 | On | 111.87, 163.75, 163.85 | 163.75 | 1.180, 0.120, 0.120 s | 0.120 s | 368, 368, 368 |
 
-## 7. Lightweight reproduction gate
+MTP increased median PC decode throughput about 36.8% on CPU and 46.6% on GPU. The first GPU run in each mode includes cold-start effects; the two warm repeats were stable at about 111.7 tok/s without MTP and 163.8 tok/s with MTP. The output lengths differ because generation ended at different points, so decode rate is the relevant comparison; all runs produced valid long-form outputs.
 
-Before an expensive run, reuse the existing training environment and run its CPU test suite plus tiny synthetic quantizer/LoRA preflight. The preflight should prove: zero-init adapter exactly preserves base output; controlled adapter changes cross the fixed quantizer; A and B receive gradients; base packed weights and scales remain unchanged; pack/depack is exact; and a few optimizer steps lower loss. Do not load the full E4B model or run the training regiment for this baseline check. Section 8 separately records the short full-model proof of execution.
+The supplied Pixel v116 export has five P10 GPU narrator records with the same package hash, prompt version, 458 input tokens, model-default precision, context 4096 and output ceiling 500. Its two MTP-off runs were 7.775 and 7.832 tok/s (median 7.804; median TTFT 2.696 s). Its three MTP-on runs were 13.732, 13.579 and 14.198 tok/s (median 13.732; median TTFT 2.899 s), about 1.76x the MTP-off median. This is repeated diagnostic evidence of P10 speedup on Pixel, not a controlled hardware/runtime comparison against the PC.
 
-The initial guide-only validation ran 28 existing CPU unit tests and the tiny trainer preflight; all preflight invariants passed and toy loss fell from 13.8330 to 12.9280. No full training regimen or device run was part of that first documentation pass. The later one-step full-model POC, package rebuild and local CPU/GPU smoke are recorded separately in section 8. No full training regimen, formal benchmark or new Pixel run was performed.
+The earlier 128/64-token synthetic CLI benchmark reported zero accepted drafts and lower MTP-on throughput; that result does not contradict the long-form app workload above. A separate fixed-token 500-decode API attempt did not emit progress for several minutes and was stopped after confirming it was this task's own process. The app-equivalent conversation API completed all reported runs. No partial or stalled-run metrics are included.
 
-## 8. Executed short proof of concept and package structure
-
-A one-step synthetic-data proof of execution was run with the same QAT-aware trainer before packaging. The single synthetic conversation was `What is two plus two?` → `4`, tokenized with the pinned tokenizer/chat template and last-assistant-only labels. It produced 24 input tokens and one supervised token after masking EOT/newline. This is intentionally only a path check: one optimizer update cannot establish a loss trend, useful adaptation, or quality.
-
-Use the same existing training/export environments and artifacts described above. For a truly short run, prepare a tiny synthetic JSONL row in the trainer's prepared format and pass `--max-samples 1`; that option still loads the whole model. Set a hard run-time budget and stop before ten minutes if a future machine behaves differently. The actual run on the RTX 4090 completed in about ten seconds including model loading, with 20 GiB estimated peak plus 2 GiB reserve checked before launch. The step had nonzero gradients in the selected modules; the fixed-scale merge changed 127 INT4 values in one tensor, and no INT2 or INT8 values changed. Its single loss was 0.00132, so there was no multi-step loss comparison.
-
-Run the production-equivalent fixed-scale merge, audit patch, and official builder in that order. For POC mode, the actual output was `SimpleLoRA-POC-Gemma4-E4B-MixedQAT-MTP.litertlm`, SHA-256 `4d066ef5f5fcb31cb0428571ef6ea7b9d6be9431db418a7ad2be6240aa9478b1`. The merge fake-quant hash matched exactly; patch readback passed and all graph bytes outside the one quantized payload range were identical to the stock graph.
-
-### Package structure changes made for LiteRT-LM
-
-The packaging change is a storage/layout transformation around an official graph, plus a verified payload edit:
-
-1. Start from Google's official E4B `.litertlm`, unpack its sections, and preserve the stock tokenizer, metadata and all unmodified model graphs.
-2. Replace only the matched packed INT4 tensor bytes in the official `tf_lite_prefill_decode` graph. Keep that graph's operator topology, buffer metadata and quantization parameters intact. For the POC, the single matched tensor was `model.language_model.layers.22.self_attn.k_proj.weight`; for the full R14-D P10 artifact, 77 INT4 tensors were patched. INT2/INT8, MTP drafter and non-target tensors stay at their source values.
-3. Point the original `model.toml` prefill/decode graph path at the patched graph. The LiteRT-LM builder externalizes eligible constants from eight graphs into separate `TFLiteWeights` sections and redirects their buffers. Thus the stock 12-section bundle becomes a 20-section bundle; eight weight sections are added, including the MTP drafter weights. The builder also adjusts package metadata, redirects two buffers and deduplicates 167,772,160 bytes. Do not expect raw section offsets or all graph-section bytes to match stock.
-4. Verify semantic/integer tensor provenance, scale hashes, graph readback, byte equality outside patched payload ranges, and package inventory. Confirm the MTP drafter graph and its external weights remain present. The POC package retained the MTP graph (3,839,640 bytes) and its `TFLiteWeights` section (41,287,680 bytes).
-
-This is why patching the audited official graph payloads and then invoking the official builder is the working route; exporting a raw checkpoint or rebuilding only the main graph would omit the multimodal sections, external-weight layout or drafter.
-
-### Short local inference smoke
-
-With LiteRT-LM CLI 0.19.2 on Finnl1/RTX 4090, run the same three short prompts on CPU and GPU, with speculative decoding off and on. For the tested POC package use `--max-num-tokens=1024` (requested context limit); all 12 executions returned the expected answers on both backends. GPU logs selected the NVIDIA RTX 4090 / Direct3D 12 adapter. MTP-on logs loaded the `mtp_drafter` signature and recorded success rates of 1.000, 0.667 and 0.333 on CPU, and 0.667, 0.667 and 0.333 on GPU for the three prompts. These are functional smoke observations, not performance measurements.
-
-An initial attempt with `--max-num-tokens=64` failed: CPU could not allocate tensors (the decode graph's dynamic update slice exceeded the short state) and GPU reported `Chosen prefill work group size exceeds available state entries (64)`. The CLI nevertheless returned process exit code 0 after printing a traceback. Therefore, check logs for exceptions and an actual generated response; an exit code alone is not a pass. The successful 1024-token retry generated `42`, `Paris` and `Green.` for the arithmetic, capital and color prompts. This debug cap is not evidence that larger contexts are safe.
-
-POC training, merge report, patch/repack manifests, full inference logs, and the POC package were retained under `D:\Forge-GM\experiment\output\r14d-qat-lora-20261123_0818\evaluation\simple_lora_poc`. The POC is not a quality-qualified model and must not be presented as a trained release.
+Host logs, exact prompt copy, runner, JSON results, and GPU gate records are in `D:\Forge-GM\experiment\output\r14d-qat-lora-20261123_0818\evaluation\litertlm_mtp_host_metrics\rerun_20261124\`. The shared pre-existing LiteRT-LM engine cache was reused and expanded; it remains in place. No model or environment was created for this benchmark.
 
 ## Useful references
 
