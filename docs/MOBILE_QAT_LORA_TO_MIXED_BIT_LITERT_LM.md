@@ -186,7 +186,7 @@ $s = Join-Path $src 'repro\scripts'
 & $py "$s\prepare_chat_jsonl.py" --model-dir $models --input "$src\repro\fixtures\poc_chat.jsonl" --output "$run\prepared.jsonl"
 # Before GPU training, monitor nvidia-smi until estimated peak plus 2 GiB fits; never stop another process.
 & $py "$s\r14d_qat_lora.py" --arm P10 --model-dir $models --prepared "$run\prepared.jsonl" --output "$run\adapter" --max-samples 1 --estimate-gib 20
-& $py "$s\merge_r14d_qat_lora.py" --source-model $models --manifest "$run\checkpoint-manifest.json" --adapter-dir "$run\adapter\checkpoints\epoch_100_final" --output "$run\merged" --expected-metrics "$run\adapter\quantization_metrics.jsonl"
+& $py "$s\merge_r14d_qat_lora.py" --source-model $models --manifest "$run\checkpoint-manifest.json" --adapter-dir "$run\adapter\checkpoints\epoch_100" --output "$run\merged" --expected-metrics "$run\adapter\quantization_metrics.jsonl"
 ~~~
 
 The preprocessing fixture intentionally trains on one supervised answer token. The preparer checks that the rendered full conversation begins with the user-only generation prefix; it masks headers, prompt, template suffix and end-of-turn, and labels only assistant body tokens. Real corpora should use the same schema, source/session split before shuffle, deduplication, and a recorded private data manifest; do not commit private conversations. The training script uses an effective batch of 8, so this one-row POC is one partial-batch optimizer update. Full protocol and quantization invariants are described above.
@@ -227,3 +227,6 @@ The official stock package download command is:
 ~~~
 
 `prepare_chat_jsonl.py` consumes the `BatchEncoding['input_ids']` returned by the pinned Transformers tokenizer. Do not assume `apply_chat_template(tokenize=True)` directly returns a Python list; its wrapper type can vary across tokenizer implementations. The preparer should fail closed if the user-only generation prefix does not exactly match the full conversation prefix.
+
+
+Fresh checkout validation revealed the adapter checkpoint for `--max-samples 1` is named `checkpoints/epoch_100` (not `epoch_100_final`); use the emitted checkpoint path or inspect the run directory. Large Hugging Face Xet downloads can stall with Python's `urllib` on some Windows networks. `download_stock_litertlm.py` therefore uses the built-in Windows `curl.exe` with resume/retry support and hashes the completed file; do not restart a partial 3.6 GB transfer from byte zero.
