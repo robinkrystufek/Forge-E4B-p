@@ -4,9 +4,20 @@ import argparse,hashlib,json,mmap,re,shutil
 from pathlib import Path
 import numpy as np
 from safetensors import safe_open
-from quantization import unpack_signed
-from round_trip_checkpoint import scale_key
 from patch_official_qat_graph import _buffer_ranges,_decode_tflite,_graph_schema,_sha256
+
+def scale_key(key:str)->str:
+ if key.endswith('.embedding_quantized'):return key.removesuffix('.embedding_quantized')+'.embedding_scale'
+ if key.endswith('.weight'):return key.removesuffix('.weight')+'.weight_scale'
+ raise ValueError(key)
+
+def unpack_signed_np(packed:np.ndarray,width:int,bits:int)->np.ndarray:
+ packed=np.asarray(packed)
+ if bits==8:return packed.astype(np.int8,copy=False)[...,:width]
+ if bits not in (2,4):raise ValueError(bits)
+ factor=8//bits;mask=(1<<bits)-1;offset=1<<(bits-1);u=packed.astype(np.uint8,copy=False)
+ parts=[((u>>(i*bits))&mask).astype(np.int16)-offset for i in range(factor)]
+ return np.stack(parts,axis=-1).reshape(*u.shape[:-1],-1)[...,:width].astype(np.int8)
 
 def _file_sha(path:Path)->str:
  h=hashlib.sha256()
@@ -38,7 +49,7 @@ def patch(graph:Path,provenance:Path,merged:Path,merge_report:Path,source_manife
  changed=[row for row in merge['modules'] if row['changed_values']>0]
  if not changed:raise ValueError('selected adapter has no fixed-scale packed weight changes')
  plan=[];buffer_ids=set()
- with safe_open(str(merged/'model.safetensors'),framework='pt',device='cpu') as f:
+ with safe_open(str(merged/'model.safetensors'),framework='numpy') as f:
   for mod in changed:
    name=mod['tensor'];row=matches.get(name)
    if row is None:raise ValueError(f'no source-to-official audit row for changed tensor: {name}')
@@ -53,10 +64,10 @@ def patch(graph:Path,provenance:Path,merged:Path,merge_report:Path,source_manife
    wk=name;sk=scale_key(wk);headers=source_meta['safetensors']['tensor_headers']
    if headers[wk]['assigned_bits']!=bits:raise ValueError(f'source manifest width mismatch for {name}')
    scale=f.get_tensor(sk)
-   scale_hash=_sha256(np.asarray(scale.cpu(),dtype=np.float32))
+   scale_hash=_sha256(np.asarray(scale,dtype=np.float32))
    if scale_hash!=match['graph_scales_sha256']:raise ValueError(f'official scale mismatch for {name}')
    packed=f.get_tensor(wk)
-   width=shape[-1];ints=unpack_signed(packed,width,bits).cpu().numpy().astype(np.int8,copy=False)
+   width=shape[-1];ints=unpack_signed_np(packed,width,bits).astype(np.int8,copy=False)
    current_integer_hash=hashlib.sha256(np.ascontiguousarray(ints).tobytes()).hexdigest()
    payload=_pack_tflite(ints,bits)
    plan.append({'source_tensor':name,'bits':bits,'logical_shape':list(shape),'official_buffer':bid,
@@ -125,3 +136,4 @@ def main():
  p.add_argument('--output-graph',type=Path,required=True);p.add_argument('--manifest',type=Path,required=True)
  a=p.parse_args();print(json.dumps(patch(a.official_graph,a.provenance,a.merged_model,a.merge_report,a.source_manifest,a.output_graph,a.manifest),indent=2))
 if __name__=='__main__':main()
+
