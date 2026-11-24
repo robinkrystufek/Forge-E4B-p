@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="232" viewBox="0 0 720 232" role="img" aria-labelledby="title desc">
+  <title id="title">Fixed-scale LoRA to LiteRT-LM workflow</title>
+  <desc id="desc">Five sequential stages: inspect the pinned mixed-bit mobile-QAT checkpoint, prepare masked chat examples, adapt and merge at fixed scales, patch and repack the official graph with MTP, and validate CPU and GPU inference and narrator throughput. The path reads left to right on the upper row and right to left on the lower row.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#52677d"/>
+    </marker>
+  </defs>
+  <g fill="none" stroke="#52677d" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow)">
+    <path d="M 226 56 H 248"/>
+    <path d="M 468 56 H 490"/>
+    <path d="M 602 100 V 116 H 481 V 126"/>
+    <path d="M 375 176 H 351"/>
+  </g>
+  <g font-family="system-ui, -apple-system, Segoe UI, sans-serif" text-anchor="middle">
+    <g>
+      <rect x="12" y="12" width="212" height="88" rx="8" fill="#f8fafc" stroke="#94a8b9"/>
+      <text x="118" y="37" font-size="15" font-weight="700" fill="#176b80">01 · Inspect</text>
+      <text x="118" y="60" font-size="13" fill="#172b3e">Pinned mobile-QAT</text>
+      <text x="118" y="78" font-size="13" fill="#172b3e">Verify INT2 / INT4 / INT8</text>
+    </g>
+    <g>
+      <rect x="254" y="12" width="212" height="88" rx="8" fill="#f8fafc" stroke="#94a8b9"/>
+      <text x="360" y="37" font-size="15" font-weight="700" fill="#176b80">02 · Prepare</text>
+      <text x="360" y="60" font-size="13" fill="#172b3e">Chat JSONL</text>
+      <text x="360" y="78" font-size="13" fill="#172b3e">Mask non-target tokens</text>
+    </g>
+    <g>
+      <rect x="496" y="12" width="212" height="88" rx="8" fill="#f8fafc" stroke="#94a8b9"/>
+      <text x="602" y="37" font-size="15" font-weight="700" fill="#176b80">03 · Adapt &amp; merge</text>
+      <text x="602" y="60" font-size="13" fill="#172b3e">LoRA update</text>
+      <text x="602" y="78" font-size="13" fill="#172b3e">Original fixed scales</text>
+    </g>
+    <g>
+      <rect x="375" y="132" width="212" height="88" rx="8" fill="#f8fafc" stroke="#94a8b9"/>
+      <text x="481" y="157" font-size="15" font-weight="700" fill="#176b80">04 · Patch &amp; repack</text>
+      <text x="481" y="180" font-size="13" fill="#172b3e">Audited official graph</text>
+      <text x="481" y="198" font-size="13" fill="#172b3e">Preserve MTP drafter</text>
+    </g>
+    <g>
+      <rect x="133" y="132" width="212" height="88" rx="8" fill="#f8fafc" stroke="#94a8b9"/>
+      <text x="239" y="157" font-size="15" font-weight="700" fill="#176b80">05 · Validate</text>
+      <text x="239" y="180" font-size="13" fill="#172b3e">CPU / GPU smoke tests</text>
+      <text x="239" y="198" font-size="13" fill="#172b3e">Narrator MTP benchmark</text>
+    </g>
+  </g>
+</svg>
