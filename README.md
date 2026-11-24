@@ -18,15 +18,7 @@ A reproducible proof of concept for adapting Google's Gemma 4 E4B mobile-QAT che
 
 The adaptation retains the original quantization grid. Only audited packed weight payloads in the official LiteRT-LM graph are patched; package metadata and the MTP drafter are preserved.
 
-```mermaid
-flowchart TD
-    A["01 · Inspect pinned mobile-QAT checkpoint<br/>Verify packed INT2 / INT4 / INT8 weights"]
-    B["02 · Prepare training examples<br/>Chat JSONL · masked assistant-only labels"]
-    C["03 · Adapt and merge<br/>LoRA · original fixed quantization scales"]
-    D["04 · Patch and repack<br/>Audited official graph · original MTP drafter"]
-    E["05 · Validate<br/>CPU / GPU smoke tests · MTP benchmark"]
-    A --> B --> C --> D --> E
-```
+![Five-step workflow: inspect pinned mixed-bit weights, prepare masked chat examples, adapt and merge at fixed scales, patch and repack the official graph while preserving MTP, and validate CPU/GPU inference and narrator throughput.](docs/assets/workflow.svg)
 
 The workflow supports exact source-weight round-tripping, masked chat preparation, fixed-scale LoRA merging, audited graph patching and inference validation without converting the source checkpoint to uniform precision.
 
