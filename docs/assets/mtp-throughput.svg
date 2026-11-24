@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300" role="img" aria-labelledby="title desc">
+  <title id="title">Median narrator decode throughput with and without MTP</title>
+  <desc id="desc">CPU: 14.59 versus 18.90 tokens per second. RTX 4090: 110.91 versus 151.62 tokens per second. Common linear scale from zero to 160.</desc>
+  <rect x="0.5" y="0.5" width="759" height="299" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+  <g font-family="system-ui, -apple-system, Segoe UI, sans-serif" fill="#172b3e">
+    <text x="24" y="32" font-size="17" font-weight="700">Median decode throughput</text>
+    <text x="24" y="51" font-size="11" fill="#475569">Forge-GM narrator benchmark · tokens/s · three runs per mode</text>
+    <rect x="515" y="23" width="12" height="12" rx="2" fill="#8494a8"/>
+    <text x="534" y="33" font-size="11">MTP off</text>
+    <rect x="623" y="23" width="12" height="12" rx="2" fill="#176b80"/>
+    <text x="642" y="33" font-size="11">MTP on</text>
+    <line x1="150" y1="74" x2="150" y2="242" stroke="#d5dee8" stroke-width="1"/><text x="150" y="259" font-size="11" text-anchor="middle" fill="#475569">0</text>
+    <line x1="256" y1="74" x2="256" y2="242" stroke="#d5dee8" stroke-width="1"/><text x="256" y="259" font-size="11" text-anchor="middle" fill="#475569">40</text>
+    <line x1="362" y1="74" x2="362" y2="242" stroke="#d5dee8" stroke-width="1"/><text x="362" y="259" font-size="11" text-anchor="middle" fill="#475569">80</text>
+    <line x1="468" y1="74" x2="468" y2="242" stroke="#d5dee8" stroke-width="1"/><text x="468" y="259" font-size="11" text-anchor="middle" fill="#475569">120</text>
+    <line x1="574" y1="74" x2="574" y2="242" stroke="#d5dee8" stroke-width="1"/><text x="574" y="259" font-size="11" text-anchor="middle" fill="#475569">160</text>
+    <text x="24" y="108" font-size="14" font-weight="650">CPU</text>
+    <rect x="150" y="83" width="38.66" height="20" rx="3" fill="#8494a8"/>
+    <rect x="150" y="109" width="50.08" height="20" rx="3" fill="#176b80"/>
+    <text x="196.66" y="97" font-size="12">14.59</text>
+    <text x="208.08" y="123" font-size="12" font-weight="650">18.90</text>
+    <text x="735" y="103" text-anchor="end" font-size="22" font-weight="700" fill="#176b80">1.30×</text>
+    <text x="735" y="122" text-anchor="end" font-size="12" fill="#475569">+29.6%</text>
+    <text x="24" y="194" font-size="14" font-weight="650">RTX 4090</text>
+    <rect x="150" y="169" width="293.91" height="20" rx="3" fill="#8494a8"/>
+    <rect x="150" y="195" width="401.79" height="20" rx="3" fill="#176b80"/>
+    <text x="451.91" y="183" font-size="12">110.91</text>
+    <text x="559.79" y="209" font-size="12" font-weight="650">151.62</text>
+    <text x="735" y="189" text-anchor="end" font-size="22" font-weight="700" fill="#176b80">1.37×</text>
+    <text x="735" y="208" text-anchor="end" font-size="12" fill="#475569">+36.7%</text>
+    <text x="24" y="283" font-size="11" fill="#475569">Windows host · GPU: WebGPU/Dawn, Direct3D 12 · LiteRT-LM 0.19.2</text>
+  </g>
+</svg>
