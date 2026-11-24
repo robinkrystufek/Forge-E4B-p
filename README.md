@@ -8,9 +8,9 @@ A reproducible proof of concept for adapting Google's Gemma 4 E4B mobile-QAT che
 
 ---
 
-| **3.49 GB** | **INT2 / INT4 / INT8** | **1.37×** |
-| :---: | :---: | :---: |
-| Repacked model | Original mixed precision | GPU median decode speedup with MTP |
+| **3.49 GB** | **INT2 / INT4 / INT8** | **1.37×** | **1.66×** |
+| :---: | :---: | :---: | :---: |
+| Repacked model | Original mixed precision | RTX 4090 median MTP speedup | Pixel 10 Pro mean MTP speedup |
 
 > **Scope:** A clean-checkout, one-update synthetic proof of concept. This demonstrates packaging correctness and CPU/GPU inference, not model quality or generalization.
 
@@ -37,6 +37,10 @@ The [clean reproduction record](repro/results/POC_REPRODUCTION_20261124.md) docu
 
 ## MTP performance
 
+[LoRA POC · PC](#lora-poc-pc) · [LoRA POC · Pixel](#pixel-10-pro-gpu) · [Official stock · PC](#official-stock-e4b-pc-baseline)
+
+### LoRA POC PC
+
 ![Median decode throughput on CPU and RTX 4090 with MTP off and on; 14.59 to 18.90 tok/s on CPU and 110.91 to 151.62 tok/s on GPU.](docs/assets/mtp-throughput.svg)
 
 | PC backend | MTP off | MTP on | Median speedup | Median TTFT off → on |
@@ -52,6 +56,8 @@ The first run in each mode included cold-start effects and was retained in the r
 
 ### Pixel 10 Pro GPU
 
+![Pixel 10 Pro mean GPU decode throughput: 7.7 tok/s with MTP off and 12.8 tok/s with MTP on, a 66.2% increase. Separate on-device benchmark, four serial runs per mode.](docs/assets/mtp-throughput-pixel.svg)
+
 This is a separate on-device run of the same POC package, not a pooled comparison with the PC results above. Forge GM 1.0-v116 on Android 17 used LiteRT-LM 0.19.1 and LiteRT 2.3.2. The model file selected in the app was `Gemma4-E4B-POC-INT2-4-8-MTP.litertlm`; its 3,492,003,840-byte ADB transfer was verified against SHA-256 `d9088bd7e39056f9a470332d4a6f9fac309e05de7392e181606382091b225b7f`.
 
 | Pixel GPU mode | TTFT mean (range) | Decode tok/s mean (range) | Total time mean (range) | Output tokens |
@@ -64,6 +70,8 @@ Four serial runs per mode were valid. Forge GM reported MTP effective off/on as 
 The Pixel harness creates one LiteRT-LM conversation per run and reads TTFT, prefill/decode token counts and decode tok/s from `conversation.benchmarkInfo()`; total time uses Android's monotonic elapsed clock around generation. Engine/model initialization happens before that timer and is not included in the reported generation total. The implementation details and complete protocol are in the [Pixel benchmark record](repro/results/POC_REPRODUCTION_20261124.md#pixel-10-pro-gpu-mtp-benchmark) and [implementation guide](docs/MOBILE_QAT_LORA_TO_MIXED_BIT_LITERT_LM.md#6b-pixel-10-pro-gpu-mtp-benchmark).
 
 ### Official stock E4B PC baseline
+
+![Official stock E4B PC median decode throughput: CPU 13.73 to 17.45 tok/s and RTX 4090 111.45 to 154.48 tok/s with MTP enabled. Three runs per mode.](docs/assets/mtp-throughput-stock.svg)
 
 This is a separate PC run using the pinned official `gemma-4-E4B-it.litertlm` package, not the LoRA POC package above. LiteRT-LM 0.19.2 ran the fixed Forge-GM `benchmark.narrator` v1 workload for three conversations per backend/MTP setting.
 
