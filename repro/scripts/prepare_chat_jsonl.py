@@ -17,3 +17,4 @@ for line in a.input.read_text(encoding='utf-8-sig').splitlines():
  rows.append({'id':r['id'],'sourceId':r['sourceId'],'input_ids':ids,'labels':labels})
 a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(''.join(json.dumps(x)+'\n' for x in rows),encoding='utf-8')
 print(json.dumps({'rows':len(rows),'supervised_tokens':sum(x!=-100 for r in rows for x in r['labels']),'output':str(a.output)}))
+

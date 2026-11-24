@@ -219,3 +219,11 @@ Run a short CPU and GPU generation first. For throughput comparisons use only th
 Windows Python API inference registers the bundled DLL directory with `os.add_dll_directory` and retains its handle until engine close, so `dxcompiler.dll` and `dxil.dll` are discoverable. Do not reuse short synthetic prompts to infer narrator MTP behavior: the 128/64 CLI microbenchmark produced zero draft acceptance and is not Forge-GM's app workload.
 
 Use `download_stock_litertlm.py --output <path>` to fetch the pinned official package; it verifies the SHA before renaming the `.partial` file. The short clean reproduction also needs an explicit `--model-dir` in the trainer. Install the CUDA wheel before the rest of the training lock (`pip install --index-url https://download.pytorch.org/whl/cu126 torch==2.14.1+cu126`, then install the lock with PyPI as the index); this avoids resolving CUDA Torch from the general package index. The export lock is intentionally minimal and excludes the unrelated editable `litert-torch` checkout from the shared environment.
+
+The official stock package download command is:
+
+~~~powershell
+& $ep "$s\download_stock_litertlm.py" --output "$stock\gemma-4-E4B-it.litertlm"
+~~~
+
+`prepare_chat_jsonl.py` consumes the `BatchEncoding['input_ids']` returned by the pinned Transformers tokenizer. Do not assume `apply_chat_template(tokenize=True)` directly returns a Python list; its wrapper type can vary across tokenizer implementations. The preparer should fail closed if the user-only generation prefix does not exactly match the full conversation prefix.
