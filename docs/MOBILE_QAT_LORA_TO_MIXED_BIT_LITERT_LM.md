@@ -230,3 +230,5 @@ The official stock package download command is:
 
 
 Fresh checkout validation revealed the adapter checkpoint for `--max-samples 1` is named `checkpoints/epoch_100` (not `epoch_100_final`); use the emitted checkpoint path or inspect the run directory. Large Hugging Face Xet downloads can stall with Python's `urllib` on some Windows networks. `download_stock_litertlm.py` therefore uses the built-in Windows `curl.exe` with resume/retry support and hashes the completed file; do not restart a partial 3.6 GB transfer from byte zero.
+
+On clean-run smoke tests, `--max-num-tokens=32` failed during engine initialization in both the stock bundle and patched candidate with `DYNAMIC_UPDATE_SLICE`/tensor-shape preparation errors. Using `--max-num-tokens=1024` initialized and generated `42` on the stock model. Keep CLI functional checks at 1024 or the app's 4096 context; tiny context values are not supported by these fixed prefill graph signatures.
