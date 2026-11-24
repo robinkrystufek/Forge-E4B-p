@@ -14,16 +14,18 @@ The workflow preserves the checkpoint’s mixed INT2/INT4/INT8 weight representa
 
 ## Workflow
 
+### From pinned QAT checkpoint to tested LiteRT-LM package
+
+*Five stages preserve the mixed-bit weights and carry the official MTP drafter through packaging.*
+
 ```mermaid
 flowchart LR
-    A[ pinned Gemma 4 E4B mobile-QAT weights ] --> B[ inspect metadata and verify INT2/4/8 round-trip ]
-    B --> C[ prepare chat examples and masked labels ]
-    C --> D[ short or full QAT-aware LoRA training ]
-    D --> E[ merge LoRA at original fixed scales ]
-    E --> F[ patch verified weight payloads in official LiteRT-LM graph ]
-    F --> G[ repack original bundle with MTP drafter retained ]
-    G --> H[ CPU and GPU smoke checks ]
-    H --> I[ narrator benchmark: MTP off versus on ]
+    A["1 · Pin and inspect<br/>Gemma 4 E4B mobile-QAT<br/>Verify metadata and INT2/4/8"]
+    B["2 · Prepare data<br/>Format chat examples<br/>Mask prompt and headers"]
+    C["3 · Train and merge<br/>QAT-aware LoRA<br/>Keep original scales and bit widths"]
+    D["4 · Package with MTP<br/>Patch verified graph weights<br/>Retain official drafter and bundle"]
+    E["5 · Validate performance<br/>CPU and GPU smoke checks<br/>Narrator benchmark · MTP off/on"]
+    A --> B --> C --> D --> E
 ```
 
 ## Demonstrated result
