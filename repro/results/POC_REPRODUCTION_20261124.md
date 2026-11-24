@@ -31,6 +31,38 @@ Prompt: tracked `benchmark.narrator.v1.txt`; SHA-256 `de63332fe826bdaa0ca030662f
 
 MTP median decode speedup: CPU 1.30x (+29.6%); GPU 1.37x (+36.7%). The two warm GPU repeats were 110.91 / 111.53 tok/s with MTP off and 151.62 / 153.91 with MTP on (1.37x comparing warm medians). MTP drafter success rates in native runtime logs were 47.6% on CPU and 46.4% on GPU. The first run in each mode had cold-start TTFT and is retained in the table. Output lengths differ because model generation ends naturally; all runs pass the benchmark's 200-token validity floor.
 
+## Pixel 10 Pro GPU MTP benchmark
+
+This is a separate on-device run of the same clean POC package. The exact file selected in Forge GM's Load/Replace model picker was `Gemma4-E4B-POC-INT2-4-8-MTP.litertlm` in Downloads. It was 3,492,003,840 bytes; after ADB transfer the device-side SHA-256 matched the host package SHA-256 `d9088bd7e39056f9a470332d4a6f9fac309e05de7392e181606382091b225b7f`.
+
+Test environment: Pixel 10 Pro / Android 17, Forge GM 1.0-v116, LiteRT-LM 0.19.1 and LiteRT 2.3.2. The registered `benchmark.narrator` v1 fixture was used (SHA-256 `de63332fe826bdaa0ca030662f01f150799186b04218aecd8cd966e3a1abbd38`). Both modes used GPU, model-default precision, 4096 context, 500-token output ceiling, and thinking disabled. Four serial runs were made per mode. All eight runs were valid; the app reported no errors, short runs or missing metrics, and each output exceeded 200 tokens. No Pixel CPU runs were made.
+
+| Pixel GPU mode | TTFT mean (range) | Decode tok/s mean (range) | Total generation time mean (range) | Input tokens | Output tokens |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| MTP off | 2.85 s (2.52–3.03) | 7.7 (7.5–7.8) | 59.88 s (59.08–61.49) | 458 | 440 |
+| MTP on | 2.77 s (2.42–2.98) | 12.8 (12.7–13.0) | 37.09 s (36.26–37.74) | 458 | 441 |
+
+Mean decode throughput increased 66.2% with MTP enabled (12.8 versus 7.7 tok/s); mean TTFT was 2.77 s versus 2.85 s, and mean total generation time was 37.09 s versus 59.88 s. Forge GM's run profiles reported MTP requested/effective as Off/Off and On/On. The result is a within-device comparison for this package and workload; it is not pooled with PC results.
+
+For Forge GM's prompt compilation, engine configuration, MTP gating and metric collection details, see [the implementation and Pixel protocol section](../../docs/MOBILE_QAT_LORA_TO_MIXED_BIT_LITERT_LM.md#6b-pixel-10-pro-gpu-mtp-benchmark).
+
+## Stock official E4B PC baseline
+
+This baseline uses the official stock `gemma-4-E4B-it.litertlm` package rather than the LoRA POC. The local model was the pinned package from `litert-community/gemma-4-E4B-it-litert-lm@f254b5ba6e36f7d89cc7892e268e9877bc20f0a0`, 3,659,530,240 bytes, SHA-256 `0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0`.
+
+The reused LiteRT-LM CLI/Python environment was version 0.19.2. CPU and GPU CLI smoke checks each generated `42`; the verbose GPU log selected `NVIDIA GeForce RTX 4090, arch=lovelace, vendor=nvidia, backend=Direct3D 12, adapterType=Discrete GPU`. Timed runs used `repro/scripts/benchmark_narrator.py` with the Forge-GM `benchmark.narrator` v1 fixture (SHA-256 `de63332fe826bdaa0ca030662f01f150799186b04218aecd8cd966e3a1abbd38`), 4096 context, 500-token ceiling, 200-token validity floor, top-k 64, top-p 0.95, temperature 1.0, and thinking disabled. There were three serial runs for each of CPU/GPU × MTP off/on. All 12 passed the validity floor; input count was 453 tokens in each run.
+
+| Backend | MTP | Decode tok/s (runs) | Median decode | TTFT (runs, seconds) | Median TTFT | Total seconds (runs) | Output tokens/run |
+| :--- | :--- | ---: | ---: | ---: | ---: | ---: | ---: |
+| CPU / XNNPACK | Off | 13.86, 13.73, 12.88 | 13.73 | 2.16, 2.14, 2.67 | 2.16 | 31.60, 31.87, 34.35 | 409 each |
+| CPU / XNNPACK | On | 17.16, 17.45, 17.46 | 17.45 | 2.16, 2.00, 2.01 | 2.01 | 29.09, 28.48, 28.47 | 463 each |
+| RTX 4090 / WebGPU-D3D12 | Off | 108.41, 111.58, 111.45 | 111.45 | 0.84, 0.12, 0.12 | 0.12 | 5.19, 4.34, 4.35 | 472 each |
+| RTX 4090 / WebGPU-D3D12 | On | 100.92, 154.91, 154.48 | 154.48 | 1.47, 0.12, 0.12 | 0.12 | 5.48, 2.73, 2.73 | 405 each |
+
+MTP median decode speedup was 27.1% on CPU and 38.6% on GPU. Runtime logs reported drafter success of 41.9% on CPU and 47.6% on GPU and showed the stock bundle's `mtp_drafter` signature. GPU resource gates passed before both phases at 23,554 MiB free and 0% utilization. The initial GPU run in each mode had cold-start effects and is included in the three-run medians. After the warm repeats, GPU median decode was 111.52 tok/s off and 154.70 tok/s on (38.7% speedup).
+
+The task output folder retains `cpu-off.json`, `cpu-on.json`, `gpu-off.json`, `gpu-on.json` and matching logs, plus `smoke-cpu.log` and `smoke-gpu.log`, under `D:\Forge-GM\experiment\output\DISPOSABLE_FORGE_E4B_P_REPRO_20261124\run\official-stock-pc-test-20261124\`. The model was not copied. The installed LiteRT-LM environment was reused; the pre-existing official-baseline engine cache expanded from 2.22 GB to 4.52 GB and remains in place.
+
 ## Obstacles fixed in the repo
 
 1. Trainer had a host-specific hardcoded cache; added `--model-dir` for clean disposable paths.

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="214" viewBox="0 0 760 214" role="img" aria-labelledby="title desc">
+  <title id="title">Mean decode throughput · Pixel 10 Pro</title>
+  <desc id="desc">Pixel 10 Pro GPU, MTP off 7.7 and on 12.8 tokens per second, an increase of 66.2 percent. Linear scale zero to 16.</desc>
+  <rect x="0.5" y="0.5" width="759" height="213" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+  <g font-family="system-ui, -apple-system, Segoe UI, sans-serif" fill="#172b3e">
+    <text x="24" y="32" font-size="17" font-weight="700">Mean decode throughput · Pixel 10 Pro</text>
+    <text x="24" y="51" font-size="11" fill="#475569">LoRA POC · tokens/s · four serial runs per mode</text>
+    <rect x="515" y="23" width="12" height="12" rx="2" fill="#8494a8"/>
+    <text x="534" y="33" font-size="11">MTP off</text>
+    <rect x="623" y="23" width="12" height="12" rx="2" fill="#176b80"/>
+    <text x="642" y="33" font-size="11">MTP on</text>
+    <line x1="150" y1="74" x2="150" y2="156" stroke="#d5dee8"/><text x="150" y="173" font-size="11" text-anchor="middle" fill="#475569">0</text>
+    <line x1="256" y1="74" x2="256" y2="156" stroke="#d5dee8"/><text x="256" y="173" font-size="11" text-anchor="middle" fill="#475569">4</text>
+    <line x1="362" y1="74" x2="362" y2="156" stroke="#d5dee8"/><text x="362" y="173" font-size="11" text-anchor="middle" fill="#475569">8</text>
+    <line x1="468" y1="74" x2="468" y2="156" stroke="#d5dee8"/><text x="468" y="173" font-size="11" text-anchor="middle" fill="#475569">12</text>
+    <line x1="574" y1="74" x2="574" y2="156" stroke="#d5dee8"/><text x="574" y="173" font-size="11" text-anchor="middle" fill="#475569">16</text>
+    <text x="24" y="108" font-size="13" font-weight="650">Pixel GPU</text>
+    <rect x="150" y="83" width="204.05" height="20" rx="3" fill="#8494a8"/>
+    <rect x="150" y="109" width="339.20" height="20" rx="3" fill="#176b80"/>
+    <text x="362.05" y="97" font-size="12">7.7</text>
+    <text x="497.20" y="123" font-size="12" font-weight="650">12.8</text>
+    <text x="735" y="103" text-anchor="end" font-size="22" font-weight="700" fill="#176b80">1.66×</text>
+    <text x="735" y="122" text-anchor="end" font-size="12" fill="#475569">+66.2%</text>
+    <text x="24" y="197" font-size="11" fill="#475569">Android 17 · Forge GM 1.0-v116 · LiteRT-LM 0.19.1 · model-default precision</text>
+  </g>
+</svg>
