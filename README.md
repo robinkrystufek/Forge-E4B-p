@@ -37,50 +37,24 @@ The [clean reproduction record](repro/results/POC_REPRODUCTION_20261124.md) docu
 
 ## MTP performance
 
-[LoRA POC · PC](#lora-poc-pc) · [LoRA POC · Pixel](#pixel-10-pro-gpu) · [Official stock · PC](#official-stock-e4b-pc-baseline)
+![Decode throughput with MTP off and on for all five benchmark configurations: PC CPU stock and LoRA POC, RTX 4090 stock and LoRA POC, and Pixel 10 Pro GPU LoRA POC. PC medians and Pixel means are distinguished; all bars share a zero-based linear scale.](docs/assets/mtp-throughput.svg)
 
-### LoRA POC PC
+| Backend | Package | Statistic | MTP off (tok/s) | MTP on (tok/s) | Speedup | TTFT off → on (s) |
+| :--- | :--- | :--- | ---: | ---: | ---: | ---: |
+| PC CPU | Official stock | Median | 13.73 | 17.45 | **1.27×** (+27.1%) | 2.16 → 2.01 |
+| PC CPU | LoRA POC | Median | 14.59 | 18.90 | **1.30×** (+29.6%) | 2.105 → 1.973 |
+| RTX 4090 | Official stock | Median | 111.45 | 154.48 | **1.39×** (+38.6%) | 0.12 → 0.12 |
+| RTX 4090 | LoRA POC | Median | 110.91 | 151.62 | **1.37×** (+36.7%) | 0.120 → 0.119 |
+| Pixel 10 Pro GPU | LoRA POC | Mean | 7.7 | 12.8 | **1.66×** (+66.2%) | 2.85 → 2.77 |
 
-![Median decode throughput on CPU and RTX 4090 with MTP off and on; 14.59 to 18.90 tok/s on CPU and 110.91 to 151.62 tok/s on GPU.](docs/assets/mtp-throughput.svg)
+**Benchmark protocol.** All runs used the registered Forge-GM `benchmark.narrator` v1 fixture, a 4,096-token context, 500-token output ceiling and disabled thinking; every generation passed the 200-token validity floor. TTFT denotes time to first token.
 
-| PC backend | MTP off | MTP on | Median speedup | Median TTFT off → on |
-| :--- | ---: | ---: | ---: | ---: |
-| CPU | 14.59 tok/s | 18.90 tok/s | **1.30×** (+29.6%) | 2.105 s → 1.973 s |
-| RTX 4090 / WebGPU-D3D12 | 110.91 tok/s | 151.62 tok/s | **1.37×** (+36.7%) | 0.120 s → 0.119 s |
+- **PC:** LiteRT-LM 0.19.2, CPU (XNNPACK for the stock baseline) and RTX 4090 (WebGPU/Dawn over Direct3D 12), three runs per package/backend/MTP mode. The explicit sampler used top-k 64, top-p 0.95 and temperature 1.0. Cold-start samples remain included in the medians. Stock drafter success was 41.9% on CPU and 47.6% on GPU; POC drafter success was 47.6% and 46.4%, respectively.
+- **Pixel:** Android 17, Forge GM 1.0-v116, LiteRT-LM 0.19.1 / LiteRT 2.3.2, GPU with model-default precision and sampler, four valid serial runs per mode. The transferred POC package was verified by SHA-256 and the app reported MTP effective off/on as configured. Decode ranges were 7.5–7.8 → 12.7–13.0 tok/s; TTFT ranges were 2.52–3.03 → 2.42–2.98 s. Mean generation time decreased from 59.88 s (59.08–61.49) to 37.09 s (36.26–37.74), a **38.1% reduction**, with 440 → 441 output tokens. Total time excludes engine/model initialization.
 
-**Benchmark protocol:** Forge-GM `benchmark.narrator` workload, LiteRT-LM 0.19.2, 4,096-token context, 500-token output ceiling, three runs per mode. All generations passed the 200-token validity floor. TTFT is time to first token.
+These are separate within-configuration MTP comparisons. PC results use medians and Pixel results use means; the differing runtimes and samplers preclude a controlled cross-device comparison. Output lengths vary with natural generation endings. No Pixel CPU or stock Pixel results are reported, and these measurements do not establish model quality.
 
-The first run in each mode included cold-start effects and was retained in the reported results. Output lengths vary with natural generation endings. These measurements validate MTP behavior for this package and workload; they are not a cross-device comparison or broad model-quality claim.
-
-[Full per-run metrics, settings and package hashes →](repro/results/POC_REPRODUCTION_20261124.md#app-aligned-narrator-benchmark)
-
-### Pixel 10 Pro GPU
-
-![Pixel 10 Pro mean GPU decode throughput: 7.7 tok/s with MTP off and 12.8 tok/s with MTP on, a 66.2% increase. Separate on-device benchmark, four serial runs per mode.](docs/assets/mtp-throughput-pixel.svg)
-
-This is a separate on-device run of the same POC package, not a pooled comparison with the PC results above. Forge GM 1.0-v116 on Android 17 used LiteRT-LM 0.19.1 and LiteRT 2.3.2. The model file selected in the app was `Gemma4-E4B-POC-INT2-4-8-MTP.litertlm`; its 3,492,003,840-byte ADB transfer was verified against SHA-256 `d9088bd7e39056f9a470332d4a6f9fac309e05de7392e181606382091b225b7f`.
-
-| Pixel GPU mode | TTFT mean (range) | Decode tok/s mean (range) | Total time mean (range) | Output tokens |
-| :--- | ---: | ---: | ---: | ---: |
-| MTP off | 2.85 s (2.52–3.03) | 7.7 (7.5–7.8) | 59.88 s (59.08–61.49) | 440 |
-| MTP on | 2.77 s (2.42–2.98) | 12.8 (12.7–13.0) | 37.09 s (36.26–37.74) | 441 |
-
-Four serial runs per mode were valid. Forge GM reported MTP effective off/on as configured. MTP increased mean decode throughput by **66.2%** and reduced mean generation time by **38.1%**. Each run used the registered `benchmark.narrator` v1 prompt (fixture SHA-256 `de63332fe826bdaa0ca030662f01f150799186b04218aecd8cd966e3a1abbd38`), 4,096-token context, 500-token output ceiling, thinking disabled, GPU backend, and model-default GPU precision. The app's built-in test uses the model-default sampler; these results are not directly interchangeable with host runs that pass an explicit sampler.
-
-The Pixel harness creates one LiteRT-LM conversation per run and reads TTFT, prefill/decode token counts and decode tok/s from `conversation.benchmarkInfo()`; total time uses Android's monotonic elapsed clock around generation. Engine/model initialization happens before that timer and is not included in the reported generation total. The implementation details and complete protocol are in the [Pixel benchmark record](repro/results/POC_REPRODUCTION_20261124.md#pixel-10-pro-gpu-mtp-benchmark) and [implementation guide](docs/MOBILE_QAT_LORA_TO_MIXED_BIT_LITERT_LM.md#6b-pixel-10-pro-gpu-mtp-benchmark).
-
-### Official stock E4B PC baseline
-
-![Official stock E4B PC median decode throughput: CPU 13.73 to 17.45 tok/s and RTX 4090 111.45 to 154.48 tok/s with MTP enabled. Three runs per mode.](docs/assets/mtp-throughput-stock.svg)
-
-This is a separate PC run using the pinned official `gemma-4-E4B-it.litertlm` package, not the LoRA POC package above. LiteRT-LM 0.19.2 ran the fixed Forge-GM `benchmark.narrator` v1 workload for three conversations per backend/MTP setting.
-
-| PC backend | MTP off: median decode / TTFT | MTP on: median decode / TTFT | Median decode speedup |
-| :--- | ---: | ---: | ---: |
-| CPU / XNNPACK | 13.73 tok/s / 2.16 s | 17.45 tok/s / 2.01 s | **1.27×** (+27.1%) |
-| RTX 4090 / WebGPU-D3D12 | 111.45 tok/s / 0.12 s | 154.48 tok/s / 0.12 s | **1.39×** (+38.6%) |
-
-All 12 generations passed the 200-token validity floor. LiteRT logs recorded MTP drafter success of 41.9% on CPU and 47.6% on GPU. The first GPU sample in each MTP setting included cold-start effects and remains included in the three-run medians. Package hash, per-run values, resource gates, smoke checks and exact settings are in the [stock E4B PC result record](repro/results/POC_REPRODUCTION_20261124.md#stock-official-e4b-pc-baseline).
+**Full evidence:** [LoRA POC PC](repro/results/POC_REPRODUCTION_20261124.md#app-aligned-narrator-benchmark) · [Official stock PC](repro/results/POC_REPRODUCTION_20261124.md#stock-official-e4b-pc-baseline) · [Pixel GPU](repro/results/POC_REPRODUCTION_20261124.md#pixel-10-pro-gpu-mtp-benchmark) · [Pixel engine and metric collection](docs/MOBILE_QAT_LORA_TO_MIXED_BIT_LITERT_LM.md#6b-pixel-10-pro-gpu-mtp-benchmark). The records retain package hashes, per-run values or available ranges, and exact settings.
 
 ## Reproduce it
 
