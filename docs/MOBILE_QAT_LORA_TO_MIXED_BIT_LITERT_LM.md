@@ -93,6 +93,33 @@ Before an expensive run, reuse the existing training environment and run its CPU
 
 For this guide change, 28 existing CPU unit tests passed and the tiny actual trainer preflight passed all six invariants with loss 13.8330 → 12.9280. No full training, package rebuild, GPU inference, or Pixel rerun was performed. The preflight result is in the experiment's task log; reuse the existing scripts/tests rather than adding another environment.
 
+## 8. Executed short proof of concept and package structure
+
+A one-step synthetic-data proof of execution was run with the same QAT-aware trainer before packaging. The single synthetic conversation was `What is two plus two?` → `4`, tokenized with the pinned tokenizer/chat template and last-assistant-only labels. It produced 24 input tokens and one supervised token after masking EOT/newline. This is intentionally only a path check: one optimizer update cannot establish a loss trend, useful adaptation, or quality.
+
+Use the same existing training/export environments and artifacts described above. For a truly short run, prepare a tiny synthetic JSONL row in the trainer's prepared format and pass `--max-samples 1`; that option still loads the whole model. Set a hard run-time budget and stop before ten minutes if a future machine behaves differently. The actual run on the RTX 4090 completed in about ten seconds including model loading, with 20 GiB estimated peak plus 2 GiB reserve checked before launch. The step had nonzero gradients in the selected modules; the fixed-scale merge changed 127 INT4 values in one tensor, and no INT2 or INT8 values changed. Its single loss was 0.00132, so there was no multi-step loss comparison.
+
+Run the production-equivalent fixed-scale merge, audit patch, and official builder in that order. For POC mode, the actual output was `SimpleLoRA-POC-Gemma4-E4B-MixedQAT-MTP.litertlm`, SHA-256 `4d066ef5f5fcb31cb0428571ef6ea7b9d6be9431db418a7ad2be6240aa9478b1`. The merge fake-quant hash matched exactly; patch readback passed and all graph bytes outside the one quantized payload range were identical to the stock graph.
+
+### Package structure changes made for LiteRT-LM
+
+The packaging change is a storage/layout transformation around an official graph, plus a verified payload edit:
+
+1. Start from Google's official E4B `.litertlm`, unpack its sections, and preserve the stock tokenizer, metadata and all unmodified model graphs.
+2. Replace only the matched packed INT4 tensor bytes in the official `tf_lite_prefill_decode` graph. Keep that graph's operator topology, buffer metadata and quantization parameters intact. For the POC, the single matched tensor was `model.language_model.layers.22.self_attn.k_proj.weight`; for the full R14-D P10 artifact, 77 INT4 tensors were patched. INT2/INT8, MTP drafter and non-target tensors stay at their source values.
+3. Point the original `model.toml` prefill/decode graph path at the patched graph. The LiteRT-LM builder externalizes eligible constants from eight graphs into separate `TFLiteWeights` sections and redirects their buffers. Thus the stock 12-section bundle becomes a 20-section bundle; eight weight sections are added, including the MTP drafter weights. The builder also adjusts package metadata, redirects two buffers and deduplicates 167,772,160 bytes. Do not expect raw section offsets or all graph-section bytes to match stock.
+4. Verify semantic/integer tensor provenance, scale hashes, graph readback, byte equality outside patched payload ranges, and package inventory. Confirm the MTP drafter graph and its external weights remain present. The POC package retained the MTP graph (3,839,640 bytes) and its `TFLiteWeights` section (41,287,680 bytes).
+
+This is why patching the audited official graph payloads and then invoking the official builder is the working route; exporting a raw checkpoint or rebuilding only the main graph would omit the multimodal sections, external-weight layout or drafter.
+
+### Short local inference smoke
+
+With LiteRT-LM CLI 0.19.2 on Finnl1/RTX 4090, run the same three short prompts on CPU and GPU, with speculative decoding off and on. For the tested POC package use `--max-num-tokens=1024` (requested context limit); all 12 executions returned the expected answers on both backends. GPU logs selected the NVIDIA RTX 4090 / Direct3D 12 adapter. MTP-on logs loaded the `mtp_drafter` signature and recorded drafter success rates of 0.667, 0.667 and 0.333 for the three prompts. These are functional smoke observations, not performance measurements.
+
+An initial attempt with `--max-num-tokens=64` failed: CPU could not allocate tensors (the decode graph's dynamic update slice exceeded the short state) and GPU reported `Chosen prefill work group size exceeds available state entries (64)`. The CLI nevertheless returned process exit code 0 after printing a traceback. Therefore, check logs for exceptions and an actual generated response; an exit code alone is not a pass. The successful 1024-token retry generated `42`, `Paris` and `Green.` for the arithmetic, capital and color prompts. This debug cap is not evidence that larger contexts are safe.
+
+POC training, merge report, patch/repack manifests, full inference logs, and the POC package were retained under `D:\Forge-GM\experiment\output\r14d-qat-lora-20261123_0818\evaluation\simple_lora_poc`. The POC is not a quality-qualified model and must not be presented as a trained release.
+
 ## Useful references
 
 - [Pinned Google model revision](https://huggingface.co/google/gemma-4-E4B-it-qat-mobile-transformers/tree/8e3ac78f1a4a97c19f5f194ab362a2206f71d961)
