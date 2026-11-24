@@ -12,7 +12,8 @@ def main():
  model=a.model.resolve(); cache=a.cache.resolve();
  with model.open('rb') as f: digest=hashlib.file_digest(f,'sha256').hexdigest()
  if EXPECTED and digest!=EXPECTED: raise SystemExit(f'P10 SHA mismatch: {digest}')
- cache.mkdir(parents=True,exist_ok=True)\n dll_dir=os.add_dll_directory(str(Path(litert_lm.__file__).resolve().parent))
+ cache.mkdir(parents=True,exist_ok=True)
+ dll_dir=os.add_dll_directory(str(Path(litert_lm.__file__).resolve().parent))
  backend=litert_lm.Backend.GPU() if a.backend=='gpu' else litert_lm.Backend.CPU()
  mode=litert_lm.SpeculativeDecodingMode.ON if a.mtp=='on' else litert_lm.SpeculativeDecodingMode.OFF
  cfg=litert_lm.SpeculativeDecodingConfig(mode=mode)
@@ -30,6 +31,7 @@ def main():
  result={'package_sha256':digest,'runtime':'LiteRT-LM Python conversation API 0.19.2','backend':a.backend,'device':'RTX 4090 / WebGPU-Dawn D3D12' if a.backend=='gpu' else 'CPU','mtp':a.mtp,'prompt_id':'Forge-GM benchmark.narrator v1','prompt_source':'repro/fixtures/benchmark.narrator.v1.txt','prompt_sha256':hashlib.sha256(PROMPT.encode()).hexdigest(),'sampler':{'top_k':64,'top_p':0.95,'temperature':1.0},'thinking':False,'output_token_limit':500,'max_context_tokens':4096,'minimum_valid_output_tokens':200,'runs':rows,'all_runs_valid':all(r['valid_long_output'] for r in rows)}
  Path(a.output).parent.mkdir(parents=True,exist_ok=True); Path(a.output).write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8'); print('RESULT '+json.dumps(result),flush=True); _=dll_dir
 if __name__=='__main__': main()
+
 
 
 
