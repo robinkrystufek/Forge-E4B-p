@@ -63,6 +63,17 @@ Four serial runs per mode were valid. Forge GM reported MTP effective off/on as 
 
 The Pixel harness creates one LiteRT-LM conversation per run and reads TTFT, prefill/decode token counts and decode tok/s from `conversation.benchmarkInfo()`; total time uses Android's monotonic elapsed clock around generation. Engine/model initialization happens before that timer and is not included in the reported generation total. The implementation details and complete protocol are in the [Pixel benchmark record](repro/results/POC_REPRODUCTION_20261124.md#pixel-10-pro-gpu-mtp-benchmark) and [implementation guide](docs/MOBILE_QAT_LORA_TO_MIXED_BIT_LITERT_LM.md#6b-pixel-10-pro-gpu-mtp-benchmark).
 
+### Official stock E4B PC baseline
+
+This is a separate PC run using the pinned official `gemma-4-E4B-it.litertlm` package, not the LoRA POC package above. LiteRT-LM 0.19.2 ran the fixed Forge-GM `benchmark.narrator` v1 workload for three conversations per backend/MTP setting.
+
+| PC backend | MTP off: median decode / TTFT | MTP on: median decode / TTFT | Median decode speedup |
+| :--- | ---: | ---: | ---: |
+| CPU / XNNPACK | 13.73 tok/s / 2.16 s | 17.45 tok/s / 2.01 s | **1.27×** (+27.1%) |
+| RTX 4090 / WebGPU-D3D12 | 111.45 tok/s / 0.12 s | 154.48 tok/s / 0.12 s | **1.39×** (+38.6%) |
+
+All 12 generations passed the 200-token validity floor. LiteRT logs recorded MTP drafter success of 41.9% on CPU and 47.6% on GPU. The first GPU sample in each MTP setting included cold-start effects and remains included in the three-run medians. Package hash, per-run values, resource gates, smoke checks and exact settings are in the [stock E4B PC result record](repro/results/POC_REPRODUCTION_20261124.md#stock-official-e4b-pc-baseline).
+
 ## Reproduce it
 
 **Start here:** [Clean proof-of-concept reproduction instructions](docs/MOBILE_QAT_LORA_TO_MIXED_BIT_LITERT_LM.md#clean-proof-of-concept-reproduction-repository-tracked-inputs)

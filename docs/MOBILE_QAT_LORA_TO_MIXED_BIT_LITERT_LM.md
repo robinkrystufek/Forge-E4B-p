@@ -163,6 +163,23 @@ The engine reload and cache identity include precision and the MTP setting; mode
 
 The README summarizes the results. The detailed run record and package identity are in [`repro/results/POC_REPRODUCTION_20261124.md`](../repro/results/POC_REPRODUCTION_20261124.md#pixel-10-pro-gpu-mtp-benchmark).
 
+## 6c. Official stock E4B PC CPU/GPU baseline
+
+This baseline uses the official stock `gemma-4-E4B-it.litertlm` package, not a LoRA-patched POC artifact. The local file used was the pinned official bundle from `litert-community/gemma-4-E4B-it-litert-lm@f254b5ba6e36f7d89cc7892e268e9877bc20f0a0`, 3,659,530,240 bytes, SHA-256 `0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0`.
+
+The PC used the existing LiteRT-LM CLI/API 0.19.2 environment. A separate CLI smoke with `--cache=no --verbose --top-k=1 --temperature=0` generated `42` on CPU and GPU; the GPU log selected the RTX 4090 Direct3D 12 adapter. Performance measurements then used `repro/scripts/benchmark_narrator.py` and its tracked `benchmark.narrator.v1.txt` prompt. Settings were 4096-token context, 500-token output ceiling, 200-token validity floor, top-k 64, top-p 0.95, temperature 1.0, and thinking off. Three serial conversations ran for each CPU/GPU and MTP off/on combination. No performance modes overlapped.
+
+| Backend | MTP | Decode tok/s, runs | Median decode | TTFT, runs (s) | Median TTFT | Total time, runs (s) | Output tokens/run |
+| :--- | :--- | ---: | ---: | ---: | ---: | ---: | ---: |
+| CPU / XNNPACK | Off | 13.86, 13.73, 12.88 | 13.73 | 2.16, 2.14, 2.67 | 2.16 | 31.60, 31.87, 34.35 | 409 each |
+| CPU / XNNPACK | On | 17.16, 17.45, 17.46 | 17.45 | 2.16, 2.00, 2.01 | 2.01 | 29.09, 28.48, 28.47 | 463 each |
+| RTX 4090 / WebGPU-D3D12 | Off | 108.41, 111.58, 111.45 | 111.45 | 0.84, 0.12, 0.12 | 0.12 | 5.19, 4.34, 4.35 | 472 each |
+| RTX 4090 / WebGPU-D3D12 | On | 100.92, 154.91, 154.48 | 154.48 | 1.47, 0.12, 0.12 | 0.12 | 5.48, 2.73, 2.73 | 405 each |
+
+Median MTP decode speedup was 27.1% on CPU and 38.6% on GPU. LiteRT logged MTP drafter success of 41.9% for CPU and 47.6% for GPU; the stock bundle's `mtp_drafter` signature was loaded. GPU gates recorded 23,554 MiB free at 0% utilization before both off and on performance phases. The GPU phase used an 8 GiB peak estimate plus a 2 GiB reserve for MTP off, and a 10 GiB estimate plus the same reserve for MTP on. The first run in each GPU mode showed cold-start cost; all three runs remain in the reported median.
+
+The full result record contains the package and prompt hashes, all settings, resource-gate readings, CLI smoke adapter line, and per-run JSON/log locations: [`repro/results/POC_REPRODUCTION_20261124.md`](../repro/results/POC_REPRODUCTION_20261124.md#stock-official-e4b-pc-baseline). No model was copied and the existing LiteRT-LM environment and official-baseline engine cache were reused.
+
 Host logs, exact prompt copy, runner, JSON results, and GPU gate records are in `D:\Forge-GM\experiment\output\r14d-qat-lora-20261123_0818\evaluation\litertlm_mtp_host_metrics\rerun_20261124\`. The shared pre-existing LiteRT-LM engine cache was reused and expanded; it remains in place. No model or environment was created for this benchmark.
 
 ## Useful references
