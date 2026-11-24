@@ -1,0 +1,1 @@
+{"id":"poc-0001","sourceId":"synthetic-poc-v1","lossMask":"last_assistant_only","messages":[{"role":"user","content":"What is two plus two? Answer with the number only."},{"role":"assistant","content":"4"}]}

@@ -1,0 +1,8 @@
+ai-edge-litert-nightly==2.4.0.dev20261122
+ai-edge-quantizer-nightly==0.10.1.dev20261113
+flatbuffers==25.12.19
+litert-lm==0.19.2
+litert-lm-api==0.19.2
+litert-lm-builder==0.19.2
+numpy==2.4.6
+safetensors==0.9.0rc1

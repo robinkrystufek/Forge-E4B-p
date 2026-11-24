@@ -1,0 +1,29 @@
+Write a coherent scene of about 400 words from the mission notes below. Use plain English
+prose and preserve the order of events. Show what the crew discovers, what they decide,
+and what remains unexplained. Use only these notes as the source of events and names.
+
+The survey ship Ardent arrives at Halcyon Relay just before the station passes into the
+shadow of its planet. The exterior navigation lights still work, but a docking beacon
+pulses once every forty seconds instead of once every four seconds. The crew approaches
+from the sunlit side and spots a rectangular repair patch near the main antenna. It looks
+newer than the surrounding hull. The station sends no reply to three radio calls.
+
+Mara and Ivo dock at the maintenance collar. The airlock opens without resistance. Inside,
+two pressure gauges disagree. Mara checks a portable gauge against the airlock panel and
+finds that the station is holding pressure. She keeps their suits sealed until they can
+check the next compartment. Ivo finds a handwritten note under a transparent cover. The
+note asks the next shift to leave the battery circuit connected overnight.
+
+In the equipment room, a narrow channel on a printed wiring diagram connects the beacon
+and the recording cabinet. An amber light on that channel blinks when the beacon pulses.
+The cabinet holds a record of the last six hours. It shows a steady rise in power draw
+beginning shortly after the antenna was repaired. The last entry marks a manual change
+to the station clock. The record contains no entry identifying who changed it.
+
+Mara wants to disconnect the beacon to stop the power drain. Ivo points out that the crew
+may need the beacon to find the collar again on the way back. They agree to isolate the
+recording cabinet first and copy its data to the ship. Once the copy is verified, Mara
+sends a status update to the pilot and asks her to watch the beacon from outside.
+Just as the station enters shadow, the beacon flashes twice. The pilot confirms the
+double flash before the signal goes quiet. End the scene with the crew deciding how to
+investigate the unexpected flash while keeping their return route open.
