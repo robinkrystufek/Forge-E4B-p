@@ -15,12 +15,18 @@ This is a reproducible implementation record for adapting the pinned mobile-QAT 
 Use the repository downloader and pin the revision. The metadata is part of the model: weights alone do not describe widths, groups, scales or packing.
 
 ~~~powershell
-$root = 'D:\Forge-GM\experiment\Forge-GM-lab\benchmarks\mobile_qat_feasibility'
-$cache = 'D:\Forge-GM\experiment\output\r14d-qat-lora-20261123_0818\source'
+$python = 'D:\Forge-GM\experiment\mobile_qat_feasibility\venv\Scripts\python.exe'
+$exportPython = 'D:\Forge-GM\experiment\mobile_qat_feasibility\litert_export_venv\Scripts\python.exe'
+$scripts = 'D:\Forge-GM\experiment\Forge-GM-lab\benchmarks\mobile_qat_feasibility\scripts'
+$cache = 'D:\Forge-GM\experiment\mobile_qat_feasibility\cache'
 $run = 'D:\Forge-GM\experiment\output\r14d-qat-lora-20261123_0818'
-python "$root\scripts\download_checkpoint.py" --repo google/gemma-4-E4B-it-qat-mobile-transformers --revision 8e3ac78f1a4a97c19f5f194ab362a2206f71d961 --output "$cache\model.safetensors" --metadata "$cache\metadata_manifest.json"
-python "$root\scripts\download_checkpoint_metadata.py" --repo google/gemma-4-E4B-it-qat-mobile-transformers --revision 8e3ac78f1a4a97c19f5f194ab362a2206f71d961 --output-dir "$cache"
-python "$root\scripts\round_trip_checkpoint.py" --weights "$cache\model.safetensors" --manifest "$cache\metadata_manifest.json" --output "$run\audits\source_round_trip.json"
+New-Item -ItemType Directory -Force "$run\audits" | Out-Null
+if (-not (Test-Path "$cache\model.safetensors")) {
+  & $python "$scripts\download_checkpoint.py" --repo google/gemma-4-E4B-it-qat-mobile-transformers --revision 8e3ac78f1a4a97c19f5f194ab362a2206f71d961 --output "$cache\model.safetensors" --metadata "$run\audits\download_manifest.json"
+}
+& $python "$scripts\download_checkpoint_metadata.py" --repo google/gemma-4-E4B-it-qat-mobile-transformers --revision 8e3ac78f1a4a97c19f5f194ab362a2206f71d961 --output-dir "$cache"
+& $python "$scripts\inspect_checkpoint_header.py" --repo google/gemma-4-E4B-it-qat-mobile-transformers --revision 8e3ac78f1a4a97c19f5f194ab362a2206f71d961 --output "$run\audits\checkpoint_manifest.json"
+& $python "$scripts\round_trip_checkpoint.py" --weights "$cache\model.safetensors" --manifest "$run\audits\checkpoint_manifest.json" --output "$run\audits\source_round_trip.json"
 ~~~
 
 Expected inventory: 613 packed tensors: 111 INT2, 306 INT4 and 196 INT8. INT2/INT4 use low-value-first offset-binary packing in U8; INT8 is signed. Stop if metadata cannot be reconciled or the no-op round-trip changes packed bytes or decoded values. Never reinterpret these payloads as ordinary BF16 tensors.
@@ -46,7 +52,7 @@ Recorded adapter: rank 16, alpha 32 (scale 2), Kaiming A, zero B. The experiment
 Representative protocol (the full R14-D run used these settings): AdamW lr 1e-4, weight decay .01, effective batch 8, 5% warmup then cosine decay, grad norm clip 1, BF16 autocast, gradient checkpointing, `use_cache=False`, seed 451, one pass over prepared data, max length 4096 without silent truncation. Save optimizer and RNG state to resume exactly. `--max-samples` limits examples but still loads the full model: it is not a cheap preflight.
 
 ~~~powershell
-python "$root\scripts\r14d_qat_lora.py" --arm P10 --prepared "$run\training\prepared\P10.jsonl" --output "$run\training\P10" --estimate-gib 20
+& $python "$scripts\r14d_qat_lora.py" --arm P10 --prepared "$run\training\prepared\P10.jsonl" --output "$run\training\P10" --estimate-gib 20
 ~~~
 
 Before every GPU phase check available VRAM, utilization, and active processes. Wait/retry until estimated peak plus the agreed 2 GiB reserve fits. Never terminate an existing workload. Keep throughput benchmarks exclusive and separate from functional checks. On the recorded setup the gate estimate was 20 GiB plus 2 GiB reserve.
@@ -56,7 +62,7 @@ Before every GPU phase check available VRAM, utilization, and active processes. 
 Merge the trained floating adapter delta into the source's quantized grid using the original fixed scales and quantizer. Use the training-produced quantization metrics as the expected merge record:
 
 ~~~powershell
-python "$root\scripts\merge_r14d_qat_lora.py" --source-model "$cache" --manifest "$cache\metadata_manifest.json" --adapter-dir "$run\training\P10\checkpoints\epoch_100_final" --output "$run\export\merged_fixed_scale\P10" --expected-metrics "$run\training\P10\quantization_metrics.jsonl"
+& $python "$scripts\merge_r14d_qat_lora.py" --source-model "$cache" --manifest "$run\audits\checkpoint_manifest.json" --adapter-dir "$run\training\P10\checkpoints\epoch_100_final" --output "$run\export\merged_fixed_scale\P10" --expected-metrics "$run\training\P10\quantization_metrics.jsonl"
 ~~~
 
 Require `training_merge_packed_exact: true`; fail on mismatched scales or quantization metrics. In R14-D, exactly 77 INT4 tensors and 183,610 packed values changed; INT2=0 and INT8=0. Verify decoded integer values, shapes, widths, scale hashes, q-axis/zero-points and op use. This is still the source INT2/4/8 scheme, not a new uniform INT4 or dynamic quantization.
@@ -65,6 +71,19 @@ Require `training_merge_packed_exact: true`; fail on mismatched scales or quanti
 
 Use the exact official LiteRT-LM conversion/builder version and pristine stock E4B bundle/config. Patch only corresponding prefill/decode packed weight payloads after proving unique tensor matches, base integer hashes, readback, and unchanged bytes outside payload ranges. The official builder externalizes weights and can change section layout; compare tensor payload provenance, not raw section offsets. Retain the official MTP drafter section/config unchanged. Do not rebuild/approximate the drafter or omit it.
 
+Run the patcher and builder with the reused export environment; it contains `ai_edge_litert` and `litert_lm_builder`. The patch audit JSON must report `merge_packed_hash_match: true` and `outside_payload_bytes_unchanged: true` before you repack.
+
+~~~powershell
+$official = 'D:\Gemma4-MTP-work\official-reference\unpacked'
+$provenance = 'D:\Forge-GM\experiment\Forge-GM-lab\benchmarks\mobile_qat_feasibility\quantization_provenance.json'
+$merged = "$run\export\merged_fixed_scale\P10"
+$patched = "$run\export\P10\patched\Section10_R14D_P10.tflite"
+$pkg = "$run\export\P10\Gemma4-E4B-R14D-P10-QAT-INT2-INT4-INT8.litertlm"
+& $exportPython "$scripts\patch_official_graph_from_checkpoint.py" --official-graph "$official\Section10_TFLiteModel_tf_lite_prefill_decode.tflite" --provenance $provenance --merged-model $merged --merge-report "$merged\fixed_scale_merge_report.json" --source-manifest "$run\audits\checkpoint_manifest.json" --output-graph $patched --manifest "$run\export\P10\patch_manifest.json"
+if ($LASTEXITCODE -ne 0) { throw 'Official graph payload patch failed' }
+& $exportPython "$scripts\repack_official_litertlm.py" --unpacked-dir $official --patched-graph $patched --output $pkg --manifest "$run\export\P10\package_manifest.json"
+if ($LASTEXITCODE -ne 0) { throw 'Official LiteRT-LM repack failed' }
+~~~
 Audit package contents: all ten graph structures match expected counts; 1,658 externalized stock weight payloads matched byte-for-byte with zero mismatch; official drafter has 23 quantized buffers (13 INT4, 10 INT8), unchanged. P10 operator provenance maps 77 adapted tensors to 242 FULLY_CONNECTED occurrences. These checks catch accidental graph drift and wrong tensor replacement.
 
 Expected audited P10 artifact: 3,492,003,840 bytes, SHA-256 `18108925d98c552107e2e3d0724c025bb839fa8d70cd6ad5e1aa86ea460b0cfd`. Recompute and compare hashes in a reproduction; do not assume every rebuild is byte-deterministic. The package was created by patching official graph payloads and repacking through official LiteRT-LM builder, not by treating a raw safetensors file as a LiteRT-LM package.
@@ -76,10 +95,11 @@ Before a candidate run, check installed CLI version and use the already installe
 ~~~powershell
 $cli = 'D:\Forge-GM\experiment\mobile_qat_feasibility\litert_export_venv\Scripts\litert-lm.exe'
 & $cli --version
-& $cli run '<model.litertlm>' --backend=gpu --cache=no --verbose --top-k=1 --temperature=0 --prompt 'Write a short test response.'
+& $cli run '<model.litertlm>' --backend=cpu --speculative-decoding=off --cache=no --verbose --top-k=1 --temperature=0 --max-num-tokens=1024 --prompt 'What is 19 + 23? Answer with the number only.'
+& $cli run '<model.litertlm>' --backend=gpu --speculative-decoding=on --cache=no --verbose --top-k=1 --temperature=0 --max-num-tokens=1024 --prompt 'What is 19 + 23? Answer with the number only.'
 ~~~
 
-Confirm verbose output selects the NVIDIA RTX 4090 adapter with Direct3D 12, generates a response, and exits successfully. Capture the full initialization log and first native error if it fails. The WebGPU/Dawn backend is not CUDA. For Python API engine creation on Windows, add the LiteRT-LM package folder via `os.add_dll_directory(...)` so `dxcompiler.dll` and `dxil.dll` resolve, and keep that directory handle alive until the engine closes.
+Confirm verbose output selects the NVIDIA RTX 4090 adapter with Direct3D 12, generates a response, and exits successfully. Capture the full initialization log and first native error if it fails. Treat any traceback, runtime error, or missing generated response as failure even if the CLI process exit code is zero. The WebGPU/Dawn backend is not CUDA. For Python API engine creation on Windows, add the LiteRT-LM package folder via `os.add_dll_directory(...)` so `dxcompiler.dll` and `dxil.dll` resolve, and keep that directory handle alive until the engine closes.
 
 Smoke-test a known-good stock package first, then candidate with identical flags. `--cache=no` avoids compiled-model sidecars. Keep functional smoke separate from performance measurements; use an exclusive repeated-run benchmark only for performance comparisons.
 
@@ -89,9 +109,9 @@ Observed single-run diagnostics on Pixel 10 Pro: MTP off, 458 input/446 output, 
 
 ## 7. Lightweight reproduction gate
 
-Before an expensive run, reuse the existing training environment and run its CPU test suite plus tiny synthetic quantizer/LoRA preflight. The preflight should prove: zero-init adapter exactly preserves base output; controlled adapter changes cross the fixed quantizer; A and B receive gradients; base packed weights and scales remain unchanged; pack/depack is exact; and a few optimizer steps lower loss. Do not load the full E4B model or run the training regiment for this check.
+Before an expensive run, reuse the existing training environment and run its CPU test suite plus tiny synthetic quantizer/LoRA preflight. The preflight should prove: zero-init adapter exactly preserves base output; controlled adapter changes cross the fixed quantizer; A and B receive gradients; base packed weights and scales remain unchanged; pack/depack is exact; and a few optimizer steps lower loss. Do not load the full E4B model or run the training regiment for this baseline check. Section 8 separately records the short full-model proof of execution.
 
-For this guide change, 28 existing CPU unit tests passed and the tiny actual trainer preflight passed all six invariants with loss 13.8330 → 12.9280. No full training, package rebuild, GPU inference, or Pixel rerun was performed. The preflight result is in the experiment's task log; reuse the existing scripts/tests rather than adding another environment.
+The initial guide-only validation ran 28 existing CPU unit tests and the tiny trainer preflight; all preflight invariants passed and toy loss fell from 13.8330 to 12.9280. No full training regimen or device run was part of that first documentation pass. The later one-step full-model POC, package rebuild and local CPU/GPU smoke are recorded separately in section 8. No full training regimen, formal benchmark or new Pixel run was performed.
 
 ## 8. Executed short proof of concept and package structure
 
