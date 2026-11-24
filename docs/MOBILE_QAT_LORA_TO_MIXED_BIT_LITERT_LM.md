@@ -134,6 +134,35 @@ The supplied Pixel v116 export has five P10 GPU narrator records with the same p
 
 The earlier 128/64-token synthetic CLI benchmark reported zero accepted drafts and lower MTP-on throughput; that result does not contradict the long-form app workload above. A separate fixed-token 500-decode API attempt did not emit progress for several minutes and was stopped after confirming it was this task's own process. The app-equivalent conversation API completed all reported runs. No partial or stalled-run metrics are included.
 
+## 6b. Pixel 10 Pro GPU MTP benchmark
+
+This section records a separate on-device benchmark of the clean POC artifact. The exact file selected in Forge GM's Load/Replace model picker was `Gemma4-E4B-POC-INT2-4-8-MTP.litertlm` in Downloads. Its 3,492,003,840-byte device file was SHA-256 checked after ADB transfer and matched the host package manifest: `d9088bd7e39056f9a470332d4a6f9fac309e05de7392e181606382091b225b7f`. The file picker selection, rather than a prior benchmark report's model label, identifies the tested artifact.
+
+The test ran on a Pixel 10 Pro with Android 17 using Forge GM `1.0-v116`, LiteRT-LM `0.19.1`, and LiteRT `2.3.2`. Only GPU inference was measured; no Pixel CPU runs were performed. Four generations were run sequentially with MTP off, then four with MTP on. The fixed workload is Forge GM's registered `benchmark.narrator` version 1; its tracked fixture is `repro/fixtures/benchmark.narrator.v1.txt`, SHA-256 `de63332fe826bdaa0ca030662f01f150799186b04218aecd8cd966e3a1abbd38`. Each mode used the same 4096-token context, 500-token output ceiling, thinking disabled, GPU backend, and model-default precision. The app reported four valid runs, no errors, no short runs, and no missing metrics per mode; all outputs exceeded the 200-token validity floor.
+
+| Pixel GPU mode | TTFT mean (range) | Decode tok/s mean (range) | Total generation time mean (range) | Input tokens | Output tokens |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| MTP off | 2.85 s (2.52–3.03) | 7.7 (7.5–7.8) | 59.88 s (59.08–61.49) | 458 | 440 |
+| MTP on | 2.77 s (2.42–2.98) | 12.8 (12.7–13.0) | 37.09 s (36.26–37.74) | 458 | 441 |
+
+The app's per-run/profile table reported `MTP requested / effective` as `Off / Off` for the baseline and `On / On` for the drafter run. Mean decode throughput rose 66.2% (12.8 versus 7.7 tok/s); mean TTFT changed from 2.85 s to 2.77 s, and mean generation time fell 38.1%. This is a within-device A/B result for the selected package and fixed prompt, not a comparison against PC hardware.
+
+### Forge GM engine path and metric boundaries
+
+The benchmark uses Forge GM's compiled prompt and native LiteRT-LM conversation path rather than a separate Android inference client:
+
+| Stage | Forge GM implementation | Behavior relevant to this run |
+| :--- | :--- | :--- |
+| Prompt | `src/main.ts` calls `compilePrompt('benchmark.narrator', {})`; `src/prompts/templates.ts` owns the versioned fixture | Fixed prompt v1; no app-specific duplicate prompt and no retry |
+| Test request | `android/app/src/main/java/app/forgegm/local/ForgeBridge.kt`, `probeModel` | Empty system/tools/history; one conversation; 500-token limit; thinking disabled; supplies no sampler override, so LiteRT-LM uses the bundle/runtime default sampler |
+| Model inspection and MTP | `ForgeBridge.openEngine` and `android/gpu-runtime/src/main/kotlin/app/forgegm/generation/LiteRtGeneration.kt` | `ModelInfo` detects the bundle's speculative-decoding support; requested MTP is configured ON only when a drafter is present and backend is GPU or CPU. The run's app profile reported requested and effective MTP both ON |
+| GPU engine | `LiteRtGeneration` | Uses LiteRT-LM `Backend.GPU` and `EngineConfig`; model-default precision leaves activation data type unset. Context is capped at `min(4096, bundle maximum)` for this narrator path |
+| Benchmark instrumentation | `ForgeBridge.probeModel` and `ModelDiagnostics.benchmark` | Enables LiteRT-LM benchmark instrumentation during engine initialization; reads prefill/decode counts, TTFT and decode tok/s from `conversation.benchmarkInfo()` and measures generation total with `SystemClock.elapsedRealtime()` |
+
+The engine reload and cache identity include precision and the MTP setting; model initialization occurs before the generation timer and is not included in TTFT or total generation time. Logcat showed the bundle's `mtp_drafter` signature and the LiteRT GPU delegate for the main subgraph. The speed increase and app-reported effective-MTP profile provide the measured A/B evidence; signature presence alone is not treated as proof of drafter use.
+
+The README summarizes the results. The detailed run record and package identity are in [`repro/results/POC_REPRODUCTION_20261124.md`](../repro/results/POC_REPRODUCTION_20261124.md#pixel-10-pro-gpu-mtp-benchmark).
+
 Host logs, exact prompt copy, runner, JSON results, and GPU gate records are in `D:\Forge-GM\experiment\output\r14d-qat-lora-20261123_0818\evaluation\litertlm_mtp_host_metrics\rerun_20261124\`. The shared pre-existing LiteRT-LM engine cache was reused and expanded; it remains in place. No model or environment was created for this benchmark.
 
 ## Useful references

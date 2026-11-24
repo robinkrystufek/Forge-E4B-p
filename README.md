@@ -50,6 +50,19 @@ The first run in each mode included cold-start effects and was retained in the r
 
 [Full per-run metrics, settings and package hashes →](repro/results/POC_REPRODUCTION_20261124.md#app-aligned-narrator-benchmark)
 
+### Pixel 10 Pro GPU
+
+This is a separate on-device run of the same POC package, not a pooled comparison with the PC results above. Forge GM 1.0-v116 on Android 17 used LiteRT-LM 0.19.1 and LiteRT 2.3.2. The model file selected in the app was `Gemma4-E4B-POC-INT2-4-8-MTP.litertlm`; its 3,492,003,840-byte ADB transfer was verified against SHA-256 `d9088bd7e39056f9a470332d4a6f9fac309e05de7392e181606382091b225b7f`.
+
+| Pixel GPU mode | TTFT mean (range) | Decode tok/s mean (range) | Total time mean (range) | Output tokens |
+| :--- | ---: | ---: | ---: | ---: |
+| MTP off | 2.85 s (2.52–3.03) | 7.7 (7.5–7.8) | 59.88 s (59.08–61.49) | 440 |
+| MTP on | 2.77 s (2.42–2.98) | 12.8 (12.7–13.0) | 37.09 s (36.26–37.74) | 441 |
+
+Four serial runs per mode were valid. Forge GM reported MTP effective off/on as configured. MTP increased mean decode throughput by **66.2%** and reduced mean generation time by **38.1%**. Each run used the registered `benchmark.narrator` v1 prompt (fixture SHA-256 `de63332fe826bdaa0ca030662f01f150799186b04218aecd8cd966e3a1abbd38`), 4,096-token context, 500-token output ceiling, thinking disabled, GPU backend, and model-default GPU precision. The app's built-in test uses the model-default sampler; these results are not directly interchangeable with host runs that pass an explicit sampler.
+
+The Pixel harness creates one LiteRT-LM conversation per run and reads TTFT, prefill/decode token counts and decode tok/s from `conversation.benchmarkInfo()`; total time uses Android's monotonic elapsed clock around generation. Engine/model initialization happens before that timer and is not included in the reported generation total. The implementation details and complete protocol are in the [Pixel benchmark record](repro/results/POC_REPRODUCTION_20261124.md#pixel-10-pro-gpu-mtp-benchmark) and [implementation guide](docs/MOBILE_QAT_LORA_TO_MIXED_BIT_LITERT_LM.md#6b-pixel-10-pro-gpu-mtp-benchmark).
+
 ## Reproduce it
 
 **Start here:** [Clean proof-of-concept reproduction instructions](docs/MOBILE_QAT_LORA_TO_MIXED_BIT_LITERT_LM.md#clean-proof-of-concept-reproduction-repository-tracked-inputs)

@@ -31,6 +31,21 @@ Prompt: tracked `benchmark.narrator.v1.txt`; SHA-256 `de63332fe826bdaa0ca030662f
 
 MTP median decode speedup: CPU 1.30x (+29.6%); GPU 1.37x (+36.7%). The two warm GPU repeats were 110.91 / 111.53 tok/s with MTP off and 151.62 / 153.91 with MTP on (1.37x comparing warm medians). MTP drafter success rates in native runtime logs were 47.6% on CPU and 46.4% on GPU. The first run in each mode had cold-start TTFT and is retained in the table. Output lengths differ because model generation ends naturally; all runs pass the benchmark's 200-token validity floor.
 
+## Pixel 10 Pro GPU MTP benchmark
+
+This is a separate on-device run of the same clean POC package. The exact file selected in Forge GM's Load/Replace model picker was `Gemma4-E4B-POC-INT2-4-8-MTP.litertlm` in Downloads. It was 3,492,003,840 bytes; after ADB transfer the device-side SHA-256 matched the host package SHA-256 `d9088bd7e39056f9a470332d4a6f9fac309e05de7392e181606382091b225b7f`.
+
+Test environment: Pixel 10 Pro / Android 17, Forge GM 1.0-v116, LiteRT-LM 0.19.1 and LiteRT 2.3.2. The registered `benchmark.narrator` v1 fixture was used (SHA-256 `de63332fe826bdaa0ca030662f01f150799186b04218aecd8cd966e3a1abbd38`). Both modes used GPU, model-default precision, 4096 context, 500-token output ceiling, and thinking disabled. Four serial runs were made per mode. All eight runs were valid; the app reported no errors, short runs or missing metrics, and each output exceeded 200 tokens. No Pixel CPU runs were made.
+
+| Pixel GPU mode | TTFT mean (range) | Decode tok/s mean (range) | Total generation time mean (range) | Input tokens | Output tokens |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| MTP off | 2.85 s (2.52–3.03) | 7.7 (7.5–7.8) | 59.88 s (59.08–61.49) | 458 | 440 |
+| MTP on | 2.77 s (2.42–2.98) | 12.8 (12.7–13.0) | 37.09 s (36.26–37.74) | 458 | 441 |
+
+Mean decode throughput increased 66.2% with MTP enabled (12.8 versus 7.7 tok/s); mean TTFT was 2.77 s versus 2.85 s, and mean total generation time was 37.09 s versus 59.88 s. Forge GM's run profiles reported MTP requested/effective as Off/Off and On/On. The result is a within-device comparison for this package and workload; it is not pooled with PC results.
+
+For Forge GM's prompt compilation, engine configuration, MTP gating and metric collection details, see [the implementation and Pixel protocol section](../../docs/MOBILE_QAT_LORA_TO_MIXED_BIT_LITERT_LM.md#6b-pixel-10-pro-gpu-mtp-benchmark).
+
 ## Obstacles fixed in the repo
 
 1. Trainer had a host-specific hardcoded cache; added `--model-dir` for clean disposable paths.
