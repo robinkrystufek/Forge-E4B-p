@@ -10,6 +10,12 @@ This is a reproducible implementation record for adapting the pinned mobile-QAT 
 - Training environment reused from `D:\Forge-GM\experiment\mobile_qat_feasibility\venv` (Python 3.11.9, Torch 2.14.1+cu126, Transformers 5.24.0.dev0, PEFT/Accelerate stack). Export reuses `litert_export_venv`; LiteRT-LM 0.19.2. Do not make a new environment if these existing environments still fit.
 - The actual R14-D report, package audit and Pixel record are linked in the [Forge-GM experiment tree](https://github.com/robinkrystufek/Forge-GM-lab/tree/main/benchmarks/mobile_qat_feasibility). Main report files in the original workspace are `experiment/output/r14d-qat-lora-20261123_0818/reports/DEPLOYMENT_REPORT.md` and `FINAL_VERDICT.md`.
 
+## Repository completeness audit (2026-11-24)
+
+The procedure below is **not yet self-contained in this GitHub repository**. This guide is committed, but the implementation scripts, test fixtures, lock files, source manifests, and model/package binaries it names live in the FINNL1 workspace at the paths listed here; those files are not included in this repo's PR. A clean checkout therefore cannot execute the steps as written until those exact versioned scripts/fixtures and dependency pins are added or published. The linked Forge-GM-lab path currently supplies the experiment record, but is a separate workspace/repository dependency. Treat this document as a location-indexed runbook, not a complete reproducibility bundle, until those dependencies are vendored or linked to immutable source revisions.
+
+To close that gap, the repository needs (at minimum) the exact training/merge/patch/repack/provenance scripts and their imports, a generic JSONL-to-token/label preparation utility, synthetic test fixtures plus lightweight checks, pinned training/export dependency manifests, and instructions with immutable revisions/hashes for both the QAT source checkpoint and official stock LiteRT-LM package. Full model binaries and private corpora should remain external; their download URLs, revisions, expected hashes, and storage requirements belong in the guide. Do not describe the artifact as reproducible from this repository alone until a clean-checkout smoke test uses only repository-tracked code plus those documented external downloads.
+
 ## 1. Acquire and validate the exact source
 
 Use the repository downloader and pin the revision. The metadata is part of the model: weights alone do not describe widths, groups, scales or packing.
@@ -106,6 +112,21 @@ Smoke-test a known-good stock package first, then candidate with identical flags
 Android was tested in Forge GM's isolated debug probe app, not Edge Gallery. On Pixel, verify pushed file SHA, select Model-default precision and GPU, and test MTP on/off in separate runs with identical app/runtime/prompt/context when comparing. The 4096 context with initial FP32 compatibility setting was LMK-killed five times. A 1024 requested context, Model-default precision, GPU run completed with MTP off; this only validates that debug configuration and does not establish 4096-context safety.
 
 Observed single-run diagnostics on Pixel 10 Pro: MTP off, 458 input/446 output, TTFT 2.86 s, 7.59 token/s, 61.54 s total. MTP on, 458 input/396 output, TTFT 2.91 s, 13.61 token/s, 31.97 s total. These were not a controlled paired benchmark: output lengths differed and MTP-on trace is a diagnostic record, so treat as directional observations, not a guaranteed speedup. The corresponding 5-run cold-start host proxy median was 6.786 s (range 6.759–7.115); it measures startup/graph-init plus a short response, not steady-state token throughput or MTP A/B.
+
+## 6a. Final P10 host CPU/GPU TTFT and decode benchmark
+
+The final R14-D P10 package was measured on Finnl1 with LiteRT-LM CLI/builder 0.19.2. Package SHA-256: `18108925d98c552107e2e3d0724c025bb839fa8d70cd6ad5e1aa86ea460b0cfd`. The GPU backend selected the NVIDIA RTX 4090 through WebGPU/Dawn on Direct3D 12. CPU and GPU runs were separated; MTP off/on were separate runs. Each CLI benchmark used 128 prefill tokens, 64 decode tokens, a 1024-token context limit, three measured iterations plus the CLI warmup, and `--cache=no`.
+
+| Host backend | Speculative decoding | Prefill tok/s | Decode tok/s | TTFT | Drafter acceptance |
+|---|---:|---:|---:|---:|---:|
+| CPU | off | 329.58 | 15.94 | 0.4513 s | n/a |
+| CPU | on | 331.51 | 9.07 | 0.4965 s | 0% |
+| RTX 4090 / D3D12 | off | 4505.12 | 119.18 | 0.0368 s | n/a |
+| RTX 4090 / D3D12 | on | 4418.69 | 69.62 | 0.0433 s | 0% |
+
+These are the reported LiteRT-LM benchmark rates for this short synthetic 128/64-token workload, not a general throughput promise. MTP-on initialized and executed its drafter path, but accepted no draft tokens in these four short-run comparisons; it was slower here and does not demonstrate a PC speedup. The separate three-prompt POC functional smoke had nonzero MTP success rates, and the Pixel diagnostic recorded 13.61 token/s with MTP enabled versus 7.59 token/s disabled, but that Pixel pair was not controlled. Keep those distinct from this host benchmark.
+
+Full invocation logs and gate evidence are retained in `D:\Forge-GM\experiment\output\r14d-qat-lora-20261123_0818\evaluation\litertlm_mtp_host_metrics\`: `cpu_mtp_off.log`, `cpu_mtp_on.log`, `gpu_mtp_off.log`, `gpu_mtp_on.log`, `gpu_exclusive_gate.jsonl`, and the task-local Chrome GPU-process classification helper. Each run log records the command header, runtime details, benchmark settings/results, and process exit status. Before each GPU run, the task followed the exclusive GPU gate, checked free VRAM and utilization, and did not stop any process.
 
 ## 7. Lightweight reproduction gate
 
