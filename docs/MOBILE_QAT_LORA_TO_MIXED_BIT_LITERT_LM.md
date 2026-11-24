@@ -144,3 +144,76 @@ Host logs, exact prompt copy, runner, JSON results, and GPU gate records are in 
 - Experiment source: `D:\Forge-GM\experiment\Forge-GM-lab\benchmarks\mobile_qat_feasibility`
 - Audit outputs: `D:\Forge-GM\experiment\output\r14d-qat-lora-20261123_0818\export\P10\package_manifest.json`, `patch_manifest.json`, `operator_provenance.json`, `evaluation\package_section_audit\PACKAGE_SECTION_AUDIT.md`, and `evaluation\pixel_gpu\pixel_p10_gpu_retry_record.json`.
 
+
+## Clean proof-of-concept reproduction (repository tracked inputs)
+
+The `repro/` tree contains the implementation dependencies used by this short proof-of-concept: source-format inspection/download, packed quantization, fixed-scale LoRA trainer and merge, official graph payload patch/repack, prompt and one-row synthetic corpus fixtures, and narrator benchmark runner. The 7 MB `fixtures/quantization_provenance.json` is the audited source-to-official graph mapping; it is public model metadata, not training corpus. The POC is one optimizer update and is for pipeline validation only, not a quality claim.
+
+### Disposable setup
+
+Use Python 3.11 x64. These steps intentionally create `DISPOSABLE_FORGE_E4B_POC` and a fresh venv. Do not point outputs at a valuable shared model cache. The source model requires 3.53 GB; the stock bundle is 3.66 GB; unpacked sections, merged weights, patched graph and package require roughly 16 GB working space. Preserve the output package and audit directory before removing the disposable workspace.
+
+~~~powershell
+$root = (Get-Location).Path
+$work = Join-Path $root 'DISPOSABLE_FORGE_E4B_POC'
+$py = Join-Path $work 'venv\Scripts\python.exe'
+$src = Join-Path $work 'repo'
+$run = Join-Path $work 'run'
+$models = Join-Path $work 'models\qat-e4b'
+$stock = Join-Path $work 'models\stock-e4b'
+New-Item -ItemType Directory -Force $work,$run,$models,$stock | Out-Null
+py -3.11 -m venv (Join-Path $work 'venv')
+& $py -m pip install --upgrade pip
+& $py -m pip install -r (Join-Path $src 'repro\requirements-training.lock')
+# Install the CUDA 12.6 Torch wheel from the official PyTorch index before the lock:
+# & $py -m pip install --index-url https://download.pytorch.org/whl/cu126 torch==2.14.1+cu126
+# Install export pins in a separate venv because LiteRT-LM and training have distinct native stacks.
+py -3.11 -m venv (Join-Path $work 'export-venv')
+$ep = Join-Path $work 'export-venv\Scripts\python.exe'
+& $ep -m pip install -r (Join-Path $src 'repro\requirements-export.lock')
+~~~
+
+The export lock records the validated LiteRT-LM 0.19.2 / builder 0.19.2 and LiteRT nightly versions. The training lock pins Transformers to commit `1097d1570e6208063fa49575bb2b6e756a50c2f6` because stock Gemma mobile-QAT loading depends on its `QuantizedLinear` integration. If the CUDA wheel is unavailable for the host, stop rather than silently installing CPU Torch: this trainer targets the GPU and its memory gate.
+
+### Fetch, validate, train, merge
+
+~~~powershell
+$s = Join-Path $src 'repro\scripts'
+& $py "$s\download_checkpoint.py" --repo google/gemma-4-E4B-it-qat-mobile-transformers --revision 8e3ac78f1a4a97c19f5f194ab362a2206f71d961 --output "$models\model.safetensors" --metadata "$run\source-download.json"
+& $py "$s\download_checkpoint_metadata.py" --repo google/gemma-4-E4B-it-qat-mobile-transformers --revision 8e3ac78f1a4a97c19f5f194ab362a2206f71d961 --output-dir $models
+& $py "$s\inspect_checkpoint_header.py" --repo google/gemma-4-E4B-it-qat-mobile-transformers --revision 8e3ac78f1a4a97c19f5f194ab362a2206f71d961 --output "$run\checkpoint-manifest.json"
+& $py "$s\round_trip_checkpoint.py" --weights "$models\model.safetensors" --manifest "$run\checkpoint-manifest.json" --output "$run\round-trip.json"
+& $py "$s\prepare_chat_jsonl.py" --model-dir $models --input "$src\repro\fixtures\poc_chat.jsonl" --output "$run\prepared.jsonl"
+# Before GPU training, monitor nvidia-smi until estimated peak plus 2 GiB fits; never stop another process.
+& $py "$s\r14d_qat_lora.py" --arm P10 --model-dir $models --prepared "$run\prepared.jsonl" --output "$run\adapter" --max-samples 1 --estimate-gib 20
+& $py "$s\merge_r14d_qat_lora.py" --source-model $models --manifest "$run\checkpoint-manifest.json" --adapter-dir "$run\adapter\checkpoints\epoch_100_final" --output "$run\merged" --expected-metrics "$run\adapter\quantization_metrics.jsonl"
+~~~
+
+The preprocessing fixture intentionally trains on one supervised answer token. The preparer checks that the rendered full conversation begins with the user-only generation prefix; it masks headers, prompt, template suffix and end-of-turn, and labels only assistant body tokens. Real corpora should use the same schema, source/session split before shuffle, deduplication, and a recorded private data manifest; do not commit private conversations. The training script uses an effective batch of 8, so this one-row POC is one partial-batch optimizer update. Full protocol and quantization invariants are described above.
+
+### Stock LiteRT-LM package, patch, repack
+
+Download the official bundle from `litert-community/gemma-4-E4B-it-litert-lm`, revision `f254b5ba6e36f7d89cc7892e268e9877bc20f0a0`, file `gemma-4-E4B-it.litertlm`; verify SHA-256 `0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0`. Unpack using the pinned CLI (`litert-lm unpack --help` for syntax), then patch and repack:
+
+~~~powershell
+& $ep -m pip show litert-lm litert-lm-builder ai-edge-litert
+$cli = Join-Path $work 'export-venv\Scripts\litert-lm.exe'
+& $cli unpack "$stock\gemma-4-E4B-it.litertlm" --output-dir "$stock\unpacked"
+$patched = "$run\patched\Section10_TFLiteModel_tf_lite_prefill_decode.tflite"
+& $ep "$s\patch_official_graph_from_checkpoint.py" --official-graph "$stock\unpacked\Section10_TFLiteModel_tf_lite_prefill_decode.tflite" --provenance "$src\repro\fixtures\quantization_provenance.json" --merged-model "$run\merged" --merge-report "$run\merged\fixed_scale_merge_report.json" --source-manifest "$run\checkpoint-manifest.json" --output-graph $patched --manifest "$run\patch-manifest.json"
+& $ep "$s\repack_official_litertlm.py" --unpacked-dir "$stock\unpacked" --patched-graph $patched --output "$run\Gemma4-E4B-POC-INT2-4-8-MTP.litertlm" --manifest "$run\package-manifest.json"
+~~~
+
+The patcher refuses mismatched base integer hashes, scales, shapes, quant widths, merge metrics, or byte changes outside target payloads. The repacker uses original section metadata and leaves the official MTP drafter intact. Audit package section counts and MTP section presence before inference. The pinned P10 reference SHA above is a previous full-run package and is not expected for a newly trained one-step POC.
+
+### Functional check and performance acceptance
+
+Run a short CPU and GPU generation first. For throughput comparisons use only the exact `benchmark.narrator.v1.txt` fixture and repo runner below, with 3 valid conversations per mode; each must emit at least 200 tokens. Keep modes and benchmark phases exclusive. The runner records package hash, TTFT, input/output counts and decode tok/s. GPU uses WebGPU/Dawn over Direct3D 12; confirm the NVIDIA adapter in verbose CLI logs. Wait until GPU utilization is idle and estimated memory plus 2 GiB reserve fits. Require median MTP-on decode tok/s > median MTP-off on the same backend; report the actual ratio rather than claiming a result from section presence alone.
+
+~~~powershell
+& $ep "$s\benchmark_narrator.py" --model "$run\Gemma4-E4B-POC-INT2-4-8-MTP.litertlm" --cache "$run\engine-cache" --backend cpu --mtp off --runs 3 --output "$run\cpu-off.json"
+& $ep "$s\benchmark_narrator.py" --model "$run\Gemma4-E4B-POC-INT2-4-8-MTP.litertlm" --cache "$run\engine-cache" --backend cpu --mtp on --runs 3 --output "$run\cpu-on.json"
+# Repeat on GPU only after the resource gate and exclusive-idle check.
+~~~
+
+Windows Python API inference registers the bundled DLL directory with `os.add_dll_directory` and retains its handle until engine close, so `dxcompiler.dll` and `dxil.dll` are discoverable. Do not reuse short synthetic prompts to infer narrator MTP behavior: the 128/64 CLI microbenchmark produced zero draft acceptance and is not Forge-GM's app workload.
