@@ -45,9 +45,9 @@ The [clean reproduction record](repro/results/POC_REPRODUCTION_20261124.md) docu
 | PC CPU | LoRA POC | Median | 3 | 14.59 (14.56–14.70) | 18.90 (18.63–18.96) | **1.30×** (+29.6%) | 2.105 (2.068–2.476) | 1.973 (1.964–2.108) |
 | RTX 4090 | Official stock | Median | 3 | 111.45 (108.41–111.58) | 154.48 (100.92–154.91) | **1.39×** (+38.6%) | 0.12 (0.12–0.84) | 0.12 (0.12–1.47) |
 | RTX 4090 | LoRA POC | Median | 3 | 110.91 (107.54–111.53) | 151.62 (110.74–153.91) | **1.37×** (+36.7%) | 0.120 (0.120–0.765) | 0.119 (0.117–1.205) |
-| Pixel 10 Pro GPU | LoRA POC | Mean* | 4 | 7.7 (7.5–7.8) | 12.8 (12.7–13.0) | **1.66×** (+66.2%) | 2.85 (2.52–3.03) | 2.77 (2.42–2.98) |
+| Pixel 10 Pro GPU | LoRA POC | Mean | 4 | 7.7 (7.5–7.8) | 12.8 (12.7–13.0) | **1.66×** (+66.2%) | 2.85 (2.52–3.03) | 2.77 (2.42–2.98) |
 
-Values are **median (min–max)** of valid generations for the PC configurations. *Pixel values are mean (min–max): individual run measurements are not included in the reproduction record, so exact medians cannot be reported. N is the number of generations per MTP mode (32 generations total across all configurations). Speedup is the ratio of the reported central statistics; the ranges are observed extrema, not confidence intervals.
+Values are **median (min–max)** of valid generations for the PC configurations. **Pixel values are mean (min–max):** individual run measurements are not included in the reproduction record, so exact medians cannot be reported. N is the number of generations per MTP mode (32 generations total across all configurations). Speedup is the ratio of the reported central statistics; the ranges are observed extrema, not confidence intervals.
 
 **Benchmark protocol.** All runs used the registered Forge-GM `benchmark.narrator` v1 fixture, a 4,096-token context, 500-token output ceiling and disabled thinking; every generation passed the 200-token validity floor. TTFT denotes time to first token.
 
