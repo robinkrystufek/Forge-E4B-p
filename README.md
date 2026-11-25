@@ -39,18 +39,20 @@ The [clean reproduction record](repro/results/POC_REPRODUCTION_20261124.md) docu
 
 ![Decode throughput with MTP off and on for all five benchmark configurations: PC CPU stock and LoRA POC, RTX 4090 stock and LoRA POC, and Pixel 10 Pro GPU LoRA POC. PC medians and Pixel means are distinguished; all bars share a zero-based linear scale.](docs/assets/mtp-throughput.svg)
 
-| Backend | Package | Statistic | MTP off (tok/s) | MTP on (tok/s) | Speedup | TTFT off → on (s) |
-| :--- | :--- | :--- | ---: | ---: | ---: | ---: |
-| PC CPU | Official stock | Median | 13.73 | 17.45 | **1.27×** (+27.1%) | 2.16 → 2.01 |
-| PC CPU | LoRA POC | Median | 14.59 | 18.90 | **1.30×** (+29.6%) | 2.105 → 1.973 |
-| RTX 4090 | Official stock | Median | 111.45 | 154.48 | **1.39×** (+38.6%) | 0.12 → 0.12 |
-| RTX 4090 | LoRA POC | Median | 110.91 | 151.62 | **1.37×** (+36.7%) | 0.120 → 0.119 |
-| Pixel 10 Pro GPU | LoRA POC | Mean | 7.7 | 12.8 | **1.66×** (+66.2%) | 2.85 → 2.77 |
+| Backend | Package | Statistic | N per mode | MTP off (tok/s) | MTP on (tok/s) | Speedup | TTFT off (s) | TTFT on (s) |
+| :--- | :--- | :--- | ---: | ---: | ---: | ---: | ---: | ---: |
+| PC CPU | Official stock | Median | 3 | 13.73 (12.88–13.86) | 17.45 (17.16–17.46) | **1.27×** (+27.1%) | 2.16 (2.14–2.67) | 2.01 (2.00–2.16) |
+| PC CPU | LoRA POC | Median | 3 | 14.59 (14.56–14.70) | 18.90 (18.63–18.96) | **1.30×** (+29.6%) | 2.105 (2.068–2.476) | 1.973 (1.964–2.108) |
+| RTX 4090 | Official stock | Median | 3 | 111.45 (108.41–111.58) | 154.48 (100.92–154.91) | **1.39×** (+38.6%) | 0.12 (0.12–0.84) | 0.12 (0.12–1.47) |
+| RTX 4090 | LoRA POC | Median | 3 | 110.91 (107.54–111.53) | 151.62 (110.74–153.91) | **1.37×** (+36.7%) | 0.120 (0.120–0.765) | 0.119 (0.117–1.205) |
+| Pixel 10 Pro GPU | LoRA POC | Mean* | 4 | 7.7 (7.5–7.8) | 12.8 (12.7–13.0) | **1.66×** (+66.2%) | 2.85 (2.52–3.03) | 2.77 (2.42–2.98) |
+
+Values are **median (min–max)** of valid generations for the PC configurations. *Pixel values are mean (min–max): individual run measurements are not included in the reproduction record, so exact medians cannot be reported. N is the number of generations per MTP mode (32 generations total across all configurations). Speedup is the ratio of the reported central statistics; the ranges are observed extrema, not confidence intervals.
 
 **Benchmark protocol.** All runs used the registered Forge-GM `benchmark.narrator` v1 fixture, a 4,096-token context, 500-token output ceiling and disabled thinking; every generation passed the 200-token validity floor. TTFT denotes time to first token.
 
 - **PC:** LiteRT-LM 0.19.2, CPU (XNNPACK for the stock baseline) and RTX 4090 (WebGPU/Dawn over Direct3D 12), three runs per package/backend/MTP mode. The explicit sampler used top-k 64, top-p 0.95 and temperature 1.0. Cold-start samples remain included in the medians. Stock drafter success was 41.9% on CPU and 47.6% on GPU; POC drafter success was 47.6% and 46.4%, respectively.
-- **Pixel:** Android 17, Forge GM 1.0-v116, LiteRT-LM 0.19.1 / LiteRT 2.3.2, GPU with model-default precision and sampler, four valid serial runs per mode. The transferred POC package was verified by SHA-256 and the app reported MTP effective off/on as configured. Decode ranges were 7.5–7.8 → 12.7–13.0 tok/s; TTFT ranges were 2.52–3.03 → 2.42–2.98 s. Mean generation time decreased from 59.88 s (59.08–61.49) to 37.09 s (36.26–37.74), a **38.1% reduction**, with 440 → 441 output tokens. Total time excludes engine/model initialization.
+- **Pixel:** Android 17, Forge GM 1.0-v116, LiteRT-LM 0.19.1 / LiteRT 2.3.2, GPU with model-default precision and sampler, four valid serial runs per mode. The transferred POC package was verified by SHA-256 and the app reported MTP effective off/on as configured. Mean generation time decreased from 59.88 s (59.08–61.49) to 37.09 s (36.26–37.74), a **38.1% reduction**, with 440 → 441 output tokens. Total time excludes engine/model initialization.
 
 These are separate within-configuration MTP comparisons. PC results use medians and Pixel results use means; the differing runtimes and samplers preclude a controlled cross-device comparison. Output lengths vary with natural generation endings. No Pixel CPU or stock Pixel results are reported, and these measurements do not establish model quality.
 
