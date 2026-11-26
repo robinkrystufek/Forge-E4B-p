@@ -24,6 +24,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from model_loading import install_per_layer_scale_loader_patch  # noqa: E402
 from quantization import pack_signed, unpack_signed  # noqa: E402
+from training_diagnostics import gradient_diagnostics  # noqa: E402
 
 BASE_DIR = Path(r"D:\Forge-GM\experiment\mobile_qat_feasibility\cache")
 BASE_REVISION = "8e3ac78f1a4a97c19f5f194ab362a2206f71d961"
@@ -333,15 +334,19 @@ def train(arm: str, prepared: Path, out: Path, *, max_samples: int | None = None
         with torch.autocast('cuda',dtype=torch.bfloat16):
             result=model(input_ids=ids,attention_mask=attention,labels=labels,use_cache=False)
             loss=result.loss
-        if not torch.isfinite(loss):raise FloatingPointError(f'nonfinite loss at sample {index}')
-        (loss/group_size).backward(); accumulated+=float(loss.detach().item());seen+=1
+        # One scalar transfer instead of separate finite-check and loss transfers.
+        loss_value=float(loss.detach().item())
+        if not math.isfinite(loss_value):raise FloatingPointError(f'nonfinite loss at sample {index}')
+        (loss/group_size).backward(); accumulated+=loss_value;seen+=1
+        loss_requires_grad=bool(loss.requires_grad)
+        logits_requires_grad=bool(result.logits.requires_grad)
+        # Do not keep the previous example's potentially enormous logits alive
+        # during the next forward pass.
+        del loss,result
         source=row.get('sourceId','unknown');families.add(str(source).split(':')[0])
         is_group_end=(index+1)%8==0 or index+1==len(rows)
         if is_group_end:
-            grad_tensors_present=sum(p.grad is not None for p in trainable)
-            grad_tensors_nonzero=sum(p.grad is not None and bool(torch.count_nonzero(p.grad).item()) for p in trainable)
-            nonzero_grad_norm_sum=float(sum(p.grad.float().norm().item() for p in trainable if p.grad is not None))
-            grad_norm=float(torch.nn.utils.clip_grad_norm_(trainable,1.0).item())
+            grad_tensors_present,grad_tensors_nonzero,nonzero_grad_norm_sum,grad_norm=gradient_diagnostics(trainable,1.0)
             lr=apply_lr();optimizer.step();optimizer.zero_grad(set_to_none=True);global_step+=1
             torch.cuda.synchronize()
             mem_free,mem_total=torch.cuda.mem_get_info()
@@ -354,8 +359,8 @@ def train(arm: str, prepared: Path, out: Path, *, max_samples: int | None = None
                  'grad_tensors_present':grad_tensors_present,
                  'grad_tensors_nonzero':grad_tensors_nonzero,
                  'target_modules_called':sum(layer._forward_calls>0 for layer in targets.values()),
-                 'loss_requires_grad':bool(loss.requires_grad),
-                 'logits_requires_grad':bool(result.logits.requires_grad),
+                 'loss_requires_grad':loss_requires_grad,
+                 'logits_requires_grad':logits_requires_grad,
                  'nonzero_grad_norm_sum':nonzero_grad_norm_sum,
                  'host_ram_bytes':__import__('psutil').virtual_memory().used,'elapsed_seconds':round(time.monotonic()-started,2)}
             _write_jsonl(metrics,rec);losses.append(accumulated/group_size);accumulated=0.0
