@@ -1,0 +1,56 @@
+{
+  "package_sha256": "8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759",
+  "runtime": "LiteRT-LM Python conversation API 0.19.2",
+  "backend": "gpu",
+  "device": "RTX 4090 / WebGPU-Dawn D3D12",
+  "mtp_requested": "off",
+  "mtp_support_detected": true,
+  "prompt_id": "Forge-GM benchmark.narrator v1",
+  "prompt_source": "repro/fixtures/benchmark.narrator.v1.txt",
+  "prompt_sha256": "de63332fe826bdaa0ca030662f01f150799186b04218aecd8cd966e3a1abbd38",
+  "sampler": {
+    "top_k": 64,
+    "top_p": 0.95,
+    "temperature": 1.0
+  },
+  "thinking": false,
+  "output_token_limit": 500,
+  "max_context_tokens": 4096,
+  "minimum_valid_output_tokens": 200,
+  "runs": [
+    {
+      "iteration": 1,
+      "total_seconds": 5.043835199998284,
+      "ttft_seconds": 0.63826145,
+      "input_tokens": 453,
+      "output_tokens": 472,
+      "prefill_tokens_per_second": 720.2912075340234,
+      "decode_tokens_per_second": 106.96159543915758,
+      "valid_long_output": true,
+      "output_preview": "The *Ardent* arrived at Halcyon Relay just as the station began to fall into the planet\u2019s shadow. Even though the exteri"
+    },
+    {
+      "iteration": 2,
+      "total_seconds": 4.338824800001021,
+      "ttft_seconds": 0.11967117349999999,
+      "input_tokens": 453,
+      "output_tokens": 472,
+      "prefill_tokens_per_second": 4091.512595175086,
+      "decode_tokens_per_second": 111.67976301175713,
+      "valid_long_output": true,
+      "output_preview": "The *Ardent* arrived at Halcyon Relay just as the station began to fall into the planet\u2019s shadow. Even though the exteri"
+    },
+    {
+      "iteration": 3,
+      "total_seconds": 4.340900999999576,
+      "ttft_seconds": 0.1191123345,
+      "input_tokens": 453,
+      "output_tokens": 472,
+      "prefill_tokens_per_second": 4112.472957993767,
+      "decode_tokens_per_second": 111.61169534500014,
+      "valid_long_output": true,
+      "output_preview": "The *Ardent* arrived at Halcyon Relay just as the station began to fall into the planet\u2019s shadow. Even though the exteri"
+    }
+  ],
+  "all_runs_valid": true
+}

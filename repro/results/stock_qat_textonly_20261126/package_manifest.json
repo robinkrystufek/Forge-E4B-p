@@ -1,0 +1,87 @@
+{
+  "status": "official_graph_payload_patch_repacked",
+  "package": "D:\\Forge-GM\\experiment\\output\\stock-qat-textonly-20261126\\Forge-E4B-Stock-QAT-TextOnly.litertlm",
+  "bytes": 3150102528,
+  "sha256": "8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759",
+  "patched_graph": "D:\\Forge-GM\\experiment\\output\\DISPOSABLE_FORGE_E4B_P_REPRO_20261124\\models\\stock-e4b\\unpacked\\Section10_TFLiteModel_tf_lite_prefill_decode.tflite",
+  "patched_graph_sha256": "387aafcb8ef7736e415db56a538fcd2afd198f9899d593d056bc19e5a3eb1700",
+  "official_unpacked_dir": "D:\\Forge-GM\\experiment\\output\\DISPOSABLE_FORGE_E4B_P_REPRO_20261124\\models\\stock-e4b\\unpacked",
+  "official_model_toml_sha256": "c444381dbfa05c1470971955be5a6f32b2e5441d0299e28bd85906efc4a65671",
+  "system_metadata_and_section_definitions": "copied from original official model.toml; only prefill graph data_path changed",
+  "section_count": 10,
+  "sections": [
+    {
+      "type": "LlmMetadataProto",
+      "model_type": null,
+      "bytes": 12198
+    },
+    {
+      "type": "SP_Tokenizer",
+      "model_type": null,
+      "bytes": 4689013
+    },
+    {
+      "type": "TFLiteModel",
+      "model_type": "tf_lite_embedder",
+      "bytes": 3148576
+    },
+    {
+      "type": "TFLiteModel",
+      "model_type": "tf_lite_per_layer_embedder",
+      "bytes": 132137424
+    },
+    {
+      "type": "TFLiteModel",
+      "model_type": "tf_lite_prefill_decode",
+      "bytes": 64804792
+    },
+    {
+      "type": "TFLiteModel",
+      "model_type": "tf_lite_mtp_drafter",
+      "bytes": 3839640
+    },
+    {
+      "type": "TFLiteWeights",
+      "model_type": "tf_lite_embedder",
+      "bytes": 167772160
+    },
+    {
+      "type": "TFLiteWeights",
+      "model_type": "tf_lite_per_layer_embedder",
+      "bytes": 704643072
+    },
+    {
+      "type": "TFLiteWeights",
+      "model_type": "tf_lite_prefill_decode",
+      "bytes": 2027683840
+    },
+    {
+      "type": "TFLiteWeights",
+      "model_type": "tf_lite_mtp_drafter",
+      "bytes": 41287680
+    }
+  ],
+  "builder_result": {
+    "models_inspected": 4,
+    "models_with_external_weights": 4,
+    "newly_externalized_bytes": 3109158912,
+    "redirected_buffers": 2,
+    "deduplicated_bytes": 167772160
+  },
+  "model_toml_transform": "official section definitions retained except audio/vision graphs and linked weights removed",
+  "text_only": true,
+  "removed_multimodal_model_types": [
+    "audio_encoder_hw",
+    "audio_adapter",
+    "end_of_audio",
+    "vision_encoder",
+    "vision_adapter",
+    "end_of_vision"
+  ],
+  "retained_required_model_types": [
+    "embedder",
+    "per_layer_embedder",
+    "prefill_decode",
+    "mtp_drafter"
+  ]
+}
