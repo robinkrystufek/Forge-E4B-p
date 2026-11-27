@@ -84,7 +84,7 @@ All values are median (observed min–max); whiskers are not uncertainty interva
 
 **Packaging result:** 3,659,530,240 → 3,150,102,528 bytes (−13.92%); the decrease includes removal of multimodal data and builder deduplication of shared embedding data. 345 unique retained source quantized tensors and all four final logical text/MTP graphs match. The CPU greedy panel (MTP off, up to 128 generated tokens) matched decoded text in 12/12 cases. Native token IDs and logits were unavailable.
 
-**Long-context caveat:** all four Pixel GPU configurations completed at requested/max context 4096. In one matched run per configuration, text-only MTP-on peaked at 5,049.5 MiB PSS versus 4,172.1 MiB official and decoded at 13.96 versus 18.01 tok/s. This is an unresolved, single-run observation, not proof of a reproducible regression or a runtime memory saving. See [full evidence and limitations](repro/results/stock_qat_textonly_20261126/RESULTS.md#greedy-and-pixel-4096-context-validation).
+**Long-context validation:** both packages completed GPU inference at requested/max context 4096 with MTP off/on. An initial text-only MTP-on memory/throughput anomaly did not recur in a counterbalanced repeat using fresh app processes and absent compiled caches (two runs per package). Mean inference-window peak PSS was 4,152 vs 4,179 MiB (official vs text-only; +0.65%), and decode throughput was 18.45 vs 18.20 tok/s (−1.35%). These are descriptive observations, not a formal equivalence test or evidence of runtime memory savings. See [matched repeat and original anomaly](repro/results/stock_qat_textonly_20261126/RESULTS.md#matched-mtp-on-memory-repeat).
 
 ## Reproduce it
 
