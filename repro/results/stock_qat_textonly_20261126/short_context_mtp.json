@@ -1,0 +1,18 @@
+{
+  "schema": "textonly-short-context-mtp-v1",
+  "runtime": "LiteRT-LM CLI 0.19.2",
+  "backend": "CPU",
+  "sampler": {"top_k": 1, "temperature": 0},
+  "prompt": "Hi",
+  "mtp": "on",
+  "cases": [
+    {"package": "official", "context_capacity": 32, "result": "DYNAMIC_UPDATE_SLICE prepare failure; failed to allocate tensors"},
+    {"package": "text-only", "context_capacity": 32, "result": "DYNAMIC_UPDATE_SLICE prepare failure; failed to allocate tensors"},
+    {"package": "official", "context_capacity": 128, "result": "DYNAMIC_UPDATE_SLICE prepare failure; failed to allocate tensors"},
+    {"package": "text-only", "context_capacity": 128, "result": "DYNAMIC_UPDATE_SLICE prepare failure; failed to allocate tensors"},
+    {"package": "official", "context_capacity": 1024, "result": "engine initialized and inference completed"},
+    {"package": "text-only", "context_capacity": 1024, "result": "engine initialized and inference completed"}
+  ],
+  "interpretation": "The failure reproduces identically on the official package. It is a short KV-cache/context-capacity limitation in the LiteRT-LM runtime path, not evidence of a text-only repack regression. Both packages work at 1024 tokens.",
+  "limitation": "The failed node number can differ by graph/package build. No logits or generation comparison is implied by engine initialization alone."
+}

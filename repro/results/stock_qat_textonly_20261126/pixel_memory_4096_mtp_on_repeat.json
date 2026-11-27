@@ -1,0 +1,414 @@
+{
+  "schema": "pixel-memory-mtp-on-cold-cache-repeat-v1",
+  "capturedUtc": "2026-11-27T05:47:29.4803233+00:00",
+  "device": "Pixel 10 Pro / Android 17",
+  "app": "app.forgegm.trial.mtpprobe v116",
+  "installedApkSha256": "791DD9847AB2FABC9C508699F8A763817C24FE01B8D2F5B42ADB53B37480E8C9",
+  "runtime": {
+    "precision": "model-default",
+    "liteRtLm": "0.19.1",
+    "backend": "GPU",
+    "liteRt": "2.3.2"
+  },
+  "runOrder": [
+    "official_1",
+    "textonly_1",
+    "textonly_2",
+    "official_2"
+  ],
+  "conditions": {
+    "sampler": "dumpsys meminfo TOTAL PSS, GL mtrack, Native Heap",
+    "freshAppProcessEachRun": true,
+    "outputLimit": 500,
+    "temperature": 0.01,
+    "requestedAndMaxContext": 4096,
+    "sameLongPromptInputTokens": 3499,
+    "mtpEnabled": true,
+    "compiledCacheAbsentBeforeEveryInit": true,
+    "topP": 1,
+    "sampleWindow": "180 seconds from before engine load through generation and post-response",
+    "topK": 1,
+    "uniquePids": true
+  },
+  "comparison": {
+    "officialMeanInferencePeakGlMtrackKiB": 3262992.0,
+    "anomalyNotReproduced": true,
+    "officialMeanInferencePeakPssKiB": 4251623.0,
+    "textOnlyPssPeakRangeKiB": [
+      4248107.0,
+      4310534.0
+    ],
+    "textOnlyMeanInferencePeakGlMtrackKiB": 3262994.0,
+    "repeatTextOnlyMaxPssKiB": 4310534.0,
+    "textOnlyVsOfficialPssMeanDeltaKiB": 27697.5,
+    "originalAnomalyPssPeakKiB": 5170669,
+    "causalAttribution": "not established; original text-only MTP-on run alone entered with compiled cache present, all repeat runs began with it absent",
+    "textOnlyMeanInferencePeakPssKiB": 4279320.5,
+    "textOnlyVsOfficialPssPercent": 0.651,
+    "textOnlyVsOfficialGlMeanDeltaKiB": 2.0
+  },
+  "runs": [
+    {
+      "runId": "official_1",
+      "package": "official",
+      "packageSha256": "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0",
+      "appVersion": "1.0-v116-mtp-probe",
+      "pid": 12172,
+      "processStartUtc": "2026-11-27T05:25:25.0207232Z",
+      "loadRequestUtc": "2026-11-27T05:25:27.3376774Z",
+      "loadResponseUtc": "2026-11-27T05:25:53.8072140Z",
+      "inferenceRequestUtc": "2026-11-27T05:25:53.8088804Z",
+      "inferenceResponseUtc": "2026-11-27T05:26:32.6220942Z",
+      "responseMetrics": {
+        "inputTokens": 3499,
+        "ttftMs": 11842.4862285,
+        "outputTokensPerSecond": 18.613030468696444,
+        "outputTokens": 502,
+        "totalMs": 38772
+      },
+      "sampling": {
+        "cacheDirectory": "cache/generation-v63/gpu-sha256-0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0-model-default-mtptrue",
+        "maxContext": 4096,
+        "requestedContext": 4096,
+        "cacheAbsentBeforeLoad": true,
+        "cacheArtifactsPresentBeforeInit": false,
+        "dynamicContext": true,
+        "topK": 1,
+        "outputLimit": 500,
+        "precision": "model-default",
+        "topP": 1,
+        "temperature": 0.01,
+        "initializationProfile": {
+          "backend": "gpu",
+          "bundle": {
+            "id": "gpu:0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0.litertlm:3659530240:1795756613375",
+            "bytes": 3659530240,
+            "name": "gemma-4-E4B-it-official.litertlm",
+            "sha256": "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0"
+          },
+          "trigger": "prompt-lab-load",
+          "precision": "model-default",
+          "mtpRequested": true,
+          "maxContext": 4096,
+          "dynamicContext": true,
+          "requestedContext": 4096,
+          "textBackends": [
+            "CPU",
+            "GPU"
+          ],
+          "drafter": true,
+          "mtpEnabled": true,
+          "cacheArtifactsPresentBeforeInit": false,
+          "cacheKeyVersion": "sha256-v1",
+          "modelLoadMs": 26248
+        },
+        "mtpEnabled": true
+      },
+      "memoryKiB": {
+        "inferencePeakGlMtrack": {
+          "timestamp_utc": "2026-11-26T21:26:32.0781454-08:00",
+          "pid": "12172",
+          "total_pss_kib": "4255612",
+          "gl_mtrack_kib": "3262992",
+          "native_heap_kib": "556664"
+        },
+        "lastSampleGlMtrack": 3238360,
+        "lastSamplePss": 4223692,
+        "lastSampleNativeHeap": 556668,
+        "inferencePeakNativeHeap": {
+          "timestamp_utc": "2026-11-26T21:25:54.7086925-08:00",
+          "pid": "12172",
+          "total_pss_kib": "4246783",
+          "gl_mtrack_kib": "3254228",
+          "native_heap_kib": "576036"
+        },
+        "windowEndUtc": "2026-11-27T05:28:25.2294933+00:00",
+        "sampleCount": 137,
+        "inferencePeakPss": {
+          "timestamp_utc": "2026-11-26T21:26:18.321429-08:00",
+          "pid": "12172",
+          "total_pss_kib": "4257104",
+          "gl_mtrack_kib": "3262988",
+          "native_heap_kib": "557700"
+        },
+        "meanSampleIntervalMs": 1322.1,
+        "samplesDuringInference": 29,
+        "windowStartUtc": "2026-11-27T05:25:25.4297353+00:00"
+      },
+      "rawCsv": "pixel_memory_4096_mtp_on_repeat_official_1.csv",
+      "processLog": "pixel_memory_4096_mtp_on_repeat_official_1-logcat.txt"
+    },
+    {
+      "runId": "textonly_1",
+      "package": "text_only",
+      "packageSha256": "8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759",
+      "appVersion": "1.0-v116-mtp-probe",
+      "pid": 14889,
+      "processStartUtc": "2026-11-27T05:30:05.5365288Z",
+      "loadRequestUtc": "2026-11-27T05:30:07.9384892Z",
+      "loadResponseUtc": "2026-11-27T05:30:32.9768077Z",
+      "inferenceRequestUtc": "2026-11-27T05:30:32.9781182Z",
+      "inferenceResponseUtc": "2026-11-27T05:31:12.3459390Z",
+      "responseMetrics": {
+        "inputTokens": 3499,
+        "ttftMs": 11898.332453750001,
+        "outputTokensPerSecond": 18.29339860960977,
+        "outputTokens": 502,
+        "totalMs": 39297
+      },
+      "sampling": {
+        "cacheDirectory": "cache/generation-v63/gpu-sha256-8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759-model-default-mtptrue",
+        "maxContext": 4096,
+        "requestedContext": 4096,
+        "cacheAbsentBeforeLoad": true,
+        "cacheArtifactsPresentBeforeInit": false,
+        "dynamicContext": true,
+        "topK": 1,
+        "outputLimit": 500,
+        "precision": "model-default",
+        "topP": 1,
+        "temperature": 0.01,
+        "initializationProfile": {
+          "backend": "gpu",
+          "bundle": {
+            "id": "gpu:8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759.litertlm:3150102528:1795757370631",
+            "bytes": 3150102528,
+            "name": "Forge-E4B-Stock-QAT-TextOnly.litertlm",
+            "sha256": "8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759"
+          },
+          "trigger": "prompt-lab-load",
+          "precision": "model-default",
+          "mtpRequested": true,
+          "maxContext": 4096,
+          "dynamicContext": true,
+          "requestedContext": 4096,
+          "minimumRuntime": "0.19.0",
+          "textBackends": [
+            "CPU",
+            "GPU"
+          ],
+          "drafter": true,
+          "mtpEnabled": true,
+          "cacheArtifactsPresentBeforeInit": false,
+          "cacheKeyVersion": "sha256-v1",
+          "modelLoadMs": 24959
+        },
+        "mtpEnabled": true
+      },
+      "memoryKiB": {
+        "inferencePeakGlMtrack": {
+          "timestamp_utc": "2026-11-26T21:31:08.8508537-08:00",
+          "pid": "14889",
+          "total_pss_kib": "4245408",
+          "gl_mtrack_kib": "3262992",
+          "native_heap_kib": "557492"
+        },
+        "lastSampleGlMtrack": 3238364,
+        "lastSamplePss": 4221987,
+        "lastSampleNativeHeap": 557620,
+        "inferencePeakNativeHeap": {
+          "timestamp_utc": "2026-11-26T21:30:33.0161-08:00",
+          "pid": "14889",
+          "total_pss_kib": "4235275",
+          "gl_mtrack_kib": "3254228",
+          "native_heap_kib": "576268"
+        },
+        "windowEndUtc": "2026-11-27T05:33:04.7107175+00:00",
+        "sampleCount": 137,
+        "inferencePeakPss": {
+          "timestamp_utc": "2026-11-26T21:31:02.4043125-08:00",
+          "pid": "14889",
+          "total_pss_kib": "4248107",
+          "gl_mtrack_kib": "3262984",
+          "native_heap_kib": "558816"
+        },
+        "meanSampleIntervalMs": 1313.9,
+        "samplesDuringInference": 30,
+        "windowStartUtc": "2026-11-27T05:30:06.0237630+00:00"
+      },
+      "rawCsv": "pixel_memory_4096_mtp_on_repeat_textonly_1.csv",
+      "processLog": "pixel_memory_4096_mtp_on_repeat_textonly_1-logcat.txt"
+    },
+    {
+      "runId": "textonly_2",
+      "package": "text_only",
+      "packageSha256": "8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759",
+      "appVersion": "1.0-v116-mtp-probe",
+      "pid": 17002,
+      "processStartUtc": "2026-11-27T05:33:27.6776312Z",
+      "loadRequestUtc": "2026-11-27T05:33:30.1211694Z",
+      "loadResponseUtc": "2026-11-27T05:33:52.6267329Z",
+      "inferenceRequestUtc": "2026-11-27T05:33:52.6280513Z",
+      "inferenceResponseUtc": "2026-11-27T05:34:32.0467735Z",
+      "responseMetrics": {
+        "inputTokens": 3499,
+        "ttftMs": 11607.040065750001,
+        "outputTokensPerSecond": 18.109643749845365,
+        "outputTokens": 502,
+        "totalMs": 39300
+      },
+      "sampling": {
+        "cacheDirectory": "cache/generation-v63/gpu-sha256-8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759-model-default-mtptrue",
+        "maxContext": 4096,
+        "requestedContext": 4096,
+        "cacheAbsentBeforeLoad": true,
+        "cacheArtifactsPresentBeforeInit": false,
+        "dynamicContext": true,
+        "topK": 1,
+        "outputLimit": 500,
+        "precision": "model-default",
+        "topP": 1,
+        "temperature": 0.01,
+        "initializationProfile": {
+          "backend": "gpu",
+          "bundle": {
+            "id": "gpu:8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759.litertlm:3150102528:1795757370631",
+            "bytes": 3150102528,
+            "name": "Forge-E4B-Stock-QAT-TextOnly.litertlm",
+            "sha256": "8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759"
+          },
+          "trigger": "prompt-lab-load",
+          "precision": "model-default",
+          "mtpRequested": true,
+          "maxContext": 4096,
+          "dynamicContext": true,
+          "requestedContext": 4096,
+          "minimumRuntime": "0.19.0",
+          "textBackends": [
+            "CPU",
+            "GPU"
+          ],
+          "drafter": true,
+          "mtpEnabled": true,
+          "cacheArtifactsPresentBeforeInit": false,
+          "cacheKeyVersion": "sha256-v1",
+          "modelLoadMs": 22308
+        },
+        "mtpEnabled": true
+      },
+      "memoryKiB": {
+        "inferencePeakGlMtrack": {
+          "timestamp_utc": "2026-11-26T21:34:26.2237406-08:00",
+          "pid": "17002",
+          "total_pss_kib": "4310534",
+          "gl_mtrack_kib": "3262996",
+          "native_heap_kib": "558520"
+        },
+        "lastSampleGlMtrack": 3238364,
+        "lastSamplePss": 4284980,
+        "lastSampleNativeHeap": 558716,
+        "inferencePeakNativeHeap": {
+          "timestamp_utc": "2026-11-26T21:34:02.9545789-08:00",
+          "pid": "17002",
+          "total_pss_kib": "4303815",
+          "gl_mtrack_kib": "3261428",
+          "native_heap_kib": "576580"
+        },
+        "windowEndUtc": "2026-11-27T05:36:27.6590417+00:00",
+        "sampleCount": 135,
+        "inferencePeakPss": {
+          "timestamp_utc": "2026-11-26T21:34:26.2237406-08:00",
+          "pid": "17002",
+          "total_pss_kib": "4310534",
+          "gl_mtrack_kib": "3262996",
+          "native_heap_kib": "558520"
+        },
+        "meanSampleIntervalMs": 1339.2,
+        "samplesDuringInference": 29,
+        "windowStartUtc": "2026-11-27T05:33:28.2051083+00:00"
+      },
+      "rawCsv": "pixel_memory_4096_mtp_on_repeat_textonly_2.csv",
+      "processLog": "pixel_memory_4096_mtp_on_repeat_textonly_2-logcat.txt"
+    },
+    {
+      "runId": "official_2",
+      "package": "official",
+      "packageSha256": "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0",
+      "appVersion": "1.0-v116-mtp-probe",
+      "pid": 19559,
+      "processStartUtc": "2026-11-27T05:37:56.2768198Z",
+      "loadRequestUtc": "2026-11-27T05:37:58.6029239Z",
+      "loadResponseUtc": "2026-11-27T05:38:24.3382033Z",
+      "inferenceRequestUtc": "2026-11-27T05:38:24.3395061Z",
+      "inferenceResponseUtc": "2026-11-27T05:39:03.7395254Z",
+      "responseMetrics": {
+        "inputTokens": 3499,
+        "ttftMs": 11916.41006025,
+        "outputTokensPerSecond": 18.289529049187344,
+        "outputTokens": 502,
+        "totalMs": 39323
+      },
+      "sampling": {
+        "cacheDirectory": "cache/generation-v63/gpu-sha256-0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0-model-default-mtptrue",
+        "maxContext": 4096,
+        "requestedContext": 4096,
+        "cacheAbsentBeforeLoad": true,
+        "cacheArtifactsPresentBeforeInit": false,
+        "dynamicContext": true,
+        "topK": 1,
+        "outputLimit": 500,
+        "precision": "model-default",
+        "topP": 1,
+        "temperature": 0.01,
+        "initializationProfile": {
+          "backend": "gpu",
+          "bundle": {
+            "id": "gpu:0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0.litertlm:3659530240:1795757842547",
+            "bytes": 3659530240,
+            "name": "gemma-4-E4B-it-official.litertlm",
+            "sha256": "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0"
+          },
+          "trigger": "prompt-lab-load",
+          "precision": "model-default",
+          "mtpRequested": true,
+          "maxContext": 4096,
+          "dynamicContext": true,
+          "requestedContext": 4096,
+          "textBackends": [
+            "CPU",
+            "GPU"
+          ],
+          "drafter": true,
+          "mtpEnabled": true,
+          "cacheArtifactsPresentBeforeInit": false,
+          "cacheKeyVersion": "sha256-v1",
+          "modelLoadMs": 25503
+        },
+        "mtpEnabled": true
+      },
+      "memoryKiB": {
+        "inferencePeakGlMtrack": {
+          "timestamp_utc": "2026-11-26T21:38:50.683613-08:00",
+          "pid": "19559",
+          "total_pss_kib": "4245589",
+          "gl_mtrack_kib": "3262992",
+          "native_heap_kib": "556808"
+        },
+        "lastSampleGlMtrack": 3238360,
+        "lastSamplePss": 4219475,
+        "lastSampleNativeHeap": 556680,
+        "inferencePeakNativeHeap": {
+          "timestamp_utc": "2026-11-26T21:38:24.7904227-08:00",
+          "pid": "19559",
+          "total_pss_kib": "4233779",
+          "gl_mtrack_kib": "3254228",
+          "native_heap_kib": "572668"
+        },
+        "windowEndUtc": "2026-11-27T05:40:55.6802536+00:00",
+        "sampleCount": 136,
+        "inferencePeakPss": {
+          "timestamp_utc": "2026-11-26T21:38:40.3643154-08:00",
+          "pid": "19559",
+          "total_pss_kib": "4246142",
+          "gl_mtrack_kib": "3262980",
+          "native_heap_kib": "557396"
+        },
+        "meanSampleIntervalMs": 1325.8,
+        "samplesDuringInference": 30,
+        "windowStartUtc": "2026-11-27T05:37:56.6910835+00:00"
+      },
+      "rawCsv": "pixel_memory_4096_mtp_on_repeat_official_2.csv",
+      "processLog": "pixel_memory_4096_mtp_on_repeat_official_2-logcat.txt"
+    }
+  ]
+}

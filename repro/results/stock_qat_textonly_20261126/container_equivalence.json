@@ -1,0 +1,277 @@
+{
+  "schema": "textonly-container-equivalence-v1",
+  "officialVsCandidate": {
+    "officialGraphTypes": [
+      "audio_adapter",
+      "audio_encoder_hw",
+      "embedder",
+      "end_of_audio",
+      "end_of_vision",
+      "mtp_drafter",
+      "per_layer_embedder",
+      "prefill_decode",
+      "vision_adapter",
+      "vision_encoder"
+    ],
+    "textOnlyGraphTypes": [
+      "embedder",
+      "mtp_drafter",
+      "per_layer_embedder",
+      "prefill_decode"
+    ],
+    "removedGraphTypes": [
+      "audio_adapter",
+      "audio_encoder_hw",
+      "end_of_audio",
+      "end_of_vision",
+      "vision_adapter",
+      "vision_encoder"
+    ],
+    "retainedTomlSectionMetadataEqual": true,
+    "tokenizerSha256": "e594c8a90eb08d8bda498ff4747977dc827ae0c3c56b5c0d41a605a22d02ef03",
+    "metadataEqualExceptAddedMinRuntimeVersion": true,
+    "metadataAddedLine": "min_runtime_version: \"0.19.0\"",
+    "logicalGraphs": {
+      "embedder": {
+        "officialGraphFile": "Section2_TFLiteModel_tf_lite_embedder.tflite",
+        "officialGraphFileSha256": "94cf45ffd3d0dd7040d27b22e70845cf1054db90613bf31d8ffc1623d23d4a40",
+        "repackedGraphFile": "Section2_TFLiteModel_tf_lite_embedder.tflite",
+        "repackedGraphFileSha256": "6e6b1d4ee13dcc295af3b89a825d074a481c63310bb539716ac8774dcaae3d3b",
+        "subgraphs": 1,
+        "tensorCount": 16,
+        "tensorPayloadCount": 7,
+        "externalTensorCount": 1,
+        "logicalPayloadBytes": 167772304,
+        "nonTensorPayloadBuffers": 2,
+        "structureSha256": "acaf9f75ea34102abd9df5658de0edac016bb1449301cdad7d796f6890dffda3",
+        "logicalTensorPayloadSha256": "b7056bd21e184a5d2a0bfabf4aecfbcf2d1b314f153099d2053e07104833aa77"
+      },
+      "mtp_drafter": {
+        "officialGraphFile": "Section11_TFLiteModel_tf_lite_mtp_drafter.tflite",
+        "officialGraphFileSha256": "d6b1b5e9ac298ae832cbf10f4810cf022d73fcea9c93f6905039a377e0be50ca",
+        "repackedGraphFile": "Section5_TFLiteModel_tf_lite_mtp_drafter.tflite",
+        "repackedGraphFileSha256": "46f12ba6085716849b0264caa5f49ef0e12705338a65d8e63cb6db9d3a79f0ff",
+        "subgraphs": 30,
+        "tensorCount": 585,
+        "tensorPayloadCount": 138,
+        "externalTensorCount": 23,
+        "logicalPayloadBytes": 41566416,
+        "nonTensorPayloadBuffers": 2,
+        "structureSha256": "f3cf9da5250f77d9ff77f0bfe4aa1acc4fb36b0b6332e3d4ca379a965eae431f",
+        "logicalTensorPayloadSha256": "1943dcdb3a7bf3157f9fa83e4af49eb964b48c8a57a70685dd3c4478047ca79e"
+      },
+      "per_layer_embedder": {
+        "officialGraphFile": "Section3_TFLiteModel_tf_lite_per_layer_embedder.tflite",
+        "officialGraphFileSha256": "d35fe41db89fa0128f5da9530886a12581cee715369e1b9ed9a3644e43d16a6a",
+        "repackedGraphFile": "Section3_TFLiteModel_tf_lite_per_layer_embedder.tflite",
+        "repackedGraphFileSha256": "0509ca14100df1b459c655b953813274c6d9f1f6ce0e5e432087c130dc46097a",
+        "subgraphs": 1,
+        "tensorCount": 97,
+        "tensorPayloadCount": 47,
+        "externalTensorCount": 42,
+        "logicalPayloadBytes": 704643216,
+        "nonTensorPayloadBuffers": 2,
+        "structureSha256": "1b1749db513ea384268f6bd5de9f6d6c25a394893d00b9c19ced440f9afb098c",
+        "logicalTensorPayloadSha256": "179d3ad68e670a42c89f738962f6ac769a93516f1b988fd70dfc685dd5604ab8"
+      },
+      "prefill_decode": {
+        "officialGraphFile": "Section10_TFLiteModel_tf_lite_prefill_decode.tflite",
+        "officialGraphFileSha256": "387aafcb8ef7736e415db56a538fcd2afd198f9899d593d056bc19e5a3eb1700",
+        "repackedGraphFile": "Section4_TFLiteModel_tf_lite_prefill_decode.tflite",
+        "repackedGraphFileSha256": "9870b417a21bb902cecb1f66ff09cc8b44edec96b9319467e47da196e9be0ed0",
+        "subgraphs": 1340,
+        "tensorCount": 31874,
+        "tensorPayloadCount": 8140,
+        "externalTensorCount": 1108,
+        "logicalPayloadBytes": 6669092870,
+        "nonTensorPayloadBuffers": 5,
+        "structureSha256": "167014816a5341b4c65bad0afb08783f97b2f914b19751f45ed7136606cb9f56",
+        "logicalTensorPayloadSha256": "902345209cfec12a30f68d05eced0543e9b1ea0c3141a6cce984a18649ae5e86"
+      }
+    },
+    "textSectionFileSha256": {
+      "tokenizer": "e594c8a90eb08d8bda498ff4747977dc827ae0c3c56b5c0d41a605a22d02ef03",
+      "llmMetadata": "2fe97e230f97eaf24c95b30ab2294af4ad5b298bb9b2448164e8f1582d438fbd",
+      "graphs": {
+        "embedder": "6e6b1d4ee13dcc295af3b89a825d074a481c63310bb539716ac8774dcaae3d3b",
+        "mtp_drafter": "46f12ba6085716849b0264caa5f49ef0e12705338a65d8e63cb6db9d3a79f0ff",
+        "per_layer_embedder": "0509ca14100df1b459c655b953813274c6d9f1f6ce0e5e432087c130dc46097a",
+        "prefill_decode": "9870b417a21bb902cecb1f66ff09cc8b44edec96b9319467e47da196e9be0ed0"
+      },
+      "weights": {
+        "embedder": "716cb2b91bbd0c14f5d1eca629170b1270591abbca1f54106e698e1539b0abbf",
+        "mtp_drafter": "73c6dbde701574518394bf8a5acf9426f6a6066077fdeb140e909f811c35ed0c",
+        "per_layer_embedder": "740f6d1c1a5e655ba8d087bf8a2bf4dca47a8ef0f23a7fadd79070c664f42595",
+        "prefill_decode": "6ea2a0e20ab79544f4a472b22c4d3f02ffa1913fd7c094722f2c9eb9b0fb6175"
+      }
+    },
+    "containerIdentity": {
+      "uuid": "687c69e4-6b2a-4854-a392-6f322448e5d2",
+      "creationTimestamp": "2026-11-27T01:11:42.218143+00:00"
+    },
+    "externalWeightSections": {
+      "embedder": {
+        "bytes": 167772160,
+        "sha256": "716cb2b91bbd0c14f5d1eca629170b1270591abbca1f54106e698e1539b0abbf"
+      },
+      "mtp_drafter": {
+        "bytes": 41287680,
+        "sha256": "73c6dbde701574518394bf8a5acf9426f6a6066077fdeb140e909f811c35ed0c"
+      },
+      "per_layer_embedder": {
+        "bytes": 704643072,
+        "sha256": "740f6d1c1a5e655ba8d087bf8a2bf4dca47a8ef0f23a7fadd79070c664f42595"
+      },
+      "prefill_decode": {
+        "bytes": 2027683840,
+        "sha256": "6ea2a0e20ab79544f4a472b22c4d3f02ffa1913fd7c094722f2c9eb9b0fb6175"
+      }
+    }
+  },
+  "officialVsFreshRebuild": {
+    "officialGraphTypes": [
+      "audio_adapter",
+      "audio_encoder_hw",
+      "embedder",
+      "end_of_audio",
+      "end_of_vision",
+      "mtp_drafter",
+      "per_layer_embedder",
+      "prefill_decode",
+      "vision_adapter",
+      "vision_encoder"
+    ],
+    "textOnlyGraphTypes": [
+      "embedder",
+      "mtp_drafter",
+      "per_layer_embedder",
+      "prefill_decode"
+    ],
+    "removedGraphTypes": [
+      "audio_adapter",
+      "audio_encoder_hw",
+      "end_of_audio",
+      "end_of_vision",
+      "vision_adapter",
+      "vision_encoder"
+    ],
+    "retainedTomlSectionMetadataEqual": true,
+    "tokenizerSha256": "e594c8a90eb08d8bda498ff4747977dc827ae0c3c56b5c0d41a605a22d02ef03",
+    "metadataEqualExceptAddedMinRuntimeVersion": true,
+    "metadataAddedLine": "min_runtime_version: \"0.19.0\"",
+    "logicalGraphs": {
+      "embedder": {
+        "officialGraphFile": "Section2_TFLiteModel_tf_lite_embedder.tflite",
+        "officialGraphFileSha256": "94cf45ffd3d0dd7040d27b22e70845cf1054db90613bf31d8ffc1623d23d4a40",
+        "repackedGraphFile": "Section2_TFLiteModel_tf_lite_embedder.tflite",
+        "repackedGraphFileSha256": "6e6b1d4ee13dcc295af3b89a825d074a481c63310bb539716ac8774dcaae3d3b",
+        "subgraphs": 1,
+        "tensorCount": 16,
+        "tensorPayloadCount": 7,
+        "externalTensorCount": 1,
+        "logicalPayloadBytes": 167772304,
+        "nonTensorPayloadBuffers": 2,
+        "structureSha256": "acaf9f75ea34102abd9df5658de0edac016bb1449301cdad7d796f6890dffda3",
+        "logicalTensorPayloadSha256": "b7056bd21e184a5d2a0bfabf4aecfbcf2d1b314f153099d2053e07104833aa77"
+      },
+      "mtp_drafter": {
+        "officialGraphFile": "Section11_TFLiteModel_tf_lite_mtp_drafter.tflite",
+        "officialGraphFileSha256": "d6b1b5e9ac298ae832cbf10f4810cf022d73fcea9c93f6905039a377e0be50ca",
+        "repackedGraphFile": "Section5_TFLiteModel_tf_lite_mtp_drafter.tflite",
+        "repackedGraphFileSha256": "46f12ba6085716849b0264caa5f49ef0e12705338a65d8e63cb6db9d3a79f0ff",
+        "subgraphs": 30,
+        "tensorCount": 585,
+        "tensorPayloadCount": 138,
+        "externalTensorCount": 23,
+        "logicalPayloadBytes": 41566416,
+        "nonTensorPayloadBuffers": 2,
+        "structureSha256": "f3cf9da5250f77d9ff77f0bfe4aa1acc4fb36b0b6332e3d4ca379a965eae431f",
+        "logicalTensorPayloadSha256": "1943dcdb3a7bf3157f9fa83e4af49eb964b48c8a57a70685dd3c4478047ca79e"
+      },
+      "per_layer_embedder": {
+        "officialGraphFile": "Section3_TFLiteModel_tf_lite_per_layer_embedder.tflite",
+        "officialGraphFileSha256": "d35fe41db89fa0128f5da9530886a12581cee715369e1b9ed9a3644e43d16a6a",
+        "repackedGraphFile": "Section3_TFLiteModel_tf_lite_per_layer_embedder.tflite",
+        "repackedGraphFileSha256": "0509ca14100df1b459c655b953813274c6d9f1f6ce0e5e432087c130dc46097a",
+        "subgraphs": 1,
+        "tensorCount": 97,
+        "tensorPayloadCount": 47,
+        "externalTensorCount": 42,
+        "logicalPayloadBytes": 704643216,
+        "nonTensorPayloadBuffers": 2,
+        "structureSha256": "1b1749db513ea384268f6bd5de9f6d6c25a394893d00b9c19ced440f9afb098c",
+        "logicalTensorPayloadSha256": "179d3ad68e670a42c89f738962f6ac769a93516f1b988fd70dfc685dd5604ab8"
+      },
+      "prefill_decode": {
+        "officialGraphFile": "Section10_TFLiteModel_tf_lite_prefill_decode.tflite",
+        "officialGraphFileSha256": "387aafcb8ef7736e415db56a538fcd2afd198f9899d593d056bc19e5a3eb1700",
+        "repackedGraphFile": "Section4_TFLiteModel_tf_lite_prefill_decode.tflite",
+        "repackedGraphFileSha256": "9870b417a21bb902cecb1f66ff09cc8b44edec96b9319467e47da196e9be0ed0",
+        "subgraphs": 1340,
+        "tensorCount": 31874,
+        "tensorPayloadCount": 8140,
+        "externalTensorCount": 1108,
+        "logicalPayloadBytes": 6669092870,
+        "nonTensorPayloadBuffers": 5,
+        "structureSha256": "167014816a5341b4c65bad0afb08783f97b2f914b19751f45ed7136606cb9f56",
+        "logicalTensorPayloadSha256": "902345209cfec12a30f68d05eced0543e9b1ea0c3141a6cce984a18649ae5e86"
+      }
+    },
+    "textSectionFileSha256": {
+      "tokenizer": "e594c8a90eb08d8bda498ff4747977dc827ae0c3c56b5c0d41a605a22d02ef03",
+      "llmMetadata": "2fe97e230f97eaf24c95b30ab2294af4ad5b298bb9b2448164e8f1582d438fbd",
+      "graphs": {
+        "embedder": "6e6b1d4ee13dcc295af3b89a825d074a481c63310bb539716ac8774dcaae3d3b",
+        "mtp_drafter": "46f12ba6085716849b0264caa5f49ef0e12705338a65d8e63cb6db9d3a79f0ff",
+        "per_layer_embedder": "0509ca14100df1b459c655b953813274c6d9f1f6ce0e5e432087c130dc46097a",
+        "prefill_decode": "9870b417a21bb902cecb1f66ff09cc8b44edec96b9319467e47da196e9be0ed0"
+      },
+      "weights": {
+        "embedder": "716cb2b91bbd0c14f5d1eca629170b1270591abbca1f54106e698e1539b0abbf",
+        "mtp_drafter": "73c6dbde701574518394bf8a5acf9426f6a6066077fdeb140e909f811c35ed0c",
+        "per_layer_embedder": "740f6d1c1a5e655ba8d087bf8a2bf4dca47a8ef0f23a7fadd79070c664f42595",
+        "prefill_decode": "6ea2a0e20ab79544f4a472b22c4d3f02ffa1913fd7c094722f2c9eb9b0fb6175"
+      }
+    },
+    "containerIdentity": {
+      "uuid": "ac63e42f-0f8e-4268-9f07-93c069fbf046",
+      "creationTimestamp": "2026-11-27T02:59:34.880653+00:00"
+    },
+    "externalWeightSections": {
+      "embedder": {
+        "bytes": 167772160,
+        "sha256": "716cb2b91bbd0c14f5d1eca629170b1270591abbca1f54106e698e1539b0abbf"
+      },
+      "mtp_drafter": {
+        "bytes": 41287680,
+        "sha256": "73c6dbde701574518394bf8a5acf9426f6a6066077fdeb140e909f811c35ed0c"
+      },
+      "per_layer_embedder": {
+        "bytes": 704643072,
+        "sha256": "740f6d1c1a5e655ba8d087bf8a2bf4dca47a8ef0f23a7fadd79070c664f42595"
+      },
+      "prefill_decode": {
+        "bytes": 2027683840,
+        "sha256": "6ea2a0e20ab79544f4a472b22c4d3f02ffa1913fd7c094722f2c9eb9b0fb6175"
+      }
+    }
+  },
+  "candidateVsFreshRebuildLogicalGraphsEqual": true,
+  "candidateVsFreshRebuildPhysicalTextSectionsSha256Equal": true,
+  "containerIdentityChangedOnRebuild": true,
+  "packageFiles": {
+    "official": {
+      "bytes": 3659530240,
+      "sha256": "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0"
+    },
+    "candidate": {
+      "bytes": 3150102528,
+      "sha256": "8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759"
+    },
+    "freshRebuild": {
+      "bytes": 3150102528,
+      "sha256": "cf8398a857d7c22fa9e120c3fdac4e745171bf6c90eaeefc5c2a3f4946c52858"
+    }
+  },
+  "candidateVsFreshRebuildPackageSha256Equal": false
+}\n

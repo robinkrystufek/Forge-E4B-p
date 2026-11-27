@@ -1,0 +1,200 @@
+[
+  {
+    "at": 1795742852360,
+    "backend": "gpu",
+    "mtpRequested": true,
+    "mtpEnabled": true,
+    "maxContext": 4096,
+    "requestedContext": 1024,
+    "dynamicContext": true,
+    "precision": "model-default",
+    "modelLoadMs": 24189,
+    "metrics": {
+      "promptVersion": 1,
+      "outputTokenLimit": 500,
+      "minimumOutputTokens": 200,
+      "totalMs": 37001,
+      "inputTokens": 458,
+      "outputTokens": 441,
+      "ttftMs": 2984.86241625,
+      "tokensPerSecond": 12.941503692875408
+    },
+    "error": null
+  },
+  {
+    "at": 1795742938933,
+    "backend": "gpu",
+    "mtpRequested": true,
+    "mtpEnabled": true,
+    "maxContext": 4096,
+    "requestedContext": 1024,
+    "dynamicContext": true,
+    "precision": "model-default",
+    "modelLoadMs": 24189,
+    "metrics": {
+      "promptVersion": 1,
+      "outputTokenLimit": 500,
+      "minimumOutputTokens": 200,
+      "totalMs": 35669,
+      "inputTokens": 458,
+      "outputTokens": 441,
+      "ttftMs": 2412.97466675,
+      "tokensPerSecond": 13.235445434697269
+    },
+    "error": null
+  },
+  {
+    "at": 1795742991466,
+    "backend": "gpu",
+    "mtpRequested": true,
+    "mtpEnabled": true,
+    "maxContext": 4096,
+    "requestedContext": 1024,
+    "dynamicContext": true,
+    "precision": "model-default",
+    "modelLoadMs": 24189,
+    "metrics": {
+      "promptVersion": 1,
+      "outputTokenLimit": 500,
+      "minimumOutputTokens": 200,
+      "totalMs": 35615,
+      "inputTokens": 458,
+      "outputTokens": 441,
+      "ttftMs": 2412.4317865,
+      "tokensPerSecond": 13.25700189247598
+    },
+    "error": null
+  },
+  {
+    "at": 1795743037058,
+    "backend": "gpu",
+    "mtpRequested": true,
+    "mtpEnabled": true,
+    "maxContext": 4096,
+    "requestedContext": 1024,
+    "dynamicContext": true,
+    "precision": "model-default",
+    "modelLoadMs": 24189,
+    "metrics": {
+      "promptVersion": 1,
+      "outputTokenLimit": 500,
+      "minimumOutputTokens": 200,
+      "totalMs": 35572,
+      "inputTokens": 458,
+      "outputTokens": 441,
+      "ttftMs": 2409.7146395,
+      "tokensPerSecond": 13.275051854912734
+    },
+    "error": null
+  },
+  {
+    "at": 1795743090230,
+    "backend": "gpu",
+    "mtpRequested": true,
+    "mtpEnabled": true,
+    "maxContext": 4096,
+    "requestedContext": 1024,
+    "dynamicContext": true,
+    "precision": "model-default",
+    "modelLoadMs": 24189,
+    "metrics": {
+      "promptVersion": 1,
+      "outputTokenLimit": 500,
+      "minimumOutputTokens": 200,
+      "totalMs": 35538,
+      "inputTokens": 458,
+      "outputTokens": 441,
+      "ttftMs": 2422.1358645,
+      "tokensPerSecond": 13.290972429589186
+    },
+    "error": null
+  },
+  {
+    "at": 1795743279654,
+    "backend": "gpu",
+    "mtpRequested": false,
+    "mtpEnabled": false,
+    "maxContext": 4096,
+    "requestedContext": 1024,
+    "dynamicContext": true,
+    "precision": "model-default",
+    "modelLoadMs": 25023,
+    "metrics": {
+      "promptVersion": 1,
+      "outputTokenLimit": 500,
+      "minimumOutputTokens": 200,
+      "totalMs": 61299,
+      "inputTokens": 458,
+      "outputTokens": 441,
+      "ttftMs": 3019.68217125,
+      "tokensPerSecond": 7.551587788389239
+    },
+    "error": null
+  },
+  {
+    "at": 1795743353311,
+    "backend": "gpu",
+    "mtpRequested": false,
+    "mtpEnabled": false,
+    "maxContext": 4096,
+    "requestedContext": 1024,
+    "dynamicContext": true,
+    "precision": "model-default",
+    "modelLoadMs": 25023,
+    "metrics": {
+      "promptVersion": 1,
+      "outputTokenLimit": 500,
+      "minimumOutputTokens": 200,
+      "totalMs": 60035,
+      "inputTokens": 458,
+      "outputTokens": 441,
+      "ttftMs": 2432.1761575,
+      "tokensPerSecond": 7.640388574542551
+    },
+    "error": null
+  },
+  {
+    "at": 1795743442368,
+    "backend": "gpu",
+    "mtpRequested": false,
+    "mtpEnabled": false,
+    "maxContext": 4096,
+    "requestedContext": 1024,
+    "dynamicContext": true,
+    "precision": "model-default",
+    "modelLoadMs": 25023,
+    "metrics": {
+      "promptVersion": 1,
+      "outputTokenLimit": 500,
+      "minimumOutputTokens": 200,
+      "totalMs": 60029,
+      "inputTokens": 458,
+      "outputTokens": 441,
+      "ttftMs": 2431.6249507499997,
+      "tokensPerSecond": 7.640779805586371
+    },
+    "error": null
+  },
+  {
+    "at": 1795743538870,
+    "backend": "gpu",
+    "mtpRequested": false,
+    "mtpEnabled": false,
+    "maxContext": 4096,
+    "requestedContext": 1024,
+    "dynamicContext": true,
+    "precision": "model-default",
+    "modelLoadMs": 25023,
+    "metrics": {
+      "promptVersion": 1,
+      "outputTokenLimit": 500,
+      "minimumOutputTokens": 200,
+      "totalMs": 59933,
+      "inputTokens": 458,
+      "outputTokens": 441,
+      "ttftMs": 2437.8678765,
+      "tokensPerSecond": 7.654474823501194
+    },
+    "error": null
+  }
+]

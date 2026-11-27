@@ -1,0 +1,23 @@
+{
+  "schema": "textonly-pixel-memory-sample-v1",
+  "device": "Pixel 10 Pro / Android 17",
+  "app": "app.forgegm.trial.mtpprobe v113",
+  "runtime": {"litert_lm": "0.19.1", "litert": "2.3.2"},
+  "package": "official",
+  "package_sha256": "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0",
+  "backend": "GPU",
+  "precision": "model-default",
+  "mtp": "on",
+  "max_context_tokens": 4096,
+  "requested_context_tokens": 1024,
+  "dynamic_context": true,
+  "generation": {"prompt": "probe app fixed narrator fixture", "output_tokens": 441},
+  "sampling": {"interval_ms_approx": 1250, "samples": 42, "process": "dumpsys meminfo app.forgegm.trial.mtpprobe"},
+  "sampled_total_pss_kib": {"minimum": 3889023, "peak": 4129190},
+  "estimated_peak_over_sampled_floor_kib": 240167,
+  "limitations": [
+    "This is one official-package MTP-on run; no matched candidate or MTP-off memory runs were captured.",
+    "The app profile requested 1024 context tokens, so this does not satisfy 4096-requested-context memory validation.",
+    "The sampling parser did not capture GL mtrack; PSS is process memory and may not include all driver allocations."
+  ]
+}

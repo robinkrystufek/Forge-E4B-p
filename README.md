@@ -1,18 +1,27 @@
 # Forge-E4B-p
 
-**Fixed-scale LoRA adaptation of Gemma 4 E4B mobile QAT → mixed-bit LiteRT-LM with MTP**
+**Gemma 4 E4B mobile QAT → mixed-bit LiteRT-LM with MTP**
 
-A reproducible proof of concept for adapting Google's Gemma 4 E4B mobile-QAT checkpoint without discarding its original mixed INT2/INT4/INT8 representation or the official multi-token prediction (MTP) drafter.
+A reproducible experimental project exploring fixed-scale LoRA adaptation and text-only deployment of Google's Gemma 4 E4B mobile-QAT model while preserving the original mixed INT2/INT4/INT8 representation and official multi-token prediction (MTP) drafter.
 
 [Workflow](#workflow) · [Validation](#validation) · [Benchmarks](#mtp-performance) · [Reproduce](#reproduce-it) · [Repository layout](#repository-layout)
 
 ---
 
-| **3.49 GB** | **INT2 / INT4 / INT8** | **1.37×** | **1.66×** |
+| **3.49 GB** | **3.15 GB** | **INT2 / INT4 / INT8** | **1.74×** |
 | :---: | :---: | :---: | :---: |
-| Repacked model | Original mixed precision | RTX 4090 median MTP speedup | Pixel 10 Pro mean MTP speedup |
+| Trial 1 LoRA POC | Trial 2 text-only stock | Original mixed precision | Trial 2 Pixel median MTP speedup |
 
-> **Scope:** A clean-checkout, one-update synthetic proof of concept. This demonstrates packaging correctness and CPU/GPU inference, not model quality or generalization.
+> **Scope:** Two independent packaging trials. Trial 1 is a one-update synthetic LoRA proof of concept; Trial 2 removes multimodal towers from the untrained official package. Neither is a model-quality or generalization claim.
+
+## Experimental showcase
+
+| Trial | Intervention | Result | Evidence |
+| :--- | :--- | :--- | :--- |
+| **1 · Fixed-scale LoRA POC** (Nov 24) | One synthetic optimizer update; patch original packed graph | 127 INT4 values changed; 3.49 GB package; MTP retained | [Reproduction](repro/results/POC_REPRODUCTION_20261124.md) |
+| **2 · Removal of vision and audio towers** (Nov 26) | No training or weight replacement; remove six multimodal graph sections | 3.15 GB package (13.92% smaller than official); all four retained logical graphs and payloads match | [Method](docs/TEXT_ONLY_PACKAGING_20261126.md) · [Results](repro/results/stock_qat_textonly_20261126/RESULTS.md) |
+
+Trial 2 uses the official stock package, **not** the Trial 1 LoRA artifact. The interventions are independent.
 
 ## Workflow
 
@@ -37,6 +46,8 @@ The [clean reproduction record](repro/results/POC_REPRODUCTION_20261124.md) docu
 
 ## MTP performance
 
+### Trial 1 · Fixed-scale LoRA proof of concept
+
 ![Decode throughput with MTP off and on for all five benchmark configurations: PC CPU stock and LoRA POC, RTX 4090 stock and LoRA POC, and Pixel 10 Pro GPU LoRA POC. PC medians and Pixel means are distinguished; N is shown per mode. All bars share a zero-based linear scale and error bars show observed min–max ranges.](docs/assets/mtp-throughput.svg)
 
 | Backend | Package | Statistic | N per mode | MTP off (tok/s) | MTP on (tok/s) | Speedup | TTFT off (s) | TTFT on (s) |
@@ -54,13 +65,32 @@ Values are **median (min–max)** of valid generations for the PC configurations
 - **PC:** LiteRT-LM 0.19.2, CPU (XNNPACK for the stock baseline) and RTX 4090 (WebGPU/Dawn over Direct3D 12), three runs per package/backend/MTP mode. The explicit sampler used top-k 64, top-p 0.95 and temperature 1.0. Cold-start samples remain included in the medians. Stock drafter success was 41.9% on CPU and 47.6% on GPU; POC drafter success was 47.6% and 46.4%, respectively.
 - **Pixel:** Android 17, Forge GM 1.0-v116, LiteRT-LM 0.19.1 / LiteRT 2.3.2, GPU with model-default precision and sampler, four valid serial runs per mode. The transferred POC package was verified by SHA-256 and the app reported MTP effective off/on as configured. Mean generation time decreased from 59.88 s (59.08–61.49) to 37.09 s (36.26–37.74), a **38.1% reduction**, with 440 → 441 output tokens. Total time excludes engine/model initialization.
 
-These are separate within-configuration MTP comparisons. PC results use medians and Pixel results use means; the differing runtimes and samplers preclude a controlled cross-device comparison. Output lengths vary with natural generation endings. No Pixel CPU or stock Pixel results are reported, and these measurements do not establish model quality.
+These are separate within-configuration MTP comparisons. PC results use medians and Pixel results use means; the differing runtimes and samplers preclude a controlled cross-device comparison. Output lengths vary with natural generation endings. No Pixel CPU or stock Pixel results were collected in Trial 1, and these measurements do not establish model quality.
 
 **Full evidence:** [LoRA POC PC](repro/results/POC_REPRODUCTION_20261124.md#app-aligned-narrator-benchmark) · [Official stock PC](repro/results/POC_REPRODUCTION_20261124.md#stock-official-e4b-pc-baseline) · [Pixel GPU](repro/results/POC_REPRODUCTION_20261124.md#pixel-10-pro-gpu-mtp-benchmark) · [Pixel engine and metric collection](docs/MOBILE_QAT_LORA_TO_MIXED_BIT_LITERT_LM.md#6b-pixel-10-pro-gpu-mtp-benchmark). The records retain package hashes, per-run values or available ranges, and exact settings.
 
+### Trial 2 · Removal of vision and audio towers
+
+![Trial 2 MTP throughput: official stock and text-only stock, RTX 4090 and Pixel 10 Pro GPU; medians and observed ranges with sample counts, separate device axes.](docs/assets/mtp-throughput-textonly.svg)
+
+| Backend | Package | N off/on | MTP off (tok/s) | MTP on (tok/s) | Speedup |
+| :--- | :--- | ---: | ---: | ---: | ---: |
+| RTX 4090 GPU | Official stock | 3/3 | 110.26 (107.53–111.56) | 153.27 (99.18–156.19) | **1.39×** |
+| RTX 4090 GPU | Text-only stock | 3/3 | 111.61 (106.96–111.68) | 144.32 (109.98–156.21) | **1.29×** |
+| Pixel 10 Pro GPU | Official stock | 3/3 | 7.76 (6.45–7.80) | 13.35 (13.11–13.43) | **1.72×** |
+| Pixel 10 Pro GPU | Text-only stock | 4/5 | 7.64 (7.55–7.65) | 13.26 (12.94–13.29) | **1.74×** |
+
+All values are median (observed min–max); whiskers are not uncertainty intervals. RTX 4090: LiteRT-LM 0.19.2, 453 input tokens, 4096 context, top-k 64/top-p 0.95/temperature 1. Pixel: probe v113, LiteRT-LM 0.19.1 / LiteRT 2.3.2, GPU/model-default precision, 458 input tokens, 1024 requested context with dynamic maximum 4096, 441 generated tokens. Both use the narrator fixture and a 500-token output ceiling. Trial 1 and Trial 2 were separate sessions with different Pixel profiles and summary statistics; compare MTP modes within each configuration, not the trials as a controlled head-to-head experiment.
+
+**Packaging result:** 3,659,530,240 → 3,150,102,528 bytes (−13.92%); the decrease includes removal of multimodal data and builder deduplication of shared embedding data. 345 unique retained source quantized tensors and all four final logical text/MTP graphs match. The CPU greedy panel (MTP off, up to 128 generated tokens) matched decoded text in 12/12 cases. Native token IDs and logits were unavailable.
+
+**Long-context validation:** both packages completed GPU inference at requested/max context 4096 with MTP off/on. In the controlled MTP-on benchmark (fresh app process and absent compiled cache per run, two runs per package), mean inference-window peak PSS was 4,152 vs 4,179 MiB (official vs text-only; +0.65%), and decode throughput was 18.45 vs 18.20 tok/s (−1.35%). See the [matched long-context results](repro/results/stock_qat_textonly_20261126/RESULTS.md#matched-mtp-on-memory-repeat).
+
 ## Reproduce it
 
-**Start here:** [Clean proof-of-concept reproduction instructions](docs/MOBILE_QAT_LORA_TO_MIXED_BIT_LITERT_LM.md#clean-proof-of-concept-reproduction-repository-tracked-inputs)
+**Trial 2:** [Text-only packaging and reproduction](docs/TEXT_ONLY_PACKAGING_20261126.md#reproduction-commands) (no training required).
+
+**Trial 1:** [Clean proof-of-concept reproduction instructions](docs/MOBILE_QAT_LORA_TO_MIXED_BIT_LITERT_LM.md#clean-proof-of-concept-reproduction-repository-tracked-inputs)
 
 The clean proof of concept was executed from a fresh clone with fresh pinned environments and publicly downloadable model inputs on November 24, 2026. All required implementation code, synthetic fixtures and provenance mapping are tracked here. No private workstation, private corpus or separate development repository is required for the documented POC. The implementation guide separates the canonical runnable procedure from historical R14-D/P10 results. The validated platform is Windows with a compatible NVIDIA GPU for training; other environments have not been established by this record.
 
@@ -76,6 +106,7 @@ The clean proof of concept was executed from a fresh clone with fresh pinned env
 | Path | Purpose |
 | :--- | :--- |
 | [`docs/MOBILE_QAT_LORA_TO_MIXED_BIT_LITERT_LM.md`](docs/MOBILE_QAT_LORA_TO_MIXED_BIT_LITERT_LM.md) | Implementation guide and clean-checkout instructions |
+| [`docs/TEXT_ONLY_PACKAGING_20261126.md`](docs/TEXT_ONLY_PACKAGING_20261126.md) | Stock text-only package, audits and reproduction |
 | [`repro/scripts/`](repro/scripts/) | Download, inspect, prepare, train, merge, patch, package and benchmark |
 | [`repro/fixtures/`](repro/fixtures/) | Synthetic chat sample, provenance mapping and exact narrator prompt |
 | [`repro/requirements-training.lock`](repro/requirements-training.lock) | Pinned training dependencies |

@@ -1,0 +1,413 @@
+--------- beginning of system
+11-26 21:37:56.666 D/ActivityThread(19559): Set OS env TMPDIR to /data/user/0/app.forgegm.trial.mtpprobe/cache
+11-26 21:37:56.683 I/DisplayManager(19559): Choreographer implicitly registered for the refresh rate.
+11-26 21:37:56.730 V/ResourcesManager(19559): The following library key has been added: ResourcesKey{ mHash=10910064 mResDir=null mSplitDirs=[] mOverlayDirs=[] mLibDirs=[/data/app/~~4mhMX2VE8fxZ8OKJCzQdgQ==/com.google.android.webview-LBf-YX8jgrRf8v73izXYcg==/base.apk,/system/framework/android.test.base.jar,/system_ext/framework/androidx.window.extensions.jar] mDisplayId=0 mOverrideConfig=v37 mCompatInfo={480dpi always-compat} mLoaders=[]}
+11-26 21:37:57.072 D/InsetsController(19559): hide(ime())
+11-26 21:37:57.072 I/ImeTracker(19559): app.forgegm.trial.mtpprobe:4dd20b13: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+--------- beginning of main
+11-26 21:38:02.469 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4730KB/256MB, paused 123us,1.558ms total 16.175ms
+11-26 21:38:02.555 D/ProfileInstaller(19559): Installing profile for app.forgegm.trial.mtpprobe
+11-26 21:38:03.791 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 308KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4678KB/256MB, paused 170us,1.379ms total 15.992ms
+11-26 21:38:05.241 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4678KB/256MB, paused 125us,1.424ms total 13.320ms
+11-26 21:38:06.501 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4678KB/256MB, paused 180us,2.075ms total 19.026ms
+11-26 21:38:07.722 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 232KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4670KB/256MB, paused 402us,2ms total 17.308ms
+11-26 21:38:07.748 W/libc    (19559): Access denied finding property "vendor.product.pvr.debug_level"
+11-26 21:38:09.126 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4670KB/256MB, paused 148us,1.844ms total 16.159ms
+11-26 21:38:10.472 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 196KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4666KB/256MB, paused 125us,1.720ms total 15.266ms
+11-26 21:38:11.659 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4666KB/256MB, paused 141us,2.201ms total 13.650ms
+11-26 21:38:13.050 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 228KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4662KB/256MB, paused 220us,2.579ms total 24.775ms
+11-26 21:38:14.371 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4662KB/256MB, paused 162us,1.583ms total 15.187ms
+11-26 21:38:15.579 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4662KB/256MB, paused 136us,2.026ms total 15.010ms
+11-26 21:38:16.753 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4662KB/256MB, paused 115us,1.285ms total 13.914ms
+11-26 21:38:17.805 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4662KB/256MB, paused 120us,1.303ms total 15.145ms
+11-26 21:38:18.811 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4662KB/256MB, paused 124us,917us total 13.692ms
+11-26 21:38:20.004 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4662KB/256MB, paused 91us,784us total 9.669ms
+11-26 21:38:20.267 D/IsochronousClockModel(19559): processTimestamp() - STATE_RUNNING - #309, 121658 micros VERY LATE, 0 times
+11-26 21:38:20.367 D/IsochronousClockModel(19559): processTimestamp() - STATE_RUNNING - #310, 241081 micros VERY LATE, 1 times
+11-26 21:38:20.467 D/IsochronousClockModel(19559): processTimestamp() - STATE_RUNNING - #311, 241049 micros VERY LATE, 2 times
+11-26 21:38:20.467 W/IsochronousClockModel(19559): processTimestamp() - STATE_RUNNING - #311, 241049 micros VERY LATE! Force window jump, mDspStallCount = 1
+11-26 21:38:21.099 I/native  (19559): I0000 00:00:1795757901.097162   19686 delegate_kernel.cc:360] Total 50 external tensors are used for delegate inputs and outputs
+11-26 21:38:21.099 I/native  (19559): I0000 00:00:1795757901.099500   19686 delegate_kernel.cc:1015] Initializing OpenCL-based API from serialized data.
+11-26 21:38:21.410 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4662KB/256MB, paused 86us,1.046ms total 10.893ms
+11-26 21:38:21.923 I/tflite  (19559): Replacing 1773 out of 1773 node(s) with delegate (LITERT_CL) node, yielding 1 partitions for subgraph 1 (prefill_1024).
+11-26 21:38:22.434 I/native  (19559): I0000 00:00:1795757902.434642   19686 delegate_kernel.cc:360] Total 49 external tensors are used for delegate inputs and outputs
+11-26 21:38:22.434 I/native  (19559): I0000 00:00:1795757902.434742   19686 delegate_kernel.cc:1015] Initializing OpenCL-based API from serialized data.
+11-26 21:38:22.769 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4662KB/256MB, paused 102us,2.770ms total 14.676ms
+11-26 21:38:23.455 I/tflite  (19559): Replacing 1773 out of 1773 node(s) with delegate (LITERT_CL) node, yielding 1 partitions for subgraph 2 (prefill_128).
+11-26 21:38:23.476 I/native  (19559): I0000 00:00:1795757903.475991   19686 delegate_kernel.cc:360] Total 49 external tensors are used for delegate inputs and outputs
+11-26 21:38:23.476 I/native  (19559): I0000 00:00:1795757903.476074   19686 delegate_kernel.cc:1015] Initializing OpenCL-based API from serialized data.
+11-26 21:38:24.031 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4662KB/256MB, paused 108us,1.470ms total 12.885ms
+11-26 21:38:24.126 I/tflite  (19559): Replacing 2801 out of 2801 node(s) with delegate (LITERT_CL) node, yielding 1 partitions for subgraph 3 (verify).
+11-26 21:38:24.160 I/native  (19559): I0000 00:00:1795757904.160910   19686 delegate_kernel.cc:360] Total 50 external tensors are used for delegate inputs and outputs
+11-26 21:38:24.160 I/native  (19559): I0000 00:00:1795757904.160993   19686 delegate_kernel.cc:1015] Initializing OpenCL-based API from serialized data.
+11-26 21:38:24.809 W/native  (19559): W0000 00:00:1795757904.809632   19686 litert_lm_loader.cc:407] Section not found: ExecutorMetadataProto
+11-26 21:38:24.814 I/litert  (19559): [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+11-26 21:38:24.814 I/litert  (19559): [magic_number_utils.cc:109]   signature=embedder, subgraph_index=0, num_tensors=16, num_inputs=1, num_outputs=1, num_ops=8
+11-26 21:38:24.814 I/litert  (19559): [magic_number_utils.cc:113] Magic number configs: num_configs=1
+11-26 21:38:24.814 I/litert  (19559): [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+11-26 21:38:24.814 I/litert  (19559): [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+11-26 21:38:24.825 I/tflite  (19559): Created TensorFlow Lite XNNPACK delegate for CPU.
+11-26 21:38:24.825 I/tflite  (19559): Replacing 2 out of 8 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 2 partitions for subgraph 0 (main).
+11-26 21:38:24.827 I/litert  (19559): [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+11-26 21:38:24.827 I/litert  (19559): [magic_number_utils.cc:109]   signature=eoa, subgraph_index=0, num_tensors=1, num_inputs=0, num_outputs=1, num_ops=0
+11-26 21:38:24.827 I/litert  (19559): [magic_number_utils.cc:113] Magic number configs: num_configs=1
+11-26 21:38:24.827 I/litert  (19559): [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+11-26 21:38:24.827 I/litert  (19559): [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+11-26 21:38:24.827 I/litert  (19559): [compiled_model.cc:2092] Tracked constant output tensor eoa_embedding with locked address
+11-26 21:38:24.827 I/litert  (19559): [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+11-26 21:38:24.827 I/litert  (19559): [magic_number_utils.cc:109]   signature=eoi, subgraph_index=0, num_tensors=1, num_inputs=0, num_outputs=1, num_ops=0
+11-26 21:38:24.827 I/litert  (19559): [magic_number_utils.cc:113] Magic number configs: num_configs=1
+11-26 21:38:24.827 I/litert  (19559): [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+11-26 21:38:24.827 I/litert  (19559): [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+11-26 21:38:24.827 I/litert  (19559): [compiled_model.cc:2092] Tracked constant output tensor eoi_embedding with locked address
+11-26 21:38:24.880 I/litert  (19559): [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+11-26 21:38:24.880 I/litert  (19559): [magic_number_utils.cc:109]   signature=per_layer_embedder, subgraph_index=0, num_tensors=97, num_inputs=1, num_outputs=1, num_ops=49
+11-26 21:38:24.880 I/litert  (19559): [magic_number_utils.cc:113] Magic number configs: num_configs=1
+11-26 21:38:24.880 I/litert  (19559): [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+11-26 21:38:24.880 I/litert  (19559): [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+11-26 21:38:25.044 I/tflite  (19559): Replacing 1 out of 49 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 2 partitions for subgraph 0 (main).
+11-26 21:38:25.055 I/litert  (19559): [magic_number_utils.cc:101] Loaded: num_subgraphs=30, num_signatures=1
+11-26 21:38:25.055 I/litert  (19559): [magic_number_utils.cc:109]   signature=mtp_drafter, subgraph_index=0, num_tensors=285, num_inputs=8, num_outputs=2, num_ops=206
+11-26 21:38:25.055 I/litert  (19559): [magic_number_utils.cc:113] Magic number configs: num_configs=1
+11-26 21:38:25.055 I/litert  (19559): [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+11-26 21:38:25.055 I/litert  (19559): [magic_number_utils.cc:536] 57 tensors of signature mtp_drafter have been updated for magic number  32003 to target number 4096
+11-26 21:38:25.055 I/litert  (19559): [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+11-26 21:38:25.063 I/native  (19559): I0000 00:00:1795757905.062986   19686 delegate_opencl.cc:655] options->hint_waiting_for_completion: false
+11-26 21:38:25.063 I/native  (19559): I0000 00:00:1795757905.063348   19686 delegate_opencl.cc:657] options->kernel_batch_size: 0
+11-26 21:38:25.063 I/tflite  (19559): Replacing 206 out of 206 node(s) with delegate (LITERT_CL) node, yielding 1 partitions for subgraph 0 (main).
+11-26 21:38:25.067 W/native  (19559): W0000 00:00:1795757905.067202   19686 gpu_model_builder.cc:4459] Weights preparation on Gpu is disabled for PowerVR, Broadcom, Mali GPUs and non-OpenCL/WebGPU/Metal backends.
+11-26 21:38:25.337 I/native  (19559): I0000 00:00:1795757905.337711   19686 delegate_kernel.cc:360] Total 6 external tensors are used for delegate inputs and outputs
+11-26 21:38:25.337 I/native  (19559): I0000 00:00:1795757905.337830   19686 delegate_kernel.cc:1015] Initializing OpenCL-based API from serialized data.
+11-26 21:38:25.422 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4662KB/256MB, paused 96us,1.455ms total 11.316ms
+11-26 21:38:25.441 I/litert  (19559): [environment.cc:36] Creating LiteRT environment with options
+11-26 21:38:25.441 W/litert  (19559): [npu_registry.cc:34] NPU accelerator could not be loaded and registered: kLiteRtStatusErrorNotFound.
+11-26 21:38:25.441 I/litert  (19559): [accelerator_registry.cc:54] RegisterAccelerator: ptr=0xb400007ac5e801b0, name=LiteRT GPU
+11-26 21:38:25.441 I/litert  (19559): [gpu_registry.cc:121] Statically linked GPU accelerator registered.
+11-26 21:38:25.441 I/litert  (19559): [accelerator_registry.cc:54] RegisterAccelerator: ptr=0xb400007ac5e7c6a0, name=CpuAccelerator
+11-26 21:38:25.441 I/litert  (19559): [cpu_registry.cc:73] XNNPACK CPU accelerator registered.
+11-26 21:38:25.803 W/native  (19559): W0000 00:00:1795757905.803449   19686 mel_filterbank.cc:163] Missing 10 bands  starting at 0 in mel-frequency design. Perhaps too many channels or not enough frequency resolution in spectrum. (fft_length: 257 sample_rate: 16000 mel_channel_count: 128 lower_frequency_limit: 0 upper_frequency_limit: 8000
+11-26 21:38:26.007 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_1`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_9`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_5`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_2`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_1`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_6`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_7`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_19`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_9`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_13`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_18`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_11`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_3`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_12`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_10`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_15`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_2`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_7`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_4`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_11`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_10`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_16`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_14`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_8`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_21`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_3`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_17`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_0`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_13`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_5`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_4`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_17`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_12`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_14`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_15`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_20`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_8`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_18`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_19`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_22`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_0`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_6`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_20`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_23`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_16`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_23`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_21`.
+11-26 21:38:26.008 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_22`.
+11-26 21:38:26.795 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 560KB AllocSpace bytes, 7(220KB) LOS objects, 98% free, 4694KB/256MB, paused 156us,1.643ms total 15.364ms
+11-26 21:38:28.095 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 228KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4690KB/256MB, paused 183us,1.885ms total 14.888ms
+11-26 21:38:28.934 D/AAudio  (19559): AAudioStream_requestStop(s#1) called
+11-26 21:38:28.936 D/AudioStreamInternalPlay_Client(19559): callbackLoop() exiting, result = 240, isActive() = 1 <<<<<<<<<<<<<<
+11-26 21:38:28.939 D/AAudioStream(19559): joinThread_l() pthread_join succeeded
+11-26 21:38:28.940 D/IsochronousClockModel(19559): stop(nanos = 1299403928343081) max lateness = 241081 micros, DSP stalled 1 times
+11-26 21:38:28.940 D/AAudioStream(19559): setState(s#1) from 4 to 9
+11-26 21:38:29.006 D/AudioStreamInternal_Client(19559): onEventFromServer - got AAUDIO_SERVICE_EVENT_STOPPED
+11-26 21:38:29.006 D/AAudioStream(19559): setState(s#1) from 9 to 10
+11-26 21:38:29.362 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 224KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4690KB/256MB, paused 131us,1.992ms total 13.603ms
+11-26 21:38:30.499 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 224KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4690KB/256MB, paused 146us,1.738ms total 16.360ms
+11-26 21:38:31.949 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 224KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4690KB/256MB, paused 134us,1.696ms total 16.905ms
+11-26 21:38:33.415 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 224KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4690KB/256MB, paused 120us,1.282ms total 12.669ms
+11-26 21:38:34.008 D/AAudio  (19559): AAudioStream_requestStop(s#1) called
+11-26 21:38:34.009 D/AAudio  (19559): AAudioStream_close(s#1) called ---------------
+11-26 21:38:34.010 D/AudioStreamInternal_Client(19559): release_l(): mServiceStreamHandle = 0x00000234
+11-26 21:38:34.010 D/AAudioStream(19559): setState(s#1) from 10 to 11
+11-26 21:38:34.128 D/AAudioStream(19559): setState(s#1) from 11 to 11
+11-26 21:38:34.128 D/AAudioStream(19559): setState(s#1) from 11 to 12
+11-26 21:38:34.128 D/AudioStreamInternal_Client(19559): ~AudioStreamInternal() 0xb400007b65e37bc0 called
+11-26 21:38:34.129 D/AAudioStream(19559): ~AudioStream(s#1) mPlayerBase strongCount = 2
+11-26 21:38:34.129 D/AAudio  (19559): AAudioStream_close(s#1) returned 0 ---------
+11-26 21:38:34.696 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 252KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4694KB/256MB, paused 276us,2.365ms total 25.829ms
+11-26 21:38:35.200 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_1`.
+11-26 21:38:35.200 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_9`.
+11-26 21:38:35.200 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_5`.
+11-26 21:38:35.200 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_2`.
+11-26 21:38:35.200 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_1`.
+11-26 21:38:35.200 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_6`.
+11-26 21:38:35.200 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_7`.
+11-26 21:38:35.200 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_19`.
+11-26 21:38:35.200 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_9`.
+11-26 21:38:35.200 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_13`.
+11-26 21:38:35.200 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_18`.
+11-26 21:38:35.200 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_11`.
+11-26 21:38:35.200 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_3`.
+11-26 21:38:35.200 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_12`.
+11-26 21:38:35.200 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_10`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_15`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_2`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_7`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_4`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_11`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_10`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_16`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_14`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_8`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_21`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_3`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_17`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_0`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_13`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_5`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_4`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_17`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_12`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_14`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_15`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_20`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_8`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_18`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_19`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_22`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_0`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_6`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_20`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_23`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_16`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_23`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_21`.
+11-26 21:38:35.201 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_22`.
+11-26 21:38:35.972 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 224KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4694KB/256MB, paused 148us,2.064ms total 17.217ms
+11-26 21:38:37.251 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 224KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4694KB/256MB, paused 145us,2.110ms total 13.842ms
+11-26 21:38:37.678 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_1`.
+11-26 21:38:37.678 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_9`.
+11-26 21:38:37.678 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_5`.
+11-26 21:38:37.679 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_2`.
+11-26 21:38:37.679 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_1`.
+11-26 21:38:37.679 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_6`.
+11-26 21:38:37.679 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_7`.
+11-26 21:38:37.679 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_19`.
+11-26 21:38:37.679 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_9`.
+11-26 21:38:37.679 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_13`.
+11-26 21:38:37.679 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_18`.
+11-26 21:38:37.679 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_11`.
+11-26 21:38:37.679 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_3`.
+11-26 21:38:37.679 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_12`.
+11-26 21:38:37.679 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_10`.
+11-26 21:38:37.679 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_15`.
+11-26 21:38:37.680 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_2`.
+11-26 21:38:37.680 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_7`.
+11-26 21:38:37.680 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_4`.
+11-26 21:38:37.680 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_11`.
+11-26 21:38:37.680 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_10`.
+11-26 21:38:37.680 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_16`.
+11-26 21:38:37.680 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_14`.
+11-26 21:38:37.680 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_8`.
+11-26 21:38:37.680 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_21`.
+11-26 21:38:37.680 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_3`.
+11-26 21:38:37.680 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_17`.
+11-26 21:38:37.680 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_0`.
+11-26 21:38:37.681 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_13`.
+11-26 21:38:37.681 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_5`.
+11-26 21:38:37.681 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_4`.
+11-26 21:38:37.681 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_17`.
+11-26 21:38:37.681 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_12`.
+11-26 21:38:37.681 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_14`.
+11-26 21:38:37.681 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_15`.
+11-26 21:38:37.681 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_20`.
+11-26 21:38:37.681 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_8`.
+11-26 21:38:37.682 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_18`.
+11-26 21:38:37.682 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_19`.
+11-26 21:38:37.682 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_22`.
+11-26 21:38:37.682 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_0`.
+11-26 21:38:37.682 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_6`.
+11-26 21:38:37.682 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_20`.
+11-26 21:38:37.682 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_23`.
+11-26 21:38:37.682 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_16`.
+11-26 21:38:37.682 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_23`.
+11-26 21:38:37.682 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_21`.
+11-26 21:38:37.682 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_22`.
+11-26 21:38:37.904 I/tflite  (19559): Loaded OpenCL library with dlopen.
+11-26 21:38:37.908 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_1`.
+11-26 21:38:37.908 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_9`.
+11-26 21:38:37.908 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_5`.
+11-26 21:38:37.908 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_2`.
+11-26 21:38:37.908 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_1`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_6`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_7`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_19`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_9`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_13`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_18`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_11`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_3`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_12`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_10`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_15`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_2`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_7`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_4`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_11`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_10`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_16`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_14`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_8`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_21`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_3`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_17`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_0`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_13`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_5`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_4`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_17`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_12`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_14`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_15`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_20`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_8`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_18`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_19`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_22`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_0`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_6`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_20`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_23`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_16`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_23`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_21`.
+11-26 21:38:37.909 W/litert  (19559): [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_22`.
+11-26 21:38:38.451 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 284KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4698KB/256MB, paused 152us,2.133ms total 14.076ms
+11-26 21:38:39.758 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 416KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4698KB/256MB, paused 76us,942us total 10.207ms
+11-26 21:38:40.975 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 416KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4730KB/256MB, paused 260us,3.183ms total 38.214ms
+11-26 21:38:40.979 I/.trial.mtpprobe(19559): WaitForGcToComplete blocked HeapTrim on Explicit for 6.313ms
+11-26 21:38:42.256 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 448KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4730KB/256MB, paused 222us,3.231ms total 27.018ms
+11-26 21:38:43.663 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 448KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4698KB/256MB, paused 159us,1.495ms total 16.353ms
+11-26 21:38:44.967 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 416KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4698KB/256MB, paused 161us,1.483ms total 14.393ms
+11-26 21:38:46.234 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 380KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4702KB/256MB, paused 83us,1.080ms total 11.539ms
+11-26 21:38:47.462 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 416KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4702KB/256MB, paused 82us,1.179ms total 10.835ms
+11-26 21:38:48.742 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 416KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4702KB/256MB, paused 75us,1.207ms total 11.322ms
+11-26 21:38:50.062 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 416KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4702KB/256MB, paused 123us,1.702ms total 16.108ms
+11-26 21:38:51.283 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 416KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4734KB/256MB, paused 122us,1.575ms total 16.905ms
+11-26 21:38:52.700 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 416KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4702KB/256MB, paused 175us,1.987ms total 17.412ms
+11-26 21:38:54.021 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 412KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4706KB/256MB, paused 265us,2.369ms total 19.017ms
+11-26 21:38:55.278 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 452KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4702KB/256MB, paused 236us,2.682ms total 24.258ms
+11-26 21:38:56.618 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 416KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4702KB/256MB, paused 158us,2.024ms total 17.628ms
+11-26 21:38:57.916 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 416KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4702KB/256MB, paused 128us,1.781ms total 14.664ms
+11-26 21:38:59.328 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 444KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4706KB/256MB, paused 135us,1.666ms total 17.905ms
+11-26 21:39:00.688 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 416KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4706KB/256MB, paused 93us,960us total 12.349ms
+11-26 21:39:02.051 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 416KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4706KB/256MB, paused 89us,1.119ms total 11.111ms
+11-26 21:39:03.343 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 416KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4706KB/256MB, paused 148us,1.823ms total 16.473ms
+11-26 21:39:04.731 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 448KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4706KB/256MB, paused 167us,2.253ms total 18.481ms
+11-26 21:39:05.828 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 404KB AllocSpace bytes, 4(72KB) LOS objects, 98% free, 4686KB/256MB, paused 112us,1.929ms total 14.179ms
+11-26 21:39:06.982 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 136us,1.677ms total 15.028ms
+11-26 21:39:08.355 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 231us,3.062ms total 22.569ms
+11-26 21:39:08.356 I/.trial.mtpprobe(19559): WaitForGcToComplete blocked HeapTrim on Explicit for 11.678ms
+11-26 21:39:09.681 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 115us,1.714ms total 18.415ms
+11-26 21:39:11.117 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 116us,1.307ms total 14.008ms
+11-26 21:39:12.429 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 119us,1.303ms total 13.133ms
+11-26 21:39:13.833 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 138us,1.715ms total 21.701ms
+11-26 21:39:15.262 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 145us,1.633ms total 16.230ms
+11-26 21:39:16.771 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 160us,2.045ms total 18.415ms
+11-26 21:39:18.128 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 153us,1.436ms total 15.150ms
+11-26 21:39:19.509 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 198us,1.997ms total 22.303ms
+11-26 21:39:20.709 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 114us,1.556ms total 12.579ms
+11-26 21:39:22.013 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 105us,1.037ms total 13.169ms
+11-26 21:39:23.354 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 177us,2.138ms total 18.825ms
+11-26 21:39:24.709 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 178us,2.464ms total 19.465ms
+11-26 21:39:26.102 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 170us,2.481ms total 17.208ms
+11-26 21:39:27.502 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 149us,1.591ms total 15.331ms
+11-26 21:39:28.799 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 186us,2.497ms total 23.336ms
+11-26 21:39:30.053 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 128us,1.343ms total 14.254ms
+11-26 21:39:31.407 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 221us,3.418ms total 21.777ms
+11-26 21:39:32.812 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 169us,1.949ms total 19.331ms
+11-26 21:39:34.124 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 160us,2.312ms total 18.181ms
+11-26 21:39:35.579 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 190us,2.196ms total 24.188ms
+11-26 21:39:36.842 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 279us,1.726ms total 18.386ms
+11-26 21:39:38.167 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 132us,1.466ms total 16.421ms
+11-26 21:39:39.423 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 121us,1.347ms total 14.446ms
+11-26 21:39:40.789 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 123us,1.319ms total 14.390ms
+11-26 21:39:42.055 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 214us,1.370ms total 21.152ms
+11-26 21:39:43.371 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 123us,1.371ms total 15.090ms
+11-26 21:39:44.626 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 224KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 136us,1.802ms total 19.060ms
+11-26 21:39:45.922 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 147us,1.960ms total 23.181ms
+11-26 21:39:47.477 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 201us,2.448ms total 20.706ms
+11-26 21:39:48.900 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 122us,1.597ms total 15.219ms
+11-26 21:39:50.125 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 110us,1.476ms total 14.699ms
+11-26 21:39:51.415 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 118us,1.119ms total 12.009ms
+11-26 21:39:52.914 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 121us,1.676ms total 13.574ms
+11-26 21:39:54.186 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 118us,1.545ms total 15.387ms
+11-26 21:39:55.605 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 143us,1.788ms total 15.478ms
+11-26 21:39:56.891 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 169us,1.724ms total 15.525ms
+11-26 21:39:58.369 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 137us,1.446ms total 13.798ms
+11-26 21:39:59.740 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 117us,1.464ms total 23.140ms
+11-26 21:40:01.094 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 166us,1.977ms total 19.244ms
+11-26 21:40:02.577 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 186us,2.001ms total 21.413ms
+11-26 21:40:03.909 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 130us,1.541ms total 14.372ms
+11-26 21:40:05.253 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 237us,1.111ms total 13.241ms
+11-26 21:40:06.637 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 63us,819us total 8.810ms
+11-26 21:40:07.965 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 71us,1.022ms total 9.790ms
+11-26 21:40:09.347 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 175us,1.115ms total 19.385ms
+11-26 21:40:10.714 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 218us,1.792ms total 15.824ms
+11-26 21:40:11.934 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 141us,1.561ms total 16.654ms
+11-26 21:40:13.161 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 223us,3.149ms total 24.144ms
+11-26 21:40:14.597 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 131us,1.384ms total 14.477ms
+11-26 21:40:15.936 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 131us,1.897ms total 18.824ms
+11-26 21:40:17.307 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 144us,2.249ms total 17.386ms
+11-26 21:40:18.714 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 364us,2.277ms total 18.481ms
+11-26 21:40:20.024 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 149us,1.577ms total 17.001ms
+11-26 21:40:21.432 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 231us,2.010ms total 22.746ms
+11-26 21:40:22.909 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 139us,1.859ms total 21.414ms
+11-26 21:40:24.101 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 151us,1.616ms total 15.291ms
+11-26 21:40:25.519 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 226us,3.333ms total 22.553ms
+11-26 21:40:27.007 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 150us,1.798ms total 16.697ms
+11-26 21:40:28.320 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 143us,1.950ms total 16.571ms
+11-26 21:40:29.542 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 229us,3.169ms total 23.846ms
+11-26 21:40:30.838 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 134us,1.285ms total 14.325ms
+11-26 21:40:32.337 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 208us,2.705ms total 20.713ms
+11-26 21:40:33.682 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 242us,2.055ms total 23.101ms
+11-26 21:40:35.013 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 130us,1.779ms total 16.122ms
+11-26 21:40:36.177 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 144us,1.796ms total 17.255ms
+11-26 21:40:37.482 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 165us,2.125ms total 20.052ms
+11-26 21:40:38.771 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 152us,1.573ms total 15.456ms
+11-26 21:40:40.219 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 144us,1.805ms total 16.292ms
+11-26 21:40:41.583 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 176us,2.526ms total 20.677ms
+11-26 21:40:42.967 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 222us,3.204ms total 22.234ms
+11-26 21:40:44.320 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 137us,1.423ms total 16.517ms
+11-26 21:40:45.571 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 158us,1.944ms total 20.664ms
+11-26 21:40:46.778 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 123us,1.512ms total 14.195ms
+11-26 21:40:48.169 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 104us,2.634ms total 13.416ms
+11-26 21:40:49.431 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 127us,2.186ms total 15.083ms
+11-26 21:40:50.518 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 128us,1.649ms total 14.710ms
+11-26 21:40:51.953 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 130us,3.612ms total 18.997ms
+11-26 21:40:53.447 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 173us,2.119ms total 19.727ms
+11-26 21:40:54.952 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 199us,2.414ms total 19.932ms
+11-26 21:40:56.301 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 129us,1.364ms total 14.366ms
+11-26 21:40:57.610 I/.trial.mtpprobe(19559): Explicit concurrent mark compact GC freed 192KB AllocSpace bytes, 1(20KB) LOS objects, 98% free, 4686KB/256MB, paused 120us,1.547ms total 15.750ms
