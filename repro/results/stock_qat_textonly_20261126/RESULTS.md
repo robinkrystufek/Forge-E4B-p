@@ -60,6 +60,9 @@ The follow-up used the same v116 APK (`791DD9847AB2FABC9C508699F8A763817C24FE01B
 
 Official PSS peaks were 4,257,104 and 4,246,142 KiB; text-only peaks were 4,248,107 and 4,310,534 KiB. Their two-run mean PSS difference was 27,698 KiB (27.0 MiB, 0.65%); mean GL mtrack differed by 2 KiB. The original 5,170,669 KiB (4.93 GiB) text-only MTP-on peak did not recur; repeat text-only native heap peaks were 559–563 MiB during inference and 544–546 MiB at the end of each trace. The original anomalous run alone entered with compiled cache artifacts present, but the repeat does not prove cache state caused the earlier event. Treat these two-run observations as descriptive, not a statistical package regression estimate.
 
+
+Mean timing metrics calculated directly from the four repeat API responses (official vs text-only): TTFT 11.879 vs 11.753 s (−1.07%); decode throughput 18.451 vs 18.202 tok/s (−1.35%); total generation time 39.048 vs 39.299 s (+0.64%); model load 25.876 vs 23.634 s (−8.66%). These are descriptive means of two runs per package; the substantial original throughput difference did not recur. The repeat changes both process lifecycle and compiled-cache state, so it cannot isolate their respective effects. System-wide memory/thermal/GPU telemetry was not controlled or recorded as a matched time series.
+
 ## Limitations
 
 The v113 dynamic-growth and partial memory traces are historical evidence, superseded for strict 4096-context validation by the v116 matched runs. The original single text-only MTP-on observation was anomalous; it did not reproduce in the two-run matched cold-cache repeat, and these observations do not establish a package-caused memory regression. Peak host VRAM, native token IDs, logits, and GPU/MTP-on paired greedy output parity were not measured; broad quality evaluation was outside the completed scope. The model binaries remain local and are not included in Git.
