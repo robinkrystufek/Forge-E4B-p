@@ -22,7 +22,7 @@ Use the repository downloader and pin the revision. The metadata is part of the 
 
 The canonical procedure below downloads the checkpoint and metadata, inspects its header, and performs the packed-weight round-trip using the tracked scripts. Use an explicit model directory and verify the download hash before training.
 
-Expected packed-weight round-trip inventory: 613 tensors: 111 INT2, 306 INT4 and 196 INT8. The historical provenance fixture reports 654 weight tensors (152 INT2, 306 INT4, 196 INT8) under its broader checkpoint-mapping inventory; these are distinct recorded counts. Do not equate them without reconciling the tensor sets. INT2/INT4 use low-value-first offset-binary packing in U8; INT8 is signed. Stop if metadata cannot be reconciled or the no-op round-trip changes packed bytes or decoded values. Never reinterpret these payloads as ordinary BF16 tensors.
+Expected packed-weight round-trip inventory: 613 tensors: 111 INT2, 306 INT4 and 196 INT8. The historical provenance fixture separately reports 654 weight tensors (152 INT2, 306 INT4, 196 INT8). These counts differ; the exact scope difference has not been independently reconciled. The 613-tensor round-trip result refers to the packed tensors tested in the clean reproduction. INT2/INT4 use low-value-first offset-binary packing in U8; INT8 is signed. Stop if metadata cannot be reconciled or the no-op round-trip changes packed bytes or decoded values. Never reinterpret these payloads as ordinary BF16 tensors.
 
 ## 2. Prepare corpus and splits
 
@@ -159,7 +159,7 @@ Original host logs and per-run JSON were retained locally at the time of the exp
 
 ## Clean proof-of-concept reproduction (repository tracked inputs)
 
-The `repro/` tree contains the implementation dependencies used by this short proof-of-concept: source-format inspection/download, packed quantization, fixed-scale LoRA trainer and merge, official graph payload patch/repack, prompt and one-row synthetic corpus fixtures, and narrator benchmark runner. The 7 MB `fixtures/quantization_provenance.json` is the audited source-to-official graph mapping; it is public model metadata, not training corpus. The POC is one optimizer update and is for pipeline validation only, not a quality claim.
+The `repro/` tree contains the implementation dependencies used by this short proof-of-concept: source-format inspection/download, packed quantization, fixed-scale LoRA trainer and merge, official graph payload patch/repack, prompt and one-row synthetic corpus fixtures, and narrator benchmark runner. The approximately 7 MB `repro/fixtures/quantization_provenance.json` is the audited source-to-official graph mapping; it is model metadata, not training corpus. Its historical path fields are descriptive, not required locations; the patcher consumes the tracked tensor mappings and receives actual input paths explicitly. The POC is one optimizer update and is for pipeline validation only, not a quality claim.
 
 ### Disposable setup
 
@@ -264,13 +264,7 @@ Invoke-Checked $ep "$s\benchmark_narrator.py" --model "$run\Gemma4-E4B-POC-INT2-
 
 Windows Python API inference registers the bundled DLL directory with `os.add_dll_directory` and retains its handle until engine close, so `dxcompiler.dll` and `dxil.dll` are discoverable. Do not reuse short synthetic prompts to infer narrator MTP behavior: the 128/64 CLI microbenchmark produced zero draft acceptance and is not Forge-GM's app workload.
 
-Use `download_stock_litertlm.py --output <path>` to fetch the pinned official package; it verifies the SHA before renaming the `.partial` file. The short clean reproduction also needs an explicit `--model-dir` in the trainer. Install the CUDA wheel before the rest of the training lock (`pip install --index-url https://download.pytorch.org/whl/cu126 torch==2.14.1+cu126`, then install the lock with PyPI as the index); this avoids resolving CUDA Torch from the general package index. The export lock is intentionally minimal and excludes the unrelated editable `litert-torch` checkout from the shared environment.
-
-The official stock package download command is:
-
-~~~powershell
-Invoke-Checked $ep "$s\download_stock_litertlm.py" --output "$stock\gemma-4-E4B-it.litertlm"
-~~~
+The stock downloader resumes interrupted transfers and verifies SHA-256 before renaming its partial file. The export lock intentionally excludes unrelated editable environments.
 
 `prepare_chat_jsonl.py` consumes the `BatchEncoding['input_ids']` returned by the pinned Transformers tokenizer. Do not assume `apply_chat_template(tokenize=True)` directly returns a Python list; its wrapper type can vary across tokenizer implementations. The preparer should fail closed if the user-only generation prefix does not exactly match the full conversation prefix.
 
