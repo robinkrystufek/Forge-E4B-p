@@ -1,0 +1,67 @@
+{
+  "schema": "textonly-pixel-memory-matched-4096-v1",
+  "device": "Pixel 10 Pro / Android 17",
+  "app": "app.forgegm.trial.mtpprobe v116",
+  "runtime": {"litert_lm": "0.19.1", "litert": "2.3.2"},
+  "backend": "GPU",
+  "precision": "model-default",
+  "configuration": {
+    "requested_context_tokens": 4096,
+    "max_context_tokens": 4096,
+    "dynamic_context": true,
+    "prompt_input_tokens": 3499,
+    "output_limit": 500,
+    "sampler": {"top_k": 1, "top_p": 1.0, "temperature": 0.01},
+    "sampling": "dumpsys meminfo app.forgegm.trial.mtpprobe; TOTAL PSS and GL mtrack sampled during the entire run window",
+    "run_window_seconds": "127.5–129.0",
+    "mean_sample_interval_ms": "1240–1299"
+  },
+  "runs": [
+    {
+      "package": "official",
+      "package_sha256": "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0",
+      "mtp": false,
+      "inference": {"status": "ok", "requested_context_tokens": 4096, "input_tokens": 3499, "output_tokens": 500, "elapsed_seconds": 77.144, "decode_tokens_per_second": 7.6680},
+      "memory_peak_kib": {"total_pss": 4172586, "gl_mtrack": 3203528},
+      "samples": 100,
+      "sample_window_seconds": 127.5,
+      "raw_samples": "pixel_memory_4096_official_mtp_off.csv"
+    },
+    {
+      "package": "official",
+      "package_sha256": "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0",
+      "mtp": true,
+      "inference": {"status": "ok", "requested_context_tokens": 4096, "input_tokens": 3499, "output_tokens": 502, "elapsed_seconds": 39.953, "decode_tokens_per_second": 18.0121},
+      "memory_peak_kib": {"total_pss": 4272228, "gl_mtrack": 3263612},
+      "samples": 100,
+      "sample_window_seconds": 128.6,
+      "raw_samples": "pixel_memory_4096_official_mtp_on.csv"
+    },
+    {
+      "package": "text_only",
+      "package_sha256": "8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759",
+      "mtp": false,
+      "inference": {"status": "ok", "requested_context_tokens": 4096, "input_tokens": 3499, "output_tokens": 500, "elapsed_seconds": 78.628, "decode_tokens_per_second": 7.5780},
+      "memory_peak_kib": {"total_pss": 4246146, "gl_mtrack": 3205976},
+      "samples": 100,
+      "sample_window_seconds": 127.9,
+      "raw_samples": "pixel_memory_4096_textonly_mtp_off.csv"
+    },
+    {
+      "package": "text_only",
+      "package_sha256": "8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759",
+      "mtp": true,
+      "inference": {"status": "ok", "requested_context_tokens": 4096, "input_tokens": 3499, "output_tokens": 502, "elapsed_seconds": 47.526, "decode_tokens_per_second": 13.9640},
+      "memory_peak_kib": {"total_pss": 5170669, "gl_mtrack": 3805156},
+      "samples": 105,
+      "sample_window_seconds": 129.0,
+      "raw_samples": "pixel_memory_4096_textonly_mtp_on.csv"
+    }
+  ],
+  "limitations": [
+    "These are sampled process PSS and GL mtrack maxima, not allocator instrumentation; brief peaks between samples may be missed.",
+    "PSS and GL mtrack are separate accounting views and must not be added together.",
+    "Each package/MTP combination has one generation and one complete trace; these are comparable observed peaks, not statistical distributions.",
+    "The text-only MTP-on peak is higher than the other three observations and is retained as measured; no causal attribution is made."
+  ]
+}
