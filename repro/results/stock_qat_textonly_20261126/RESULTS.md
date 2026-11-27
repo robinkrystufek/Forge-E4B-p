@@ -33,6 +33,27 @@ The earlier v113 Pixel long-prompt runs used `requestedContext=1024`; they are r
 
 For each run, `dumpsys meminfo` sampled process `TOTAL PSS` and `GL mtrack` about every 1.2 seconds over a complete 127.5–129.0 second window, including the generation. The observed PSS / GL mtrack peaks in MiB were official MTP-off 4074.8 / 3128.4, official MTP-on 4172.1 / 3187.1, text-only MTP-off 4146.6 / 3130.8, and text-only MTP-on 5049.5 / 3716.0. Exact KiB peaks, sample counts, per-run profiles, limitations, and four raw traces are in `pixel_memory_4096_matched.json` and the adjacent `pixel_memory_4096_*.csv` files. These are sampled process and graphics-accounting maxima, not allocator instrumentation; PSS and GL mtrack are separate views and must not be summed. One run per combination was measured, so the values are comparable observations rather than statistical distributions.
 
+## Temporal analysis of the matched Pixel traces
+
+All times below are Pacific Standard Time (UTC−08:00), November 26, 2026. They are the first and last sampler timestamps, not separately recorded generation-start/end events. Values are computed from the four committed CSV files (KiB / 1024).
+
+| Package / MTP | Sampling start–end | Initial PSS (MiB) | Peak PSS (MiB; elapsed s) | Final PSS (MiB) | Initial / peak / final GL mtrack (MiB) |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Official off | 20:20:59.112–20:23:06.623 | 4036.8 | 4074.8; 59.606 | 4048.9 | 3119.9 / 3128.4 / 3104.4 |
+| Official on | 20:24:25.095–20:26:33.680 | 4150.8 | 4172.1; 10.002 | 4146.5 | 3178.6 / 3187.1 / 3163.1 |
+| Text-only off | 20:33:08.624–20:35:16.535 | 4120.2 | 4146.6; 76.658 | 4122.0 | 3122.3 / 3130.8 / 3106.8 |
+| Text-only on | 20:35:56.211–20:38:05.211 | 4119.6 | 5049.5; 31.610 | 5013.2 | 3176.5 / 3716.0 / 3189.6 |
+
+The two MTP-on windows begin 11 min 31.116 s apart (9 min 22.531 s between the official window ending and the text-only window beginning). Run order was fixed, not counterbalanced. The final text-only MTP-on run starts with slightly **lower** PSS and similar graphics accounting compared with official MTP-on. Unlike the other three traces, it shows sustained PSS growth: about 4921 MiB at +47.859 s, 5020 MiB at +59.736 s, and 5013 MiB at +129 s (+893.7 MiB versus its first sample). GL mtrack has transient spikes (3716.0 MiB at +21.145 s; 3620.7 MiB at +31.610 s), but settles near 3190 MiB. The late sustained PSS difference is therefore not explained by a persistently elevated GL mtrack reading alone; do not subtract or add these distinct accounting views to infer allocation categories.
+
+The CSV files contain an additional unlabeled fourth column that also rises in the anomalous run. Its provenance/metric name is not recorded, so it is not assigned to a memory category here. There are no synchronized generation lifecycle events, process IDs, process-restart records, compiled-cache state, temperatures, or APK build/diff hashes in this result bundle. Although the reported inference duration is 47.526 s, the exact alignment of that interval with the sampling window is not known.
+
+### Probe version and interpretation
+
+The strict-context measurement used isolated probe v116 for **all four** runs; the earlier v113 probe used requested context 1024 with dynamic maximum 4096. v116 reports requested/max 4096. This was a context-profile change (3499 input tokens plus 500–502 generated), not a demonstrated change to allow 4096 output tokens. The exact app source diff, APK hash, install time, and per-run process/cache lifecycle are not included, so other changes cannot be excluded. Both packages use the same reported v116 version and runtime; the earlier v113 data should not be pooled with v116.
+
+The abnormal late-run behavior is consistent with an additional runtime/process allocation or retention event, rather than a larger initial model footprint. Potential causes include MTP/delegate buffer handling, compilation/cache behavior, process state, or probe behavior; none is established. The fixed order and single run per configuration prevent attributing the anomaly to tower removal itself. A controlled repeat should alternate package order, use a verified identical APK and clean process per run, match cache state and device conditions, and log timestamped model-load/prefill/decode/completion markers and process IDs. No new benchmark was performed for this retrospective analysis.
+
 ## Limitations
 
 The v113 dynamic-growth and partial memory traces are historical evidence, superseded for strict 4096-context validation by the v116 matched runs. The text-only MTP-on observation is 21.0% higher in peak PSS and 22.5% lower in decode throughput than official at requested context 4096 (one run per condition). Repeat under matched process, cache and thermal conditions before attributing a regression to the package. Peak host VRAM, native token IDs, logits, and GPU/MTP-on paired greedy output parity were not measured; broad quality evaluation was outside the completed scope. The model binary remains local and is not included in Git.
