@@ -4,7 +4,7 @@ Date: 2026-11-26 (America/Los_Angeles)
 
 ## Status
 
-The requested text-only artifact is built and validated on host and Pixel. Tensor-level auditing proves the official text graphs already contain the pinned original stock-QAT weights for every weight used by those graphs, so no patched copy is needed: comparison A=C and B=D. The artifact is comparison D. Its binary remains in the local experiment output because the repository has no established model-artifact publication mechanism documented or configured. Peak host/device memory and broad logit/quality-suite measurements were not captured; these are reported as limitations below.
+The requested text-only artifact is built and validated on host and Pixel. Tensor-level auditing proves the official text graphs already contain the pinned original stock-QAT weights for every weight used by those graphs, so no patched copy is needed: comparison A=C and B=D. The artifact is comparison D. Its binary remains in the local experiment output because the repository has no established model-artifact publication mechanism documented or configured. Additional final-container and fresh-rebuild audits are included in the results bundle. The remaining validations and limitations are listed below.
 
 ## Inputs and method
 
@@ -72,6 +72,10 @@ Full host logs, resource gate records, repeated benchmark results and filtered P
 
 Remaining publication and measurement notes:
 
-1. Peak host VRAM and Pixel process memory were not sampled during the performance runs; only pre-phase host free VRAM (23,394 MiB) and app model-load times are available.
+1. The prior Pixel performance runs used a GPU profile whose diagnostics reported `maxContext=4096`, `requestedContext=1024`, dynamic context enabled. They do not establish actual 4096-token requested-context inference. Sustained Pixel inference at requested context 4096 and peak device-memory sampling remain outstanding.
+2. The paired greedy run against the frozen 12-prompt panel, exact generated token IDs/first-divergence report, and logits comparison remain outstanding. LiteRT-LM 0.19.2's Python API returns generated text and token counts; direct token trace is unavailable because this runtime build has its debugger disabled.
+3. Peak host VRAM and Pixel process memory were not sampled during prior performance runs; only pre-phase host free VRAM (23,394 MiB) and app model-load times are available.
+4. A matched short-context MTP check on the official and text-only packages reproduced `DYNAMIC_UPDATE_SLICE` preparation failures at KV-cache capacities 32 and 128, with both completing at 1024. This points to the shared runtime/cache path. See `repro/results/stock_qat_textonly_20261126/short_context_mtp.json`.
+5. The final-container and clean-rebuild comparison is in `repro/results/stock_qat_textonly_20261126/container_equivalence.json`; the rebuilt package manifest is `repro/results/stock_qat_textonly_20261126/fresh_rebuild_manifest.json`. Logical tensor payloads and physical text sections match. Full container hashes differ because the builder regenerates system metadata identity/timestamp.
 2. Broad logits/quality suites were not run. The unchanged retained graph bytes, exact source quantized values/scales, and deterministic `42` smokes characterize package integrity; they are not a large behavioral evaluation.
 3. The local project docs/repository contain no configured or established model-binary publishing destination. The package is retained locally with its SHA; the binary was not uploaded. The code, tests and compact audit/benchmark evidence can be submitted in a dedicated PR.

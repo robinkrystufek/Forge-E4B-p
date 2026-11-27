@@ -17,4 +17,16 @@ Host tests used the shared LiteRT-LM 0.19.2 runtime and 3 repeated narrator gene
 
 Reproduction uses the installed Python 3.11.9 environment at `D:\Forge-GM\experiment\mobile_qat_feasibility\litert_export_venv`. Run `python -m unittest discover -s repro/tests -p test_text_only_repack.py -v`. Repack the pinned official unpacked tree by passing its original prefill/decode graph to `repro/scripts/repack_official_litertlm.py` with `--text-only`; write outputs into a new task output directory. Then run `repro/scripts/audit_stock_qat_source.py` with `--source-dir`, three `--official-graph NAME=PATH` arguments for the decoder/embedder/per-layer embedder, and the provenance fixture. The invocation used for this result is recorded in `docs/TEXT_ONLY_PACKAGING_20261126.md`.
 
-Peak host VRAM and Pixel process memory were not captured. The project checkout had no documented/configured model-binary publication target, so the binary remains local and is not included in Git.
+## Final container and reproduction audit
+
+`container_equivalence.json` compares the final text-only package directly with the official package. It verifies the retained TOML section metadata, tokenizer, text metadata (apart from the added minimum runtime version), all four retained logical graphs, every tensor's structure and quantization parameters, and every logical tensor payload. The comparison follows external-buffer references and compensates for payload externalization and deduplication. All retained payload fingerprints match, including the MTP drafter; six audio/vision graphs are the only removed graph types.
+
+A clean rebuild from the pinned official unpacked inputs is recorded in `fresh_rebuild_manifest.json`. The rebuilt package has SHA-256 `cf8398a857d7c22fa9e120c3fdac4e745171bf6c90eaeefc5c2a3f4946c52858` versus candidate `8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759`. The four logical graphs and all physical text sections are equivalent; full container hashes differ because the builder regenerates system metadata identity/timestamp.
+
+The prior short-context MTP issue was reproduced with the official and text-only packages using LiteRT-LM 0.19.2, CPU backend, greedy sampling (`top_k=1`, `temperature=0`), and prompt `Hi`. At KV-cache capacities 32 and 128, both packages fail engine creation at `DYNAMIC_UPDATE_SLICE`; both initialize and generate at 1024. See `short_context_mtp.json`. This establishes a runtime/cache-capacity failure shared by the official package.
+
+## Remaining validation
+
+The user clarified deterministic decoding means greedy. The requested paired greedy run over the frozen 12-prompt panel, including generated-token-ID divergence and logits where accessible, has not yet been completed. The existing Python API exposes decoded text and token counts; its token-trace debugger is disabled in the installed runtime build, so direct generated token IDs/logits are not currently exposed through that API.
+
+The prior Pixel tests were GPU runs with `maxContext=4096` but `requestedContext=1024`. The app diagnostics confirm this for both package hashes and both MTP states. The requested sustained Pixel run at an actual 4096 requested context, with MTP on/off and sampled peak memory for both packages, remains outstanding. These prior runs do not satisfy that requirement, and peak device memory was not sampled. The model binary remains local and is not included in Git.
