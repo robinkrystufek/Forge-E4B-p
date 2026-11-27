@@ -1,0 +1,22 @@
+{
+  "schema": "textonly-pixel-memory-samples-v1",
+  "device": "Pixel 10 Pro / Android 17",
+  "app": "app.forgegm.trial.mtpprobe v113",
+  "runtime": {"litert_lm": "0.19.1", "litert": "2.3.2"},
+  "backend": "GPU",
+  "sampling": "dumpsys meminfo app.forgegm.trial.mtpprobe, approximately 750 ms; sampled process TOTAL PSS and GL mtrack",
+  "context": {"max_tokens": 4096, "requested_tokens": 1024, "dynamic": true, "long_prompt_input_tokens": 3502, "output_tokens": 500},
+  "samples": [
+    {"package":"official","package_sha256":"0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0","mtp":true,"sample_count":58,"peak_pss_kib":3881532,"peak_gl_mtrack_kib":3166420,"csv":"external validation scratch pixel_official_mtp_on_4096_retry.csv"},
+    {"package":"official","package_sha256":"0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0","mtp":false,"sample_count":45,"peak_pss_kib":4833866,"peak_gl_mtrack_kib":3218428,"sampling_note":"Sampler ended before the 75.852-second generation completed; tail may be missing."},
+    {"package":"text_only","package_sha256":"8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759","mtp":false,"sample_count":78,"peak_pss_kib":6184703,"peak_gl_mtrack_kib":3211076,"sampling_note":"Sampler extended beyond generation; PSS peak occurred after the request and may reflect cleanup or delayed allocation."},
+    {"package":"text_only","package_sha256":"8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759","mtp":true,"sample_count":80,"peak_pss_kib":4494861,"peak_gl_mtrack_kib":3356792}
+  ],
+  "limitations": [
+    "These are observed sampled maxima, not allocator-level absolute peaks; brief spikes between samples can be missed.",
+    "Official MTP-off sampling did not cover the full generation; official MTP-on uses a fresh complete trace while candidate traces used the corrected GL parser.",
+    "Candidate MTP-off PSS reached its maximum after generation, so it is not directly attributable to active inference.",
+    "The profile starts at requested context 1024 and dynamically grows; these are not strict 4096-requested-context memory measurements.",
+    "PSS and GL mtrack can overlap conceptually and should not be summed. PSS does not guarantee inclusion of all driver allocations."
+  ]
+}

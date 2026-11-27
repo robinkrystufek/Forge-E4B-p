@@ -1,0 +1,20 @@
+{
+  "schema": "textonly-pixel-long-context-v1",
+  "device": "Pixel 10 Pro / Android 17",
+  "app": "app.forgegm.trial.mtpprobe v113",
+  "runtime": {"litert_lm": "0.19.1", "litert": "2.3.2"},
+  "backend": "GPU",
+  "precision": "model-default",
+  "max_context_tokens": 4096,
+  "requested_context_tokens": 1024,
+  "dynamic_context": true,
+  "workload": "same long prompt for all four package/MTP combinations; top_k=1 (greedy), top_p=1, temperature=0.01, 500 output ceiling",
+  "runs": [
+    {"package":"official","package_sha256":"0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0","mtp":true,"status":"ok","input_tokens":3502,"output_tokens":502,"elapsed_seconds":40.275,"decode_tokens_per_second":17.6870},
+    {"package":"official","package_sha256":"0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0","mtp":false,"status":"ok","input_tokens":3502,"output_tokens":500,"elapsed_seconds":75.852,"decode_tokens_per_second":7.7782},
+    {"package":"text_only","package_sha256":"8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759","mtp":false,"status":"ok","input_tokens":3502,"output_tokens":500,"elapsed_seconds":80.536,"decode_tokens_per_second":7.3349},
+    {"package":"text_only","package_sha256":"8a9f67c07c43a9fb16945dbae90a92e9a35e5b3bfef50686ddc42a3c8094b759","mtp":true,"status":"ok","input_tokens":3502,"output_tokens":502,"elapsed_seconds":61.746,"decode_tokens_per_second":17.4049}
+  ],
+  "interpretation": "The runs consumed 4002-4004 tokens total, demonstrating successful dynamic growth well beyond the requested 1024-token starting context and close to the 4096 maximum. They do not establish a profile configured with requested_context_tokens=4096.",
+  "limitations": ["One run per combination.", "Greedy sampling is top_k=1; temperature=0 is rejected by this app API.", "No per-step logits or native token IDs were exposed."]
+}
