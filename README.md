@@ -62,7 +62,7 @@ These are separate within-configuration MTP comparisons. PC results use medians 
 
 **Start here:** [Clean proof-of-concept reproduction instructions](docs/MOBILE_QAT_LORA_TO_MIXED_BIT_LITERT_LM.md#clean-proof-of-concept-reproduction-repository-tracked-inputs)
 
-The implementation guide also documents the original experiment, quantization invariants, pinned source and stock bundle revisions, label masking, training protocol, GPU requirements and patch/repack steps. Use the clean-reproduction section for repository-tracked inputs rather than the historical workstation-specific paths.
+The clean proof of concept was executed from a fresh clone with fresh pinned environments and publicly downloadable model inputs on November 24, 2026. All required implementation code, synthetic fixtures and provenance mapping are tracked here. No private workstation, private corpus or separate development repository is required for the documented POC. The implementation guide separates the canonical runnable procedure from historical R14-D/P10 results. The validated platform is Windows with a compatible NVIDIA GPU for training; other environments have not been established by this record.
 
 | Environment | Tested configuration |
 | :--- | :--- |

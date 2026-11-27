@@ -3,7 +3,7 @@
 ## Reproduction setup
 
 - Repository: `robinkrystufek/Forge-E4B-p`, branch `docs/e4b-mobile-qat-guide`, commit `28c6909` plus this evidence commit.
-- Run root: `D:\Forge-GM\experiment\output\DISPOSABLE_FORGE_E4B_P_REPRO_20261124` (explicitly disposable, created from a fresh clone).
+- Run root: a newly created disposable workspace beside a fresh clone; no existing private development tree was required.
 - Fresh `training-venv` and `export-venv`, Python 3.11. Training lock installed Torch 2.14.1+cu126 and Transformers 5.24.0.dev0 at `1097d1570e6208063fa49575bb2b6e756a50c2f6`; export lock installed LiteRT-LM/API/builder 0.19.2, ai-edge-litert-nightly 2.4.0.dev20261122, ai-edge-quantizer-nightly 0.10.1.dev20261113, NumPy 2.4.6, FlatBuffers 25.12.19, safetensors 0.9.0rc1.
 - Source checkpoint downloaded from `google/gemma-4-E4B-it-qat-mobile-transformers@8e3ac78f1a4a97c19f5f194ab362a2206f71d961`; 3,525,094,516 bytes; SHA-256 `391946da2e0bec22288e9fe50a4d31d2401c9570ba3baaf0ba43d644dadeb1d4`.
 - Official stock package downloaded from `litert-community/gemma-4-E4B-it-litert-lm@f254b5ba6e36f7d89cc7892e268e9877bc20f0a0`; 3,659,530,240 bytes; SHA-256 `0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0`.
@@ -61,7 +61,7 @@ The reused LiteRT-LM CLI/Python environment was version 0.19.2. CPU and GPU CLI 
 
 MTP median decode speedup was 27.1% on CPU and 38.6% on GPU. Runtime logs reported drafter success of 41.9% on CPU and 47.6% on GPU and showed the stock bundle's `mtp_drafter` signature. GPU resource gates passed before both phases at 23,554 MiB free and 0% utilization. The initial GPU run in each mode had cold-start effects and is included in the three-run medians. After the warm repeats, GPU median decode was 111.52 tok/s off and 154.70 tok/s on (38.7% speedup).
 
-The task output folder retains `cpu-off.json`, `cpu-on.json`, `gpu-off.json`, `gpu-on.json` and matching logs, plus `smoke-cpu.log` and `smoke-gpu.log`, under `D:\Forge-GM\experiment\output\DISPOSABLE_FORGE_E4B_P_REPRO_20261124\run\official-stock-pc-test-20261124\`. The model was not copied. The installed LiteRT-LM environment was reused; the pre-existing official-baseline engine cache expanded from 2.22 GB to 4.52 GB and remains in place.
+The task output folder retains `cpu-off.json`, `cpu-on.json`, `gpu-off.json`, `gpu-on.json` and matching logs, plus `smoke-cpu.log` and `smoke-gpu.log`, in the original disposable run directory. The model was not copied. The installed LiteRT-LM environment was reused; the pre-existing official-baseline engine cache expanded from 2.22 GB to 4.52 GB and remains in place.
 
 ## Obstacles fixed in the repo
 
@@ -76,4 +76,4 @@ The task output folder retains `cpu-off.json`, `cpu-on.json`, `gpu-off.json`, `g
 
 ## Preserved evidence
 
-The disposable run tree retains manifests, round-trip audit, adapter metrics/checkpoint, merge and patch manifests, package manifest/artifact, stock bundle, CPU/GPU smoke logs, and benchmark JSON under `D:\Forge-GM\experiment\output\DISPOSABLE_FORGE_E4B_P_REPRO_20261124\run`. The full model inputs, unpacked stock sections, two fresh virtual environments, and engine cache also remain under that clearly marked disposable root; they were retained so the package can be inspected and the run audited. No pre-existing shared environment or model was modified.
+At the time of the experiment, the disposable run tree retained manifests, round-trip audit, adapter metrics/checkpoint, merge and patch manifests, package manifest/artifact, stock bundle, CPU/GPU smoke logs, and benchmark JSON in the original disposable run directory. The full model inputs, unpacked stock sections, two fresh virtual environments, and engine cache also remain under that clearly marked disposable root; they were retained so the package can be inspected and the run audited. No pre-existing shared environment or model was modified. The local logs, full models and environments are not included in Git; this record summarizes the observed run, and the tracked code, locks and fixtures support independent repetition.
