@@ -19,7 +19,7 @@ Package the original Google Gemma 4 E4B mobile-QAT weights as a text-only LiteRT
 - Reuse `D:\Forge-GM\experiment\mobile_qat_feasibility\litert_export_venv` (Python 3.11.9, LiteRT-LM 0.19.2); no environment created.
 - Starting free space: C: 127,524,777,984 bytes; D: 80,382,464,000 bytes. Do not remove existing model/output artifacts without explicit direction.
 - User amendment: device availability is not an early-stage blocker; check the device once a candidate is ready. Candidate and official-device comparisons have now completed.
-- User supplied Finnl1 ADB wireless endpoint `192.168.4.20:45951` after pairing. Verified Windows/Finnl1/SDK/scrcpy ADB binaries; use the Finnl1 toolchain path in `docs/AGENT_OPERATIONS.md`.
+- Authorized wireless ADB connection was verified for Pixel testing. Discover a current endpoint locally; no private network address is required for reproduction.
 - User requested long RTX4090 tests with MTP off/on in parallel and then three official Pixel runs per mode; completed and recorded in results/docs.
 - Do not commit model binaries. No configured/established model publishing destination was found.
 
